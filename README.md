@@ -99,7 +99,7 @@ A library contains basic wallet abstractions:
 Contains different wallet API providers:
 
 - Official near wallet
-- Slender wallet
+- Sender wallet
 
 ### web
 
