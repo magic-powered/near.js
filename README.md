@@ -15,17 +15,29 @@ A modern Javascript (and Typescript) library for Near blockchain integration.
 ├── package.json
 └── packages
     ├── abstract-provider
+    │   └── package.json
     ├── cli
+    │   └── package.json
     ├── constants
+    │   └── package.json
     ├── contracts
+    │   └── package.json
     ├── explorer
+    │   └── package.json
     ├── helper
+    │   └── package.json
     ├── providers
+    │   └── package.json
     ├── rates
+    │   └── package.json
     ├── units
+    │   └── package.json
     ├── wallet-core
+    │   └── package.json
     ├── wallet-providers
+    │   └── package.json
     └── web
+        └── package.json
 ```
 
 ### abstract-provider
