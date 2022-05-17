@@ -51,6 +51,7 @@ Contains a part of the library with implementation of different providers:
 - RPC API provider
 - Stargate API provider
 - Fast Near API provider 
+- Pagoda API provider
 
 and others
 
