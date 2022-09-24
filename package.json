@@ -4,9 +4,10 @@
   "main": "index.js",
   "author": "Anatolii Petrovskyi <anatolii@magicpowered.io>",
   "license": "MIT",
-  "workspaces": {
-    "packages": [
-      "packages/*"
-    ]
-  }
+  "workspaces": [
+    "packages/keys",
+    "packages/tx",
+    "packages/signer",
+    "packages/keystore"
+  ]
 }
