@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/Magic-Powered/near.js#readme",
   "dependencies": {
-    "bn.js": "^5.2.1"
+    "bn.js": "^5.2.1",
+    "tweetnacl": "^1.0.3"
   }
 }
