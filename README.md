@@ -2,6 +2,10 @@
 
 A modern Javascript (and Typescript) library for Near blockchain integration.
 
+## Library design charts
+
+https://lucid.app/lucidchart/83b08aa7-9c7b-43d3-a19a-641dff3e4ee9/edit?viewport_loc=-41%2C-655%2C3072%2C1596%2CuxbUZxXg2iAi&invitationId=inv_36f37603-e422-4088-8094-157ffd664457
+
 ## Concepts
 
 - provider - an entity that provides access to the Near blockchain.
