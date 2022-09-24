@@ -8,6 +8,12 @@
     "packages/keys",
     "packages/tx",
     "packages/signer",
-    "packages/keystore"
+    "packages/keystore",
+    "packages/provider-core",
+    "packages/provider-rpc",
+    "packages/provider-wallet-core",
+    "packages/provider-wallet-my-near-wallet",
+    "packages/units",
+    "packages/provider-wallet-sender"
   ]
 }
