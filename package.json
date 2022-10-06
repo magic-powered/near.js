@@ -14,6 +14,8 @@
     "packages/provider-wallet-core",
     "packages/provider-wallet-my-near-wallet",
     "packages/units",
-    "packages/provider-wallet-sender"
+    "packages/provider-wallet-sender",
+    "packages/borsh",
+    "packages/config"
   ]
 }

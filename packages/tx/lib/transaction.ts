@@ -9,4 +9,6 @@ export interface ITransaction {
   receiverId: string;
   actions: IAction[];
   blockHash: Uint8Array;
+
+  toBorsh(): Buffer; // TODO: deal with ArrayBuffer and Buffer in both nodejs and browser environment
 }

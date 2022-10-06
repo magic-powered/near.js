@@ -6,7 +6,11 @@ import { ISignedTransaction } from "./signed_transaction";
 // TODO: verify tx signature
 // TODO: verify any signature
 
-export class Signer {
+export interface ISigner {
+  signTx(transaction: ITransaction): Promise<ISignedTransaction>;
+}
+
+export class Signer implements ISigner {
   private readonly keyPair: KeyPair;
 
   constructor(keyPair: KeyPair) {
@@ -14,6 +18,7 @@ export class Signer {
   }
 
   signTx(transaction: ITransaction): Promise<ISignedTransaction> {
+    const borsh = transaction.toBorsh();
     return null; // TODO
   }
 }

@@ -1,8 +1,9 @@
 {
-  "name": "@near.js/keys",
+  "name": "@near.js/borsh",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -15,9 +16,5 @@
   "bugs": {
     "url": "https://github.com/Magic-Powered/near.js/issues"
   },
-  "homepage": "https://github.com/Magic-Powered/near.js#readme",
-  "dependencies": {
-    "bn.js": "^5.2.1",
-    "tweetnacl": "^1.0.3"
-  }
+  "homepage": "https://github.com/Magic-Powered/near.js#readme"
 }
