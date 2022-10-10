@@ -1,0 +1,46 @@
+{
+  "compilerOptions": {
+    "lib": ["es2015", "es5", "dom"],
+    "preserveWatchOutput": true,
+    "pretty": false
+  },
+  "references": [
+    {
+      "path": "./packages/keys"
+    },
+    {
+      "path": "./packages/keystore"
+    },
+    {
+      "path": "./packages/provider-core"
+    },
+    {
+      "path": "./packages/provider-rpc"
+    },
+    {
+      "path": "./packages/provider-wallet-core"
+    },
+    {
+      "path": "./packages/provider-wallet-my-near-wallet"
+    },
+    {
+      "path": "./packages/provider-wallet-sender"
+    },
+    {
+      "path": "./packages/signer"
+    },
+    {
+      "path": "./packages/tx"
+    },
+    {
+      "path": "./packages/units"
+    },
+    {
+      "path": "./packages/borsh"
+    },
+    {
+      "path": "./packages/config"
+    },
+  ],
+  "files": []
+}
