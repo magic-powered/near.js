@@ -16,6 +16,7 @@
     "packages/units",
     "packages/provider-wallet-sender",
     "packages/borsh",
-    "packages/config"
+    "packages/config",
+    "packages/sandbox"
   ]
 }
