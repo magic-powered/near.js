@@ -2,7 +2,19 @@
 
 export type RPCProviderHeadersConfig = { [key: string]: string | number };
 
-export class RPCProviderConfig {
+export enum StandardNodeUrls {
+  TESTNET = 'https://rpc.testnet.near.org'
+}
+
+interface IRPCProviderConfig {
+  readonly url: StandardNodeUrls | string;
+  readonly envLabel?: string; // TODO: enum?? we need to be able to extend it tho because we assume there are infinite possibilities to sping up new Near envs (like shardnet)
+  readonly allowInsecure?: boolean;
+  readonly timeout?: number;
+  readonly headers?: RPCProviderHeadersConfig;
+}
+
+export class RPCProviderConfig implements IRPCProviderConfig{
   public readonly url: string;
   public readonly envLabel?: string; // TODO: enum?? we need to be able to extend it tho because we assume there are infinite possibilities to sping up new Near envs (like shardnet)
   public readonly allowInsecure?: boolean;
@@ -17,4 +29,7 @@ export class RPCProviderConfig {
     this.headers = headers;
   }
 
+  public static fromJSON(config: IRPCProviderConfig) {
+    return new RPCProviderConfig(config.url, config.envLabel, config.allowInsecure, config.timeout, config.headers);
+  }
 }

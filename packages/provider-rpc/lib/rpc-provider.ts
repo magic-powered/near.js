@@ -1,11 +1,16 @@
 import axios from 'axios';
 
-import { IProvider, TODO } from '@near.js/provider-core';
-import { ISignedTransaction } from '@near.js/signer';
+import { IProvider } from '@near.js/provider-core';
 
 import { RPCProviderConfig } from "./config";
-import { JsonRpcRequest, JsonRpcRequestBroadcastTx } from "./request";
-import { IJsonRpcBroadcastTxResponse } from "./response";
+import { JsonRPCRequest, IJsonRPCRequest, RPCRequest } from "./request";
+import { RPCError, UnknownError } from "./errors";
+import { IJsonRpcResponse, RPCResponse } from "./response";
+
+export enum HTTPMethods {
+  POST = "POST",
+  GET = "GET",
+}
 
 export class RPCProvider implements IProvider {
   private readonly config: RPCProviderConfig;
@@ -15,34 +20,30 @@ export class RPCProvider implements IProvider {
     this.config = config;
   }
 
-  public async sendTx(transaction: ISignedTransaction): Promise<string> {
-    const borsh = transaction.toBorsh();
-    const request = new JsonRpcRequestBroadcastTx((this.requestId++), borsh.toString('base64'));
-    const result = await this.sendPostRequest<IJsonRpcBroadcastTxResponse>(request);
-    if (result.error) {
-      // TODO: throw good error
-      throw new Error(result.error.name);
-    }
-
-    return result.result;
+  public async sendRawRequest<ReturnType>(requestObject: IJsonRPCRequest, method: HTTPMethods = HTTPMethods.POST): Promise<IJsonRpcResponse<ReturnType>> {
+    return this.sendJsonRpcRequest<ReturnType>(JsonRPCRequest.fromObject((this.requestId++), requestObject), method);
   }
 
-  private async sendPostRequest<ReturnType>(request: JsonRpcRequest): Promise<ReturnType> {
-    return this.send<ReturnType>("POST", request);
+  public async sendRPCRequest<RequestType extends RPCRequest>(rpcRequest: RequestType, method: HTTPMethods = HTTPMethods.POST): Promise<RPCResponse<RequestType>> {
+    return this.sendJsonRpcRequest(rpcRequest.toJsonRPCRequest((this.requestId++)), method);
   }
 
-  private async sendGetRequest<ReturnType>(request: JsonRpcRequest): Promise<ReturnType> {
-    return this.send<ReturnType>("GET", request);
-  }
-
-  private async send<ReturnType>(method: "POST" | "GET", request: JsonRpcRequest): Promise<ReturnType> {
-    const result = await axios.request<ReturnType>({
+  private async sendJsonRpcRequest<ReturnType>(request: JsonRPCRequest, method: HTTPMethods = HTTPMethods.POST): Promise<IJsonRpcResponse<ReturnType>> {
+    const result = await axios.request<IJsonRpcResponse<ReturnType>>({
       url: this.config.url,
       method,
       data: request.toObject(),
       timeout: this.config.timeout,
       headers: this.config.headers,
     });
+
+    if (result.status !== 200) {
+      throw new UnknownError(result.data);
+    }
+
+    if (result.data.error) {
+      throw new RPCError(result.data.error);
+    }
 
     return result.data;
   }
