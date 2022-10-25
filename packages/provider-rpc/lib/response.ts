@@ -1,5 +1,5 @@
-import { RPCErrorObject } from "./errors";
-import { BroadcastTx, ViewAccount } from "./request";
+import { RPCErrorObject } from './errors';
+import { BroadcastTx, ViewAccount } from './request';
 
 export interface IJsonRpcResponse<ResultType> {
   id: string;
@@ -18,12 +18,12 @@ export type ViewAccountResult = {
   locked: string;
   storage_paid_at: number;
   storage_usage: number;
-}
+};
 
 export type RPCResponse<RequestType> = IJsonRpcResponse<
-  RequestType extends ViewAccount ?
-    ViewAccountResult :
-    RequestType extends BroadcastTx ?
-      BroadcastTxResult :
-      unknown
-  >;
+RequestType extends ViewAccount ?
+  ViewAccountResult :
+  RequestType extends BroadcastTx ?
+    BroadcastTxResult :
+    unknown
+>;

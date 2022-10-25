@@ -24,13 +24,16 @@ export interface IJsonRPCRequest {
 export type RequestId = number;
 
 export class JsonRPCRequest {
-  public readonly jsonrpc: "2.0";
+  public readonly jsonrpc: '2.0';
+
   public readonly id: RequestId;
+
   public readonly method: RPCRequestMethod;
+
   public readonly params: any;
 
   constructor(id: RequestId, method: RPCRequestMethod, params?: any) {
-    this.jsonrpc = "2.0";
+    this.jsonrpc = '2.0';
     this.id = id;
     this.method = method;
     this.params = params;
@@ -41,7 +44,7 @@ export class JsonRPCRequest {
       jsonrpc: this.jsonrpc,
       id: this.id,
       method: this.method,
-      params: this.params
+      params: this.params,
     };
   }
 
@@ -77,9 +80,9 @@ export class ViewAccount extends RPCRequest {
 
   toJsonRPCRequest(requestId: RequestId): JsonRPCRequest {
     return new JsonRPCRequest(requestId, RPCRequestMethod.QUERY, {
-      "request_type": "view_account",
-      "finality": "final",
-      "account_id": this.accountId
+      request_type: 'view_account',
+      finality: 'final',
+      account_id: this.accountId,
     });
   }
 }

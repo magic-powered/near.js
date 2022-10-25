@@ -1,6 +1,6 @@
 import { ITransaction } from '@near.js/tx';
 import { KeyPair } from '@near.js/keys';
-import { ISignedTransaction } from "./signed_transaction";
+import { ISignedTransaction } from './signed_transaction';
 
 // TODO: sign any (string)
 // TODO: verify tx signature

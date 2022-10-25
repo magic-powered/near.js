@@ -8,7 +8,9 @@
     "build": "tsc --build ./tsconfig.project.json",
     "_build-cjs": "echo 'Building CommonJS libraries...'",
     "_build-esm": "echo 'Building ES modules...'",
-    "clean": "echo 'Cleaning all build files...'"
+    "clean": "echo 'Cleaning all build files...'",
+    "lint": "eslint . --ext ts --fix",
+    "prepare": "husky install"
   },
   "workspaces": [
     "packages/keys",
@@ -26,14 +28,21 @@
     "packages/sandbox"
   ],
   "dependencies": {
-    "@babel/parser": "^7.19.4",
-    "@babel/types": "^7.19.4",
     "bn.js": "^5.2.1",
     "tweetnacl": "^1.0.3"
   },
   "devDependencies": {
+    "@babel/parser": "^7.19.6",
+    "@babel/types": "^7.19.4",
     "@types/bn.js": "^5.1.1",
     "@types/node": "^18.8.3",
+    "@typescript-eslint/eslint-plugin": "^5.41.0",
+    "@typescript-eslint/parser": "^5.41.0",
+    "eslint": "^8.26.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-airbnb-typescript": "^17.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "husky": "^8.0.1",
     "typescript": "^4.8.4"
   }
 }
