@@ -1,9 +1,11 @@
 import { box, sign } from 'tweetnacl';
-import { KeyType, PrivateKey, PublicKey } from "./public_key";
+import { KeyType, PrivateKey, PublicKey } from './public_key';
 
 export class KeyPair {
   private readonly keyType: KeyType;
+
   private readonly publicKey: PublicKey;
+
   private readonly privateKey: PrivateKey;
 
   constructor(privateKey: PrivateKey, publicKey: PublicKey, keyType: KeyType = KeyType.ED25519) {

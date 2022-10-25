@@ -11,7 +11,7 @@ export interface FunctionCallPermission {
   /// access key should be created.
   allowance?: BN;
 
-    /// The access key only allows transactions with the given receiver's account id.
+  /// The access key only allows transactions with the given receiver's account id.
   receiver_id: string;
 
   /// A list of method names that can be used. The access key only allows transactions with the

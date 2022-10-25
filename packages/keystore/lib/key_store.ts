@@ -4,6 +4,7 @@ export type KeyIdString = string;
 
 export class KeyId {
   private readonly accountId: string;
+
   private readonly networkId: string; // TODO: make enum
 
   constructor(accountId: string, networkId: string) {

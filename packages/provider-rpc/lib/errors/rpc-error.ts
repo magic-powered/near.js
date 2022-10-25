@@ -3,7 +3,7 @@ import { ProviderError } from '@near.js/provider-core';
 export type RPCErrorCauseObject = {
   info: any; // TODO
   name: string; // TODO enum
-}
+};
 
 export type RPCErrorObject = {
   name: string; // TODO enum

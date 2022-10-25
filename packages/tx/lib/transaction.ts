@@ -1,6 +1,6 @@
 import BN from 'bn.js';
 import { PublicKey } from '@near.js/keys';
-import { IAction } from "./action";
+import { IAction } from './action';
 
 export interface ITransaction {
   signerId: string;
@@ -10,7 +10,8 @@ export interface ITransaction {
   actions: IAction[];
   blockHash: Uint8Array;
 
-  toBorsh(): Buffer; // TODO: deal with ArrayBuffer and Buffer in both nodejs and browser environment
+  // @todo: deal with ArrayBuffer and Buffer in both nodejs and browser environment
+  toBorsh(): Buffer;
 
   toBorshString(): string;
 }
