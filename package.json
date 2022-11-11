@@ -1,40 +1,25 @@
 {
-  "name": "near.js",
+  "name": "@near.js/monorepo",
   "version": "1.0.0",
   "main": "index.js",
   "author": "Anatolii Petrovskyi <anatolii@magicpowered.io>",
   "license": "MIT",
+  "engines": {
+    "node": ">=16.14.0",
+    "pnpm": ">=7"
+  },
   "scripts": {
     "build": "tsc --build ./tsconfig.project.json",
     "_build-cjs": "echo 'Building CommonJS libraries...'",
     "_build-esm": "echo 'Building ES modules...'",
     "clean": "echo 'Cleaning all build files...'",
     "lint": "eslint . --ext ts --fix",
-    "prepare": "husky install"
-  },
-  "workspaces": [
-    "packages/keys",
-    "packages/tx",
-    "packages/signer",
-    "packages/keystore",
-    "packages/provider-core",
-    "packages/provider-rpc",
-    "packages/provider-wallet-core",
-    "packages/provider-wallet-my-near-wallet",
-    "packages/units",
-    "packages/provider-wallet-sender",
-    "packages/borsh",
-    "packages/config",
-    "packages/sandbox"
-  ],
-  "dependencies": {
-    "bn.js": "^5.2.1",
-    "tweetnacl": "^1.0.3"
+    "prepare": "husky install",
+    "preinstall": "npx only-allow pnpm"
   },
   "devDependencies": {
     "@babel/parser": "^7.19.6",
     "@babel/types": "^7.19.4",
-    "@types/bn.js": "^5.1.1",
     "@types/node": "^18.8.3",
     "@typescript-eslint/eslint-plugin": "^5.41.0",
     "@typescript-eslint/parser": "^5.41.0",
@@ -44,5 +29,6 @@
     "eslint-plugin-import": "^2.26.0",
     "husky": "^8.0.1",
     "typescript": "^4.8.4"
-  }
+  },
+  "packageManager": "pnpm@7.15.0"
 }

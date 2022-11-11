@@ -15,5 +15,12 @@
   "bugs": {
     "url": "https://github.com/Magic-Powered/near.js/issues"
   },
-  "homepage": "https://github.com/Magic-Powered/near.js#readme"
+  "homepage": "https://github.com/Magic-Powered/near.js#readme",
+  "dependencies": {
+    "bn.js": "^5.2.1",
+    "tweetnacl": "^1.0.3"
+  },
+  "devDependencies": {
+    "@types/bn.js": "^5.1.1"
+  }
 }
