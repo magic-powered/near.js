@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -16,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/Magic-Powered/near.js/issues"
   },
-  "homepage": "https://github.com/Magic-Powered/near.js#readme"
+  "homepage": "https://github.com/Magic-Powered/near.js#readme",
+  "dependencies": {
+    "@near.js/keys": "*"
+  },
+  "devDependencies": {}
 }
