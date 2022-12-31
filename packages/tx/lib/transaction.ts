@@ -1,13 +1,15 @@
 import BN from 'bn.js';
 import { PublicKey } from '@near.js/keys';
+import {
+  deserialize, field, serialize, vec,
+} from '@dao-xyz/borsh';
 import { Action } from './action';
-import { deserialize, field, serialize, vec } from "@dao-xyz/borsh";
 
 export class Transaction {
   @field({ type: Action })
   public readonly actions: Action[];
 
-  @field({ type: vec('u32')})
+  @field({ type: vec('u32') })
   public readonly blockHash: Uint8Array;
 
   @field({ type: 'u64' })
@@ -22,7 +24,14 @@ export class Transaction {
   @field({ type: 'string' })
   public readonly signerId: string;
 
-  constructor(actions: Action[], blockHash: Uint8Array, nonce: BN, publicKey: PublicKey, receiverId: string, signerId: string) {
+  constructor(
+    actions: Action[],
+    blockHash: Uint8Array,
+    nonce: BN,
+    publicKey: PublicKey,
+    receiverId: string,
+    signerId: string,
+  ) {
     this.actions = actions;
     this.blockHash = blockHash;
     this.nonce = nonce;
@@ -39,4 +48,3 @@ export class Transaction {
     return deserialize(borsh, Transaction);
   }
 }
-

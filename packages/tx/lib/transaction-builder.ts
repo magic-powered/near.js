@@ -1,18 +1,23 @@
-import { IAction } from "./action";
 import { PublicKey } from '@near.js/keys';
-import BN from "bn.js";
-import { Transaction } from "./transaction";
+import BN from 'bn.js';
+import { IAction } from './action';
+import { Transaction } from './transaction';
 
 export class TransactionBuilder {
   private actions: IAction[];
+
   private blockHash: Uint8Array;
+
   private nonce: BN;
+
   private publicKey: PublicKey;
+
   private receiverId: string;
+
   private signerId: string;
 
   public static builder(): TransactionBuilder {
-    return new TransactionBuilder()
+    return new TransactionBuilder();
   }
 
   constructor() {
@@ -88,6 +93,13 @@ export class TransactionBuilder {
       throw new Error('You must specify signerId');
     }
 
-    return new Transaction(this.actions, this.blockHash, this.nonce, this.publicKey, this.receiverId, this.signerId);
+    return new Transaction(
+      this.actions,
+      this.blockHash,
+      this.nonce,
+      this.publicKey,
+      this.receiverId,
+      this.signerId,
+    );
   }
 }

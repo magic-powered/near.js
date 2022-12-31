@@ -1,13 +1,13 @@
 import BN from 'bn.js';
 import { AccessKey, PublicKey } from '@near.js/keys';
-import { field, variant, vec } from "@dao-xyz/borsh";
+import { field, variant, vec } from '@dao-xyz/borsh';
 
 export interface IAction {}
 
 export abstract class Action implements IAction {}
 
 @variant(0)
-export class CreateAccount extends Action{}
+export class CreateAccount extends Action {}
 
 @variant(1)
 export class DeployContract extends Action {

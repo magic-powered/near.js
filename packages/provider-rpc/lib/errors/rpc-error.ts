@@ -48,10 +48,10 @@ export class RPCError extends ProviderError {
   }
 
   public getCode() {
-    this.errorObject.code;
+    return this.errorObject.code;
   }
 
   public getName() {
-    this.errorObject.name;
+    return this.errorObject.name;
   }
 }
