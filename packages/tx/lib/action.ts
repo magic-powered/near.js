@@ -1,39 +1,107 @@
 import BN from 'bn.js';
 import { AccessKey, PublicKey } from '@near.js/keys';
+import { field, variant, vec } from '@dao-xyz/borsh';
 
 export interface IAction {}
 
-export interface CreateAccount extends IAction {}
+export abstract class Action implements IAction {}
 
-export interface DeployContract extends IAction {
-  code: Uint8Array;
+@variant(0)
+export class CreateAccount extends Action {}
+
+@variant(1)
+export class DeployContract extends Action {
+  @field({ type: vec('u8') })
+  readonly code: Uint8Array;
+
+  constructor(code: Uint8Array) {
+    super();
+    this.code = code;
+  }
 }
 
-export interface FunctionCall extends IAction {
-  method_name: string;
-  args: Uint8Array;
-  gas: BN;
-  deposit: BN;
+@variant(2)
+export class FunctionCall extends Action {
+  @field({ type: 'string' })
+  readonly method_name: string;
+
+  @field({ type: vec('u8') })
+  readonly args: Uint8Array;
+
+  @field({ type: 'u64' })
+  readonly gas: BN;
+
+  @field({ type: 'u128' })
+  readonly deposit: BN;
+
+  constructor(methodName: string, args: Uint8Array, gas: BN, deposit: BN) {
+    super();
+    this.method_name = methodName;
+    this.args = args;
+    this.gas = gas;
+    this.deposit = deposit;
+  }
 }
 
-export interface Transfer extends IAction {
-  deposit: BN;
+@variant(3)
+export class Transfer extends Action {
+  @field({ type: 'u128' })
+  readonly deposit: BN;
+
+  constructor(deposit: BN) {
+    super();
+    this.deposit = deposit;
+  }
 }
 
-export interface Stake extends IAction {
-  stake: BN;
-  public_key: PublicKey;
+@variant(4)
+export class Stake extends Action {
+  @field({ type: 'u128' })
+  readonly stake: BN;
+
+  @field({ type: PublicKey })
+  readonly public_key: PublicKey;
+
+  constructor(stake: BN, publicKey: PublicKey) {
+    super();
+    this.stake = stake;
+    this.public_key = publicKey;
+  }
 }
 
-export interface AddKey extends IAction {
-  public_key: PublicKey;
-  access_key: AccessKey;
+@variant(5)
+export class AddKey extends Action {
+  @field({ type: PublicKey })
+  readonly public_key: PublicKey;
+
+  @field({ type: AccessKey })
+  readonly access_key: AccessKey;
+
+  constructor(publicKey: PublicKey, accessKey: AccessKey) {
+    super();
+    this.public_key = publicKey;
+    this.access_key = accessKey;
+  }
 }
 
-export interface DeleteKey extends IAction {
-  public_key: PublicKey;
+@variant(6)
+export class DeleteKey extends Action {
+  @field({ type: PublicKey })
+  readonly public_key: PublicKey;
+
+  constructor(publicKey: PublicKey) {
+    super();
+    this.public_key = publicKey;
+  }
 }
 
-export interface DeleteAccount extends IAction {
-  beneficiary_id: string;
+@variant(7)
+export class DeleteAccount extends Action {
+  @field({ type: 'string' })
+  readonly beneficiary_id: string;
+
+  constructor(beneficiaryId: string) {
+    super();
+    this.beneficiary_id = beneficiaryId;
+  }
 }

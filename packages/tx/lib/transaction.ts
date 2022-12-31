@@ -1,17 +1,50 @@
 import BN from 'bn.js';
 import { PublicKey } from '@near.js/keys';
-import { IAction } from './action';
+import {
+  deserialize, field, serialize, vec,
+} from '@dao-xyz/borsh';
+import { Action } from './action';
 
-export interface ITransaction {
-  signerId: string;
-  publicKey: PublicKey;
-  nonce: BN;
-  receiverId: string;
-  actions: IAction[];
-  blockHash: Uint8Array;
+export class Transaction {
+  @field({ type: Action })
+  public readonly actions: Action[];
 
-  // @todo: deal with ArrayBuffer and Buffer in both nodejs and browser environment
-  toBorsh(): Buffer;
+  @field({ type: vec('u32') })
+  public readonly blockHash: Uint8Array;
 
-  toBorshString(): string;
+  @field({ type: 'u64' })
+  public readonly nonce: BN;
+
+  @field({ type: PublicKey })
+  public readonly publicKey: PublicKey;
+
+  @field({ type: 'string' })
+  public readonly receiverId: string;
+
+  @field({ type: 'string' })
+  public readonly signerId: string;
+
+  constructor(
+    actions: Action[],
+    blockHash: Uint8Array,
+    nonce: BN,
+    publicKey: PublicKey,
+    receiverId: string,
+    signerId: string,
+  ) {
+    this.actions = actions;
+    this.blockHash = blockHash;
+    this.nonce = nonce;
+    this.publicKey = publicKey;
+    this.receiverId = receiverId;
+    this.signerId = signerId;
+  }
+
+  toBorsh(): Uint8Array {
+    return serialize(this);
+  }
+
+  static fromBorsh(borsh: Uint8Array): Transaction {
+    return deserialize(borsh, Transaction);
+  }
 }

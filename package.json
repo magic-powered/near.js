@@ -15,7 +15,8 @@
     "clean": "echo 'Cleaning all build files...'",
     "lint": "eslint . --ext ts --fix",
     "prepare": "husky install",
-    "preinstall": "npx only-allow pnpm"
+    "preinstall": "npx only-allow pnpm",
+    "sandbox": "ts-node ./packages/sandbox/index.ts"
   },
   "devDependencies": {
     "@babel/parser": "^7.19.6",
