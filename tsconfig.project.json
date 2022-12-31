@@ -2,7 +2,7 @@
   "compilerOptions": {
     "lib": ["es2015", "es5", "dom"],
     "preserveWatchOutput": true,
-    "pretty": false
+    "pretty": false,
   },
   "references": [
     {
@@ -27,16 +27,10 @@
       "path": "./packages/provider-wallet-sender"
     },
     {
-      "path": "./packages/signer"
-    },
-    {
       "path": "./packages/tx"
     },
     {
       "path": "./packages/units"
-    },
-    {
-      "path": "./packages/borsh"
     },
     {
       "path": "./packages/config"

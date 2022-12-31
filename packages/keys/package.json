@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/Magic-Powered/near.js#readme",
   "dependencies": {
+    "@dao-xyz/borsh": "^4.0.7",
     "bn.js": "^5.2.1",
     "tweetnacl": "^1.0.3"
   },
