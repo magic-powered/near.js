@@ -25,7 +25,7 @@ export class RPCProvider implements IProvider {
     requestObject: IJsonRPCRequest,
     method: HTTPMethods = HTTPMethods.POST,
   ): Promise<IJsonRpcResponse<ReturnType>> {
-    this.requestId += 1
+    this.requestId += 1;
     return this.sendJsonRpcRequest<ReturnType>(
       JsonRPCRequest.fromObject(this.requestId, requestObject),
       method,
@@ -36,7 +36,7 @@ export class RPCProvider implements IProvider {
     rpcRequest: RequestType,
     method: HTTPMethods = HTTPMethods.POST,
   ): Promise<RPCResponse<RequestType>> {
-    this.requestId += 1
+    this.requestId += 1;
     return this.sendJsonRpcRequest(
       rpcRequest.toJsonRPCRequest(this.requestId),
       method,

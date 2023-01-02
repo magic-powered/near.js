@@ -44,6 +44,10 @@ export class Transaction {
     return serialize(this);
   }
 
+  toBorshString(): string {
+    return Buffer.from(this.toBorsh()).toString('base64');
+  }
+
   static fromBorsh(borsh: Uint8Array): Transaction {
     return deserialize(borsh, Transaction);
   }

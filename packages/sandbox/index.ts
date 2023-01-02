@@ -1,19 +1,36 @@
-import {
-  RPCProviderConfig,
-  RPCProvider,
-  StandardNodeUrls,
-  BroadcastTx,
-} from '@near.js/provider-rpc';
+// import {
+//   RPCProviderConfig,
+//   RPCProvider,
+//   StandardNodeUrls,
+//   ViewAccount,
+// } from '@near.js/provider-rpc';
+//
+// const config = new RPCProviderConfig(StandardNodeUrls.TESTNET);
+//
+// const provider = new RPCProvider(config);
+//
+// (async () => {
+//   const request = new ViewAccount('account.testnet');
+//
+//   const result = await provider.sendRPCRequest(request);
+//
+//   result.result.
+//
+//   console.log(result);
+// })();
+//
 
-const config = new RPCProviderConfig(StandardNodeUrls.TESTNET);
+import { TransactionBuilder, Transfer } from '@near.js/tx';
+import { KeyPair } from '@near.js/keys';
 
-const provider = new RPCProvider(config);
+const keyPair = KeyPair.fromRandom();
 
-(async () => {
-  const request = new BroadcastTx(undefined);
+const transaction = TransactionBuilder.builder()
+  .withNonce(1)
+  .addAction(new Transfer(100))
+  .withReceiverId('receiver.testnet')
+  .withSignerId('signer.testnet')
+  .withPublicKey(keyPair.getPublicKey())
+  .build();
 
-  const result = await provider.sendRPCRequest(request);
-
-  console.log(result);
-})();
-
+const signedTransaction = keyPair.sign(transaction.toBorsh());

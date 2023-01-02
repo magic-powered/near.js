@@ -1,4 +1,4 @@
-import { ISignedTransaction } from '@near.js/signer';
+import { Transaction } from '@near.js/tx';
 
 export enum RPCRequestMethod {
   BLOCK = 'block',
@@ -60,7 +60,7 @@ export abstract class RPCRequest {
 export class BroadcastTx extends RPCRequest {
   public readonly tx: string;
 
-  constructor(tx: ISignedTransaction) {
+  constructor(tx: Transaction) {
     super();
     this.tx = tx.toBorshString();
   }

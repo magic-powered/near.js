@@ -48,9 +48,9 @@ export class Transfer extends Action {
   @field({ type: 'u128' })
   readonly deposit: BN;
 
-  constructor(deposit: BN) {
+  constructor(deposit: number) {
     super();
-    this.deposit = deposit;
+    this.deposit = new BN(deposit);
   }
 }
 

@@ -17,8 +17,8 @@
   },
   "homepage": "https://github.com/Magic-Powered/near.js#readme",
   "dependencies": {
-    "axios": "^1.1.0",
-    "@near.js/signer": "*",
-    "@near.js/provider-core": "*"
+    "@near.js/provider-core": "^1.0.0",
+    "@near.js/tx": "workspace:^1.0.0",
+    "axios": "^1.1.0"
   }
 }

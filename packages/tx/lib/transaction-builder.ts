@@ -42,8 +42,8 @@ export class TransactionBuilder {
     return this;
   }
 
-  public withNonce(nonce: BN) {
-    this.nonce = nonce;
+  public withNonce(nonce: number) {
+    this.nonce = new BN(nonce);
 
     return this;
   }
