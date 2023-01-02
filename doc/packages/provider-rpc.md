@@ -43,7 +43,7 @@ For example, if you send BroadcastTX request, the result field will be typed as 
 
 If you send ViewAccount request, the result field will be typed as a ViewAccountResult object
 
-![Showcase of ViewAccount result](./doc/resources/viewaccount-annotation.png)
+![Showcase of ViewAccount result](../resources/viewaccount-annotation.png)
 
 
 
