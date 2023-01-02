@@ -18,7 +18,6 @@
   "homepage": "https://github.com/Magic-Powered/near.js#readme",
   "dependencies": {
     "@dao-xyz/borsh": "^4.0.7",
-    "@near.js/keys": "*",
     "bn.js": "^5.2.1"
   },
   "devDependencies": {

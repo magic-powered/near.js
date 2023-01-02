@@ -1,5 +1,5 @@
 {
-  "name": "@near.js/keystore",
+  "name": "@near.js/fs-key-store",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -17,7 +17,6 @@
   },
   "homepage": "https://github.com/Magic-Powered/near.js#readme",
   "dependencies": {
-    "@near.js/keys": "*"
-  },
-  "devDependencies": {}
+    "@near.js/account": "workspace:^1.0.0"
+  }
 }

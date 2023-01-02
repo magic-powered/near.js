@@ -1,4 +1,4 @@
-import { ProviderError } from '@near.js/provider-core';
+import { ProviderError } from './provider-error';
 
 export type RPCErrorCauseObject = {
   info: any; // TODO

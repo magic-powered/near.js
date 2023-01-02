@@ -17,7 +17,6 @@
   },
   "homepage": "https://github.com/Magic-Powered/near.js#readme",
   "dependencies": {
-    "@near.js/keys": "workspace:*",
     "@near.js/provider-rpc": "*",
     "@near.js/tx": "workspace:^1.0.0"
   },

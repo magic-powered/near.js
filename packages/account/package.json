@@ -1,5 +1,5 @@
 {
-  "name": "@near.js/keys",
+  "name": "@near.js/account",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",

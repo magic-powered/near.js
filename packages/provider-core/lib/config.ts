@@ -1,4 +1,4 @@
-// @todo: add auth options
+// TODO: add auth options
 
 export type RPCProviderHeadersConfig = { [key: string]: string | number };
 
@@ -6,20 +6,11 @@ export enum StandardNodeUrls {
   TESTNET = 'https://rpc.testnet.near.org',
 }
 
-interface IRPCProviderConfig {
-  readonly url: StandardNodeUrls | string;
-  // @todo: enum?? we need to be able to extend it tho because we assume
-  //        there are infinite possibilities to sping up new Near envs (like shardnet)
-  readonly envLabel?: string;
-  readonly allowInsecure?: boolean;
-  readonly timeout?: number;
-  readonly headers?: RPCProviderHeadersConfig;
-}
-
-export class RPCProviderConfig implements IRPCProviderConfig {
+// TODO: should it be just an interface ?
+export class RPCProviderConfig {
   public readonly url: string;
 
-  // @todo: enum?? we need to be able to extend it tho because we assume
+  // TODO: enum?? we need to be able to extend it tho because we assume
   //        there are infinite possibilities to sping up new Near envs (like shardnet)
   public readonly envLabel?: string;
 
@@ -43,7 +34,9 @@ export class RPCProviderConfig implements IRPCProviderConfig {
     this.headers = headers;
   }
 
-  public static fromJSON(config: IRPCProviderConfig) {
+  public static fromJSON(jsonString: string): RPCProviderConfig {
+    const config = JSON.parse(jsonString);
+
     return new RPCProviderConfig(
       config.url,
       config.envLabel,
