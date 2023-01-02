@@ -1,23 +1,20 @@
 import axios from 'axios';
-
-import { IProvider } from '@near.js/provider-core';
-
-import { RPCProviderConfig } from './config';
-import { JsonRPCRequest, IJsonRPCRequest, RPCRequest } from './request';
-import { RPCError, UnknownError } from './errors';
+import { IJsonRPCRequest, JsonRPCRequest, RPCRequest } from './request';
 import { IJsonRpcResponse, RPCResponse } from './response';
+import { RPCProviderConfig } from './config';
+import { RPCError, UnknownError } from './errors/rpc-error';
 
 export enum HTTPMethods {
   POST = 'POST',
   GET = 'GET',
 }
 
-export class RPCProvider implements IProvider {
-  private readonly config: RPCProviderConfig;
-
+export abstract class NearRPCProvider<ProviderConfig extends RPCProviderConfig> {
   private requestId = 1;
 
-  constructor(config: RPCProviderConfig) {
+  private readonly config: ProviderConfig;
+
+  protected constructor(config: ProviderConfig) {
     this.config = config;
   }
 
@@ -43,7 +40,7 @@ export class RPCProvider implements IProvider {
     );
   }
 
-  private async sendJsonRpcRequest<ReturnType>(
+  protected async sendJsonRpcRequest<ReturnType>(
     request: JsonRPCRequest,
     method: HTTPMethods = HTTPMethods.POST,
   ): Promise<IJsonRpcResponse<ReturnType>> {

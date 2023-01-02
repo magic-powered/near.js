@@ -1,3 +1,2 @@
+export * from './lib';
 export * from './lib/errors';
-
-export * from './lib/provider';

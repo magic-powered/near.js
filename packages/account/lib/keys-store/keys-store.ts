@@ -1,4 +1,4 @@
-import { KeyPair } from '@near.js/keys';
+import { KeyPair } from '../keys';
 
 export type KeyIdString = string;
 
@@ -57,4 +57,6 @@ export abstract class KeyStore {
   }
 
   protected abstract getKey(keyIdString: KeyIdString): Promise<KeyPair>;
+
+  public abstract listKeys(): Promise<KeyIdString[]>;
 }

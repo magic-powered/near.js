@@ -1,8 +1,8 @@
 {
-  "name": "@near.js/provider-rpc",
+  "name": "@near.js/browser-key-store",
   "version": "1.0.0",
   "description": "",
-  "main": "index.ts",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -17,8 +17,6 @@
   },
   "homepage": "https://github.com/Magic-Powered/near.js#readme",
   "dependencies": {
-    "@near.js/provider-core": "^1.0.0",
-    "@near.js/tx": "workspace:^1.0.0",
-    "axios": "^1.1.0"
+    "@near.js/account": "workspace:^1.0.0"
   }
 }

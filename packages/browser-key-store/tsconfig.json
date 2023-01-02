@@ -5,5 +5,5 @@
   },
   "exclude": [],
   "extends": "../../tsconfig.package.json",
-  "include": ["./lib/*.ts"]
+  "include": ["./lib/**/*.ts"]
 }

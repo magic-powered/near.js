@@ -6,10 +6,7 @@
   },
   "references": [
     {
-      "path": "./packages/keys"
-    },
-    {
-      "path": "./packages/keystore"
+      "path": "./packages/account"
     },
     {
       "path": "./packages/provider-core"
@@ -34,6 +31,12 @@
     },
     {
       "path": "./packages/config"
+    },
+    {
+      "path": "./packages/fs-key-store"
+    },
+    {
+      "path": "./packages/browser-key-store"
     },
   ],
   "files": []

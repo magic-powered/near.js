@@ -16,5 +16,8 @@
     "url": "https://github.com/Magic-Powered/near.js/issues"
   },
   "homepage": "https://github.com/Magic-Powered/near.js#readme",
-  "devDependencies": {}
+  "dependencies": {
+    "@near.js/account": "workspace:^1.0.0",
+    "@near.js/provider-core": "workspace:^1.0.0"
+  }
 }
