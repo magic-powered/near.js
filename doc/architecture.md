@@ -15,7 +15,7 @@ The vision of MagicPowered team is that any application built around web3 apps o
 1. Query and send transactions
 2. Manage accounts
 
-![near.js mindmap](/Users/anatolii/projects/mp/near.js/doc/resources/mindmap.png)
+![near.js mindmap](./resources/mindmap.png)
 
 The diagram above shows an abstract mind map of the library. As you can see the library is structured around two main pieces:
 
