@@ -39,11 +39,11 @@ The provider class support dynamic type annotations meaning that return type of 
 
 For example, if you send BroadcastTX request, the result field will be typed as string
 
-![Showcase of BroadcastTX result](/Users/anatolii/projects/mp/near.js/doc/resources/broadcast-tx-annotation.png)
+![Showcase of BroadcastTX result](../resources/broadcast-tx-annotation.png)
 
 If you send ViewAccount request, the result field will be typed as a ViewAccountResult object
 
-![Showcase of ViewAccount result](/Users/anatolii/projects/mp/near.js/doc/resources/viewaccount-annotation.png)
+![Showcase of ViewAccount result](../resources/viewaccount-annotation.png)
 
 
 
