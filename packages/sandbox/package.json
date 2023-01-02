@@ -19,7 +19,7 @@
   "dependencies": {
     "@near.js/keys": "workspace:*",
     "@near.js/provider-rpc": "*",
-    "@near.js/tx": "workspace:^1.0.0",
+    "@near.js/tx": "workspace:^1.0.0"
   },
   "devDependencies": {
     "@types/node": "^18.8.3",
