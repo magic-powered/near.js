@@ -10,8 +10,7 @@
   },
   "scripts": {
     "build": "tsc --build ./tsconfig.project.json",
-    "_build-cjs": "echo 'Building CommonJS libraries...'",
-    "_build-esm": "echo 'Building ES modules...'",
+    "rollup-build": "rollup -c --bundleConfigAsCjs",
     "clean": "echo 'Cleaning all build files...'",
     "lint": "eslint . --ext ts --fix",
     "prepare": "husky install",
@@ -19,8 +18,14 @@
     "sandbox": "ts-node ./packages/sandbox/index.ts"
   },
   "devDependencies": {
+    "@babel/core": "^7.20.7",
     "@babel/parser": "^7.19.6",
+    "@babel/preset-typescript": "^7.18.6",
     "@babel/types": "^7.19.4",
+    "@rollup/plugin-babel": "^6.0.3",
+    "@rollup/plugin-commonjs": "^24.0.0",
+    "@rollup/plugin-node-resolve": "^15.0.1",
+    "@rollup/plugin-typescript": "^10.0.1",
     "@types/node": "^18.8.3",
     "@typescript-eslint/eslint-plugin": "^5.41.0",
     "@typescript-eslint/parser": "^5.41.0",
@@ -29,6 +34,10 @@
     "eslint-config-airbnb-typescript": "^17.0.0",
     "eslint-plugin-import": "^2.26.0",
     "husky": "^8.0.1",
+    "rollup": "^3.9.1",
+    "rollup-plugin-json": "^4.0.0",
+    "rollup-plugin-polyfill-node": "^0.11.0",
+    "tslib": "^2.4.1",
     "typescript": "^4.8.4"
   },
   "packageManager": "pnpm@7.15.0"

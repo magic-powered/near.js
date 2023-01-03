@@ -2,17 +2,23 @@
   "compilerOptions": {
     "lib": ["es2015", "es5", "dom"],
     "preserveWatchOutput": true,
-    "pretty": false,
+    "pretty": false
   },
   "references": [
     {
       "path": "./packages/account"
     },
     {
-      "path": "./packages/provider-core"
+      "path": "./packages/browser-key-store"
     },
     {
-      "path": "./packages/provider-rpc"
+      "path": "./packages/config"
+    },
+    {
+      "path": "./packages/fs-key-store"
+    },
+    {
+      "path": "./packages/provider-core"
     },
     {
       "path": "./packages/provider-wallet-core"
@@ -28,16 +34,7 @@
     },
     {
       "path": "./packages/units"
-    },
-    {
-      "path": "./packages/config"
-    },
-    {
-      "path": "./packages/fs-key-store"
-    },
-    {
-      "path": "./packages/browser-key-store"
-    },
+    }
   ],
   "files": []
 }
