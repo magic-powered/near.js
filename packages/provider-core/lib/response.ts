@@ -1,10 +1,10 @@
-import { RPCErrorObject } from '@near.js/provider-rpc/lib/errors/errors';
+import { RPCErrorObject } from './errors/rpc-error';
 import { BroadcastTx, ViewAccount } from './request';
 
 export interface IJsonRpcResponse<ResultType> {
   id: string;
   jsonrpc: string;
-  result: ResultType
+  result: ResultType;
   error?: RPCErrorObject;
 }
 

@@ -2,7 +2,7 @@
   "name": "@near.js/account",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -22,6 +22,7 @@
     "tweetnacl": "^1.0.3"
   },
   "devDependencies": {
+    "@protobufjs/utf8": "^1.1.0",
     "@types/bn.js": "^5.1.1"
   }
 }
