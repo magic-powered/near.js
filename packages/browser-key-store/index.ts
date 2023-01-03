@@ -31,6 +31,7 @@ export class BrowserKeyStore extends KeyStore {
     const list = await this.listKeys();
 
     if (!list.includes(keyIdString)) {
+      list.push(keyIdString);
       this.storage.setItem(this.buildStorageKey('list'), JSON.stringify(list));
     }
   }
@@ -43,5 +44,13 @@ export class BrowserKeyStore extends KeyStore {
     const base64JsonString = this.storage.getItem(this.buildStorageKey(keyIdString));
 
     return KeyPair.fromBase64JsonString(base64JsonString);
+  }
+
+  protected async deleteKey(keyIdString: KeyIdString): Promise<void> {
+    if (!this.storage.getItem(keyIdString)) {
+      return;
+    }
+
+    this.storage.removeItem(keyIdString);
   }
 }

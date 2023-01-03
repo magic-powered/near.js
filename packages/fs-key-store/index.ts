@@ -63,4 +63,14 @@ export class FileSystemStore extends KeyStore {
 
     return Promise.resolve();
   }
+
+  protected async deleteKey(keyIdString: KeyIdString): Promise<void> {
+    const keyPath = this.getKeyPath(keyIdString);
+
+    if (!fs.existsSync(keyPath)) {
+      return;
+    }
+
+    fs.rmSync(keyPath, { force: true });
+  }
 }

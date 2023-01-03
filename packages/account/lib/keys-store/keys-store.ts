@@ -19,6 +19,7 @@ export class KeyId {
   public static fromString(keyIdString: KeyIdString): KeyId {
     KeyId.validateKeyIdStringOrThrow(keyIdString);
 
+    // TODO: introduce parse function
     const [accountId, networkId] = keyIdString.split('.');
 
     return new KeyId(accountId, networkId);
@@ -32,6 +33,15 @@ export class KeyId {
     if (!KeyId.validateKeyIdString(keyIdString)) {
       throw new Error('Invalid key id'); // TODO: make good errors
     }
+  }
+
+  public static extractAccountId(keyIdString: KeyIdString): string {
+    if (!this.validateKeyIdString(keyIdString)) {
+      throw new Error('Invalid key id'); // TODO: make good errors
+    }
+
+    // TODO: introduce parse function
+    return keyIdString.split('.')[0];
   }
 }
 
@@ -55,6 +65,17 @@ export abstract class KeyStore {
     KeyId.validateKeyIdStringOrThrow(keyIdString);
     return this.getKey(keyIdString);
   }
+
+  public deleteKeyPairByKeyId(keyId: KeyId): Promise<void> {
+    return this.deleteKeyPairByKeyIdString(keyId.toString());
+  }
+
+  public deleteKeyPairByKeyIdString(keyIdString: KeyIdString): Promise<void> {
+    KeyId.validateKeyIdStringOrThrow(keyIdString);
+    return this.deleteKey(keyIdString);
+  }
+
+  protected abstract deleteKey(keyIdString: KeyIdString): Promise<void>;
 
   protected abstract getKey(keyIdString: KeyIdString): Promise<KeyPair>;
 

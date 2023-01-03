@@ -6,7 +6,10 @@ export class KeyPair {
 
   private readonly privateKey: PrivateKey;
 
-  constructor(privateKey: PrivateKey, publicKey: PublicKey) {
+  constructor(
+    privateKey: PrivateKey,
+    publicKey: PublicKey,
+  ) {
     this.privateKey = privateKey;
     this.publicKey = publicKey;
   }
@@ -19,12 +22,21 @@ export class KeyPair {
     return sign.detached.verify(message, signature, this.publicKey.data);
   }
 
+  public static verifyWithPublicKey(
+    message: Uint8Array,
+    signature: Uint8Array,
+    publicKey: Uint8Array,
+  ) {
+    return sign.detached.verify(message, signature, publicKey);
+  }
+
   public getPublicKey(): PublicKey {
     return this.publicKey;
   }
 
   public toJsonString(): string {
     return JSON.stringify({
+      publicKey: this.publicKey.toString(),
       privateKey: this.privateKey.toString(),
     });
   }
@@ -33,7 +45,13 @@ export class KeyPair {
     try {
       const parsed = JSON.parse(keyPairJsonString);
 
-      return KeyPair.fromPrivate(PrivateKey.fromString(parsed.privateKey));
+      const privateKey = PrivateKey.fromString(parsed.privateKey);
+      const publicKey = PublicKey.fromString(parsed.publicKey);
+
+      return new KeyPair(
+        privateKey,
+        publicKey,
+      );
     } catch (e) {
       throw new Error(e);
     }
@@ -48,7 +66,6 @@ export class KeyPair {
   }
 
   public static fromRandom(keyType: KeyType = KeyType.ED25519): KeyPair {
-    // TODO: why we have KeyType here???
     const keypair = box.keyPair();
 
     return new KeyPair(

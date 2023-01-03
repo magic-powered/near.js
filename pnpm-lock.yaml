@@ -98,14 +98,24 @@ importers:
 
   packages/provider-wallet-core:
     specifiers:
-      '@near.js/account': workspace:^1.0.0
       '@near.js/provider-core': workspace:^1.0.0
     dependencies:
-      '@near.js/account': link:../account
       '@near.js/provider-core': link:../provider-core
 
   packages/provider-wallet-my-near-wallet:
-    specifiers: {}
+    specifiers:
+      '@near.js/account': workspace:^1.0.0
+      '@near.js/provider-core': workspace:^1.0.0
+      '@near.js/provider-wallet-core': workspace:^1.0.0
+      '@types/uuid': ^9.0.0
+      uuid: ^9.0.0
+    dependencies:
+      '@near.js/account': link:../account
+      '@near.js/provider-core': link:../provider-core
+      '@near.js/provider-wallet-core': link:../provider-wallet-core
+      uuid: 9.0.0
+    devDependencies:
+      '@types/uuid': 9.0.0
 
   packages/provider-wallet-sender:
     specifiers: {}
@@ -303,6 +313,10 @@ packages:
 
   /@types/semver/7.3.13:
     resolution: {integrity: sha512-21cFJr9z3g5dW8B0CVI9g2O9beqaThGQ6ZFBqHfwhzLDKUxaqTIy3vnfah/UPkfOiF2pLq+tGz+W8RyCskuslw==}
+    dev: true
+
+  /@types/uuid/9.0.0:
+    resolution: {integrity: sha512-kr90f+ERiQtKWMz5rP32ltJ/BtULDI5RVO0uavn1HQUOwjx0R1h0rnDYNL0CepF1zL5bSY6FISAfd9tOdDhU5Q==}
     dev: true
 
   /@typescript-eslint/eslint-plugin/5.42.1_2udltptbznfmezdozpdoa2aemq:
@@ -1778,6 +1792,11 @@ packages:
     dependencies:
       punycode: 2.1.1
     dev: true
+
+  /uuid/9.0.0:
+    resolution: {integrity: sha512-MXcSTerfPa4uqyzStbRoTgt5XIe3x5+42+q1sDuy3R5MDk66URdLMOZe5aPX/SQd+kuYAh0FdP/pO28IkQyTeg==}
+    hasBin: true
+    dev: false
 
   /v8-compile-cache-lib/3.0.1:
     resolution: {integrity: sha512-wa7YjyUGfNZngI/vtK0UHAN+lgDCxBPCylVXGp0zu59Fz5aiGtNXaq3DhIov063MorB+VfufLh3JlF2KdTK3xg==}

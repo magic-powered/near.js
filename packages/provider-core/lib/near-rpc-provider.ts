@@ -2,7 +2,7 @@ import axios from 'axios';
 import { IJsonRPCRequest, JsonRPCRequest, RPCRequest } from './request';
 import { IJsonRpcResponse, RPCResponse } from './response';
 import { RPCProviderConfig } from './config';
-import { RPCError, UnknownError } from './errors/rpc-error';
+import { RPCError, UnknownError } from './errors';
 
 export enum HTTPMethods {
   POST = 'POST',
@@ -10,15 +10,15 @@ export enum HTTPMethods {
 }
 
 export abstract class NearRPCProvider<ProviderConfig extends RPCProviderConfig> {
-  private requestId = 1;
+  protected requestId = 1;
 
-  private readonly config: ProviderConfig;
+  protected readonly config: ProviderConfig;
 
   protected constructor(config: ProviderConfig) {
     this.config = config;
   }
 
-  public async sendRawRequest<ReturnType>(
+  protected async sendRawRequest<ReturnType>(
     requestObject: IJsonRPCRequest,
     method: HTTPMethods = HTTPMethods.POST,
   ): Promise<IJsonRpcResponse<ReturnType>> {
@@ -29,7 +29,7 @@ export abstract class NearRPCProvider<ProviderConfig extends RPCProviderConfig> 
     );
   }
 
-  public async sendRPCRequest<RequestType extends RPCRequest>(
+  protected async sendRPCRequest<RequestType extends RPCRequest>(
     rpcRequest: RequestType,
     method: HTTPMethods = HTTPMethods.POST,
   ): Promise<RPCResponse<RequestType>> {
@@ -45,7 +45,7 @@ export abstract class NearRPCProvider<ProviderConfig extends RPCProviderConfig> 
     method: HTTPMethods = HTTPMethods.POST,
   ): Promise<IJsonRpcResponse<ReturnType>> {
     const result = await axios.request<IJsonRpcResponse<ReturnType>>({
-      url: this.config.url,
+      url: this.config.rpcUrl,
       method,
       data: request.toObject(),
       timeout: this.config.timeout,
