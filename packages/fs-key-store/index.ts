@@ -15,7 +15,7 @@ export class FileSystemStore extends KeyStore {
 
     const keysFolder = config?.keysPath ? config.keysPath : os.homedir();
 
-    this.keyStorePath = path.resolve(keysFolder);
+    this.keyStorePath = path.join(path.resolve(keysFolder), '.near-keys');
   }
 
   public async listKeys(): Promise<KeyIdString[]> {
