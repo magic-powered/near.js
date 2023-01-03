@@ -8,6 +8,11 @@ import tsproject from './tsconfig.project.json';
 
 const extensions = ['.ts'];
 const workspaces = tsproject.references;
+const getFormattedName = (fpath) => fpath
+  .split('/')
+  .pop()
+  .replace(/^(.)|-(.)/g, (v) => v.toUpperCase())
+  .replace(/-/g, '');
 
 export default workspaces.map(({ path }) => ({
   input: `${path}/index.ts`,
@@ -22,8 +27,16 @@ export default workspaces.map(({ path }) => ({
       format: 'umd',
       sourcemap: true,
       dir: `${path}/dist`,
-      name: path.split('/').pop(),
+      name: getFormattedName(path),
       entryFileNames: '[name].[format].js',
+      globals: { axios: 'axios' },
+    },
+    {
+      format: 'iife',
+      sourcemap: true,
+      dir: `${path}/dist`,
+      name: getFormattedName(path),
+      entryFileNames: 'bundle.js',
       globals: { axios: 'axios' },
     },
     {
