@@ -42,7 +42,11 @@ export abstract class ProviderWalletCore<Configuration extends RPCProviderConfig
 
   public abstract sign(accountId: string, message: Uint8Array): Promise<Uint8Array>;
 
-  public abstract verify(message: Uint8Array, signature: Uint8Array, publicKey: Uint8Array): Promise<boolean>;
+  public abstract verify(
+    message: Uint8Array,
+    signature: Uint8Array,
+    publicKey: Uint8Array
+  ): Promise<boolean>;
 
   public abstract getPublicKey(accountId: string): Promise<Uint8Array>;
 }
