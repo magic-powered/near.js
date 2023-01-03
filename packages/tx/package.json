@@ -2,7 +2,7 @@
   "name": "@near.js/tx",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -18,9 +18,11 @@
   "homepage": "https://github.com/Magic-Powered/near.js#readme",
   "dependencies": {
     "@dao-xyz/borsh": "^4.0.7",
+    "@near.js/account": "workspace:^1.0.0",
     "bn.js": "^5.2.1"
   },
   "devDependencies": {
+    "@protobufjs/utf8": "^1.1.0",
     "@types/bn.js": "^5.1.1"
   }
 }

@@ -1,20 +1,20 @@
 import {
   RPCProviderConfig,
-  RPCProvider,
+  NearRPCProvider,
   StandardNodeUrls,
   ViewAccount,
-} from '@near.js/provider-rpc';
+} from "@near.js/provider-core";
 
 const config = new RPCProviderConfig(StandardNodeUrls.TESTNET);
 
-const provider = new RPCProvider(config);
+// const provider = new NearRPCProvider(config);
 
 (async () => {
   const request = new ViewAccount('account.testnet');
 
-  const result = await provider.sendRPCRequest(request);
+  // const result = await provider.sendRPCRequest(request);
 
 
-  console.log(result);
+  // console.log(result);
 })();
 

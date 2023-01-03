@@ -1,4 +1,4 @@
-import { PublicKey } from '@near.js/keys';
+import { PublicKey } from '@near.js/account';
 import BN from 'bn.js';
 import { IAction } from './action';
 import { Transaction } from './transaction';
@@ -73,7 +73,8 @@ export class TransactionBuilder {
       throw new Error('You must specify at lease one action');
     }
 
-    if (!this.blockHash) { // TODO: really?
+    if (!this.blockHash) {
+      // TODO: really?
       throw new Error('You must specify block hash');
     }
 
@@ -85,7 +86,8 @@ export class TransactionBuilder {
       throw new Error('You must specify nonce');
     }
 
-    if (!this.receiverId) { // TODO: really?
+    if (!this.receiverId) {
+      // TODO: really?
       throw new Error('You must specify receiver Id');
     }
 
