@@ -48,7 +48,7 @@ export default workspaces.map(({ path }) => ({
   ],
   treeshake: true,
   preserveSymlinks: true,
-  external: ['axios'],
+  external: ['axios', 'uuid'],
   plugins: [
     polyfills({
       include: [
@@ -62,6 +62,7 @@ export default workspaces.map(({ path }) => ({
         'os',
         'zlib',
         'events',
+        'buffer',
       ],
     }),
     resolve({

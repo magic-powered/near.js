@@ -22,5 +22,5 @@
     "Headers": true,
     "document": true
   },
-  "ignorePatterns": ["packages/sandbox/*"]
+  "ignorePatterns": ["packages/sandbox/*", "*.d.ts"]
 }
