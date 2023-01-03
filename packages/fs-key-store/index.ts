@@ -41,6 +41,10 @@ export class FileSystemStore extends KeyStore {
   }
 
   protected storeKey(keyIdString: KeyIdString, keyPair: KeyPair): Promise<void> {
+    if (!fs.existsSync(this.keyStorePath)) {
+      fs.mkdirSync(this.keyStorePath, { recursive: true });
+    }
+
     const keyPath = this.getKeyPath(keyIdString);
 
     const oldTmpFile = `${keyPath}__old`;
