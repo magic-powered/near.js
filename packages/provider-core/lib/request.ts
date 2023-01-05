@@ -66,7 +66,7 @@ export class BroadcastTx extends RPCRequest {
   }
 
   toJsonRPCRequest(requestId: RequestId): JsonRPCRequest {
-    return new JsonRPCRequest(requestId, RPCRequestMethod.TX, [this.tx]);
+    return new JsonRPCRequest(requestId, RPCRequestMethod.TX_COMMIT, [this.tx]);
   }
 }
 

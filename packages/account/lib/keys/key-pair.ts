@@ -1,17 +1,34 @@
 import { box, sign } from 'tweetnacl';
 import { KeyType, PrivateKey, PublicKey } from './keys';
+import { AccessKey } from './access-key';
 
 export class KeyPair {
   private readonly publicKey: PublicKey;
 
   private readonly privateKey: PrivateKey;
 
+  private accessKey?: AccessKey;
+
   constructor(
     privateKey: PrivateKey,
     publicKey: PublicKey,
+    accessKey?: AccessKey,
   ) {
     this.privateKey = privateKey;
     this.publicKey = publicKey;
+    this.accessKey = accessKey;
+  }
+
+  public setAccessKey(accessKey: AccessKey) {
+    this.accessKey = accessKey;
+  }
+
+  public iterateNonce() {
+    if (!this.accessKey) {
+      throw new Error(`Access key is missing for key ${this.publicKey.toString()}`);
+    }
+    this.accessKey.nonce += 1;
+    return this.accessKey.nonce;
   }
 
   public sign(message: Uint8Array): Uint8Array {
@@ -38,6 +55,7 @@ export class KeyPair {
     return JSON.stringify({
       publicKey: this.publicKey.toString(),
       privateKey: this.privateKey.toString(),
+      accessKey: this.accessKey.toString(),
     });
   }
 
@@ -47,10 +65,12 @@ export class KeyPair {
 
       const privateKey = PrivateKey.fromString(parsed.privateKey);
       const publicKey = PublicKey.fromString(parsed.publicKey);
+      const accessKey = AccessKey.fromString(parsed.accessKey);
 
       return new KeyPair(
         privateKey,
         publicKey,
+        accessKey,
       );
     } catch (e) {
       throw new Error(e);
