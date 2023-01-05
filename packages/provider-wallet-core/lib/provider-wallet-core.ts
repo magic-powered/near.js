@@ -4,6 +4,7 @@ import {
   RPCRequest,
   RPCResponse,
 } from '@near.js/provider-core';
+import { PublicKey } from '@near.js/account';
 
 export interface WalletConnectOptions {
   contractId?: string;
@@ -48,5 +49,5 @@ export abstract class ProviderWalletCore<Configuration extends RPCProviderConfig
     publicKey: Uint8Array
   ): Promise<boolean>;
 
-  public abstract getPublicKey(accountId: string): Promise<Uint8Array>;
+  public abstract getPublicKey(accountId: string): Promise<PublicKey>;
 }

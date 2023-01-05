@@ -1,4 +1,4 @@
-import { KeyId, KeyPair } from '@near.js/account';
+import { KeyId, KeyPair, PublicKey } from '@near.js/account';
 
 import { ProviderMyNearWalletAccountManager } from './provider-my-near-wallet-account-manager';
 
@@ -7,9 +7,7 @@ export abstract class ProviderMyNearWalletSigner extends ProviderMyNearWalletAcc
     accountId: string,
     message: Uint8Array,
   ): Promise<Uint8Array> {
-    // TODO: only one wallet can be connected or multiple? We think multiple
-    const keyId = new KeyId(accountId, this.config.networkId);
-    const keyPair = await this.config.keyStore.getKeyPairByKeyId(keyId);
+    const keyPair = await this.getKeyPair(accountId);
 
     return keyPair.sign(message);
   }
@@ -23,10 +21,14 @@ export abstract class ProviderMyNearWalletSigner extends ProviderMyNearWalletAcc
     return KeyPair.verifyWithPublicKey(message, signature, publicKey);
   }
 
-  public async getPublicKey(accountId: string): Promise<Uint8Array> {
-    const keyId = new KeyId(accountId, this.config.networkId);
-    const keyPair = await this.config.keyStore.getKeyPairByKeyId(keyId);
+  public async getPublicKey(accountId: string): Promise<PublicKey> {
+    const keyPair = await this.getKeyPair(accountId);
 
-    return keyPair.getPublicKey().data;
+    return keyPair.getPublicKey();
+  }
+
+  private async getKeyPair(accountId: string): Promise<KeyPair> {
+    const keyId = new KeyId(accountId, this.config.networkId);
+    return this.config.keyStore.getKeyPairByKeyId(keyId);
   }
 }

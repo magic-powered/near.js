@@ -88,8 +88,10 @@ importers:
 
   packages/provider-wallet-core:
     specifiers:
+      '@near.js/account': workspace:^1.0.0
       '@near.js/provider-core': workspace:^1.0.0
     dependencies:
+      '@near.js/account': link:../account
       '@near.js/provider-core': link:../provider-core
 
   packages/provider-wallet-my-near-wallet:
