@@ -1,1 +1,1 @@
-export * from './lib/wallet-my-near-wallet';
+export * from './lib';

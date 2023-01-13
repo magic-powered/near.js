@@ -1,5 +1,12 @@
-import { RPCErrorObject } from './errors/rpc-error';
-import { BroadcastTx, ViewAccount } from './request';
+import { RPCErrorObject } from './errors';
+import {
+  Block,
+  BlockResult,
+  BroadcastTxSync,
+  ViewAccount,
+  ViewAccountResult,
+  BroadcastTxSyncResult,
+} from './requests';
 
 export interface IJsonRpcResponse<ResultType> {
   id: string;
@@ -8,22 +15,12 @@ export interface IJsonRpcResponse<ResultType> {
   error?: RPCErrorObject;
 }
 
-export type BroadcastTxResult = string;
-
-export type ViewAccountResult = {
-  amount: string;
-  block_hash: string;
-  block_height: number;
-  code_hash: string;
-  locked: string;
-  storage_paid_at: number;
-  storage_usage: number;
-};
-
 export type RPCResponse<RequestType> = IJsonRpcResponse<
 RequestType extends ViewAccount ?
   ViewAccountResult :
-  RequestType extends BroadcastTx ?
-    BroadcastTxResult :
-    unknown
+  RequestType extends BroadcastTxSync ?
+    BroadcastTxSyncResult :
+    RequestType extends Block ?
+      BlockResult :
+      unknown
 >;

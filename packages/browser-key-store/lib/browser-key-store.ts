@@ -3,7 +3,7 @@ import { KeyPair, KeyStore, KeyIdString } from '@near.js/account';
 export interface BrowserLocalStorageKeyStoreConfig {
   baseKey?: string;
 
-  storage?: Storage;
+  storage?: Storage
 }
 
 export class BrowserKeyStore extends KeyStore {
@@ -14,8 +14,8 @@ export class BrowserKeyStore extends KeyStore {
   constructor(config?: BrowserLocalStorageKeyStoreConfig) {
     super();
 
-    this.baseKey = config && config.baseKey ? config.baseKey : 'near.js';
-    this.storage = config && config.storage ? config.storage : window.localStorage;
+    this.baseKey = (config && config.baseKey) ? config.baseKey : 'near.js';
+    this.storage = (config && config.storage) ? config.storage : window.localStorage;
   }
 
   public async listKeys(): Promise<KeyIdString[]> {
@@ -27,31 +27,31 @@ export class BrowserKeyStore extends KeyStore {
     return `${this.baseKey}:${keyIdString}`;
   }
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
   private async updateList(keyIdString: KeyIdString) {
     const list = await this.listKeys();
 
     if (!list.includes(keyIdString)) {
+      list.push(keyIdString);
       this.storage.setItem(this.buildStorageKey('list'), JSON.stringify(list));
     }
   }
 
-  protected async storeKey(
-    keyIdString: KeyIdString,
-    keyPair: KeyPair,
-  ): Promise<void> {
-    this.storage.setItem(
-      this.buildStorageKey(keyIdString),
-      keyPair.toBase64JsonString(),
-    );
+  protected async storeKey(keyIdString: KeyIdString, keyPair: KeyPair): Promise<void> {
+    this.storage.setItem(this.buildStorageKey(keyIdString), keyPair.toBase64JsonString());
+    await this.updateList(keyIdString);
   }
 
   protected async getKey(keyIdString: KeyIdString): Promise<KeyPair> {
-    const base64JsonString = this.storage.getItem(
-      this.buildStorageKey(keyIdString),
-    );
+    const base64JsonString = this.storage.getItem(this.buildStorageKey(keyIdString));
 
     return KeyPair.fromBase64JsonString(base64JsonString);
+  }
+
+  protected async deleteKey(keyIdString: KeyIdString): Promise<void> {
+    if (!this.storage.getItem(keyIdString)) {
+      return;
+    }
+
+    this.storage.removeItem(keyIdString);
   }
 }

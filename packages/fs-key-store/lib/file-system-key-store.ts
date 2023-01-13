@@ -1,13 +1,13 @@
-import os from 'os';
-import fs from 'fs';
-import path from 'path';
+import * as os from 'os';
+import * as fs from 'fs';
+import * as path from 'path';
 import { KeyPair, KeyIdString, KeyStore } from '@near.js/account';
 
 export interface FileSystemStoreConfig {
   keysPath?: string;
 }
 
-export class FileSystemStore extends KeyStore {
+export class FileSystemKeyStore extends KeyStore {
   private readonly keyStorePath: string;
 
   constructor(config?: FileSystemStoreConfig) {
@@ -15,12 +15,11 @@ export class FileSystemStore extends KeyStore {
 
     const keysFolder = config?.keysPath ? config.keysPath : os.homedir();
 
-    this.keyStorePath = path.resolve(keysFolder);
+    this.keyStorePath = path.join(path.resolve(keysFolder), '.near-keys');
   }
 
   public async listKeys(): Promise<KeyIdString[]> {
-    return fs
-      .readdirSync(this.keyStorePath)
+    return fs.readdirSync(this.keyStorePath)
       .filter((fileName) => fileName.includes('.json'))
       .map((fileName) => fileName.replace('.json', ''));
   }
@@ -41,10 +40,11 @@ export class FileSystemStore extends KeyStore {
     return KeyPair.fromJson(rawKey.toString());
   }
 
-  protected storeKey(
-    keyIdString: KeyIdString,
-    keyPair: KeyPair,
-  ): Promise<void> {
+  protected storeKey(keyIdString: KeyIdString, keyPair: KeyPair): Promise<void> {
+    if (!fs.existsSync(this.keyStorePath)) {
+      fs.mkdirSync(this.keyStorePath, { recursive: true });
+    }
+
     const keyPath = this.getKeyPath(keyIdString);
 
     const oldTmpFile = `${keyPath}__old`;
@@ -66,5 +66,15 @@ export class FileSystemStore extends KeyStore {
     }
 
     return Promise.resolve();
+  }
+
+  protected async deleteKey(keyIdString: KeyIdString): Promise<void> {
+    const keyPath = this.getKeyPath(keyIdString);
+
+    if (!fs.existsSync(keyPath)) {
+      return;
+    }
+
+    fs.rmSync(keyPath, { force: true });
   }
 }

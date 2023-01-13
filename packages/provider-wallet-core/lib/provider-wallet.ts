@@ -1,5 +1,9 @@
-import { KeyStore } from '@near.js/account';
-import { NearRPCProvider, RPCProviderConfig } from '@near.js/provider-core';
+import {
+  NearRPCProvider,
+  RPCProviderConfig,
+  RPCRequest,
+  RPCResponse,
+} from '@near.js/provider-core';
 
 export interface WalletConnectOptions {
   contractId?: string;
@@ -16,11 +20,8 @@ export interface AccountView { // TODO: move to @near.js/account?
   storageUsage: number;
 }
 
-export class WalletProviderConfiguration extends RPCProviderConfig {
-  keyStore: KeyStore;
-}
-
-export abstract class WalletCore extends NearRPCProvider<WalletProviderConfiguration> {
+export abstract class ProviderWallet<Configuration extends RPCProviderConfig>
+  extends NearRPCProvider<Configuration> {
   public abstract connectAccount<SignInOptions extends WalletConnectOptions>(
     options: SignInOptions
   ): Promise<void>; // TODO: void?
@@ -30,4 +31,12 @@ export abstract class WalletCore extends NearRPCProvider<WalletProviderConfigura
   public abstract isAccountConnected(accountId: string): Promise<boolean>;
 
   public abstract viewAccount(accountId: string): Promise<AccountView>;
+
+  public abstract signAndSend<RequestType extends RPCRequest>(
+    rpcRequest: RequestType
+  ): Promise<RPCResponse<RequestType>>;
+
+  public abstract sendViewRequest<RequestType extends RPCRequest>(
+    rpcRequest: RequestType
+  ): Promise<RPCResponse<RequestType>>;
 }

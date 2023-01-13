@@ -1,14 +1,57 @@
-import { box, sign } from 'tweetnacl';
+import { sign } from 'tweetnacl';
 import { KeyType, PrivateKey, PublicKey } from './keys';
+import { AccessKey } from './access-key';
 
 export class KeyPair {
   private readonly publicKey: PublicKey;
 
   private readonly privateKey: PrivateKey;
 
-  constructor(privateKey: PrivateKey, publicKey: PublicKey) {
+  private accessKey?: AccessKey;
+
+  private nonce: number;
+
+  constructor(
+    privateKey: PrivateKey,
+    publicKey: PublicKey,
+    accessKey?: AccessKey,
+    nonce?: number,
+  ) {
     this.privateKey = privateKey;
     this.publicKey = publicKey;
+    this.accessKey = accessKey;
+    this.nonce = nonce || 0;
+  }
+
+  public getAndIncrementNonce() {
+    if (this.accessKey) {
+      return this.accessKey.getAndIncrementNonce();
+    }
+
+    this.nonce += 1;
+    return this.nonce;
+  }
+
+  public setNonce(newNonce: number) {
+    if (this.accessKey) {
+      this.accessKey.setNonce(newNonce);
+
+      return;
+    }
+
+    this.nonce = newNonce;
+  }
+
+  public setAccessKey(accessKey: AccessKey) {
+    this.accessKey = accessKey;
+  }
+
+  public iterateNonce() {
+    if (!this.accessKey) {
+      throw new Error(`Access key is missing for key ${this.publicKey.toString()}`);
+    }
+    this.accessKey.nonce += 1;
+    return this.accessKey.nonce;
   }
 
   public sign(message: Uint8Array): Uint8Array {
@@ -19,13 +62,24 @@ export class KeyPair {
     return sign.detached.verify(message, signature, this.publicKey.data);
   }
 
+  public static verifyWithPublicKey(
+    message: Uint8Array,
+    signature: Uint8Array,
+    publicKey: Uint8Array,
+  ) {
+    return sign.detached.verify(message, signature, publicKey);
+  }
+
   public getPublicKey(): PublicKey {
     return this.publicKey;
   }
 
   public toJsonString(): string {
     return JSON.stringify({
+      publicKey: this.publicKey.toString(),
       privateKey: this.privateKey.toString(),
+      accessKey: this.accessKey?.toString(),
+      nonce: this.nonce,
     });
   }
 
@@ -33,7 +87,17 @@ export class KeyPair {
     try {
       const parsed = JSON.parse(keyPairJsonString);
 
-      return KeyPair.fromPrivate(PrivateKey.fromString(parsed.privateKey));
+      const privateKey = PrivateKey.fromString(parsed.privateKey);
+      const publicKey = PublicKey.fromString(parsed.publicKey);
+      const accessKey = parsed.accessKey ? AccessKey.fromString(parsed.accessKey) : undefined;
+      const nonce = parsed.nonce || 0;
+
+      return new KeyPair(
+        privateKey,
+        publicKey,
+        accessKey,
+        nonce,
+      );
     } catch (e) {
       throw new Error(e);
     }
@@ -48,21 +112,20 @@ export class KeyPair {
   }
 
   public static fromRandom(keyType: KeyType = KeyType.ED25519): KeyPair {
-    // TODO: why we have KeyType here???
-    const keypair = box.keyPair();
+    const keypair = sign.keyPair();
 
     return new KeyPair(
-      { data: keypair.secretKey, keyType },
-      { data: keypair.publicKey, keyType },
+      new PrivateKey(keypair.secretKey, keyType),
+      new PublicKey(keypair.publicKey, keyType),
     );
   }
 
   public static fromPrivate(privateKey: PrivateKey, keyType: KeyType = KeyType.ED25519): KeyPair {
-    const keypair = box.keyPair.fromSecretKey(privateKey.data);
+    const keypair = sign.keyPair.fromSecretKey(privateKey.data);
 
     return new KeyPair(
-      { data: keypair.secretKey, keyType },
-      { data: keypair.publicKey, keyType },
+      new PrivateKey(keypair.secretKey, keyType),
+      new PublicKey(keypair.publicKey, keyType),
     );
   }
 }

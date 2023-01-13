@@ -97,10 +97,10 @@ export class TransactionBuilder {
 
     return new Transaction(
       this.actions,
+      this.receiverId,
       this.blockHash,
       this.nonce,
       this.publicKey,
-      this.receiverId,
       this.signerId,
     );
   }

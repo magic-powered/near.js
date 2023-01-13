@@ -1,1 +1,1 @@
-export * from './lib/browser-key-store';
+export * from './lib';
