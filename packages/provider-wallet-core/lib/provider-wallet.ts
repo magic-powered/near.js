@@ -1,9 +1,11 @@
 import {
   NearRPCProvider,
+  BroadcastTxSyncResult,
   RPCProviderConfig,
   RPCRequest,
   RPCResponse,
 } from '@near.js/provider-core';
+import { IAction } from '@near.js/tx';
 
 export interface WalletConnectOptions {
   contractId?: string;
@@ -30,7 +32,13 @@ export abstract class ProviderWallet<Configuration extends RPCProviderConfig>
 
   public abstract isAccountConnected(accountId: string): Promise<boolean>;
 
-  public abstract viewAccount(accountId: string): Promise<AccountView>;
+  public abstract viewAccount(accountId: string): Promise<AccountView>; // TODO: is it necessary?
+
+  public abstract sendTransactionSync(
+    accountId: string,
+    receiverId: string,
+    actions: IAction[],
+  ): Promise<RPCResponse<BroadcastTxSyncResult>>;
 
   public abstract signAndSend<RequestType extends RPCRequest>(
     rpcRequest: RequestType
