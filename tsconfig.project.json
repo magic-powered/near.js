@@ -12,9 +12,6 @@
       "path": "./packages/browser-key-store"
     },
     {
-      "path": "./packages/config"
-    },
-    {
       "path": "./packages/fs-key-store"
     },
     {
@@ -25,9 +22,6 @@
     },
     {
       "path": "./packages/provider-wallet-my-near-wallet"
-    },
-    {
-      "path": "./packages/provider-wallet-sender"
     },
     {
       "path": "./packages/tx"

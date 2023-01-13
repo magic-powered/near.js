@@ -25,7 +25,7 @@ export abstract class ProviderMyNearWalletTransactionSender extends ProviderMyNe
       .withActions(actions)
       .withSignerId(accountId)
       .withReceiverId(receiverId)
-      .withPublicKey(await this.getPublicKey(accountId))
+      .withPublicKey(keyPair.getPublicKey())
       .withNonce(keyPair.getAndIncrementNonce())
       .withBlockHash(fromBase58(block.result.header.hash))
       .build();
