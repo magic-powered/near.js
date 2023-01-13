@@ -1,5 +1,5 @@
 import { KeyPair, KeyId, KeyType } from '@near.js/account';
-import { ProviderWalletCore } from '@near.js/provider-wallet-core';
+import { ProviderWallet } from '@near.js/provider-wallet-core';
 
 import { v4 as uuid } from 'uuid';
 
@@ -9,14 +9,13 @@ import { MyNearWalletSignInOptions } from './my-near-wallet-sign-in-options';
 export const AUTH_ID_URL_QUERY_PARAM = 'nearJsAuthId';
 
 export abstract class ProviderMyNearWalletConnect
-  extends ProviderWalletCore<MyNearWalletConfiguration> {
+  extends ProviderWallet<MyNearWalletConfiguration> {
   private pendingAuth: string[] = [];
 
   public async connectAccount(
     signInOptions: MyNearWalletSignInOptions = {},
   ): Promise<void> {
-    // TODO: do not use window object directly !!!
-    if (!window) { // TODO: use open pkg to open browser if it is not browser
+    if (!this.config.window) { // TODO: use open pkg to open browser if it is not browser
       throw new Error('Can connect wallet only in browser');
     }
 
@@ -26,13 +25,11 @@ export abstract class ProviderMyNearWalletConnect
   private async connectAccountInBrowser(
     signInOptions: MyNearWalletSignInOptions = {},
   ): Promise<void> {
-    // TODO: do not use window object directly
-    const currentUrl = new URL(window.location.href);
+    const currentUrl = new URL(this.config.window.location.href);
     if (!this.pendingAuth.length || !currentUrl.searchParams.has(AUTH_ID_URL_QUERY_PARAM)) {
       // TODO: this is essentially a copy-paste from near-api-js.
       // TODO: We want to consider leveraging opening popup without blocking
-      // TODO: do not use window object directly!!!
-      window.location.assign(await this.constructLoginLink(signInOptions));
+      this.config.window.location.assign(await this.constructLoginLink(signInOptions));
       return;
     }
 
@@ -40,7 +37,7 @@ export abstract class ProviderMyNearWalletConnect
   }
 
   private async completeAuth(): Promise<void> {
-    const currentUrl = new URL(window.location.href);
+    const currentUrl = new URL(this.config.window.location.href);
     const authId = currentUrl.searchParams.get(AUTH_ID_URL_QUERY_PARAM);
     if (!this.pendingAuth.includes(authId)) {
       throw new Error('Unknown auth id');
@@ -68,7 +65,7 @@ export abstract class ProviderMyNearWalletConnect
     currentUrl.searchParams.delete('transactionHashes');
     currentUrl.searchParams.delete(AUTH_ID_URL_QUERY_PARAM);
 
-    window.history.replaceState({}, document.title, currentUrl.toString());
+    this.config.window.history.replaceState({}, document.title, currentUrl.toString());
   }
 
   private async constructLoginLink(
@@ -77,7 +74,7 @@ export abstract class ProviderMyNearWalletConnect
     const authId = uuid();
     const loginUrl = new URL(`${this.config.walletBaseUrl}/login`);
 
-    const callbackUrl = new URL(signInOptions.callbackUrl || window.location.href);
+    const callbackUrl = new URL(signInOptions.callbackUrl || this.config.window.location.href);
     callbackUrl.searchParams.set(AUTH_ID_URL_QUERY_PARAM, authId);
 
     loginUrl.searchParams.set('success_url', callbackUrl.toString());

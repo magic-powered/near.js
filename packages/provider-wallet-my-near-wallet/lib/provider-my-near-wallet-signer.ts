@@ -27,8 +27,13 @@ export abstract class ProviderMyNearWalletSigner extends ProviderMyNearWalletAcc
     return keyPair.getPublicKey();
   }
 
-  private async getKeyPair(accountId: string): Promise<KeyPair> {
+  protected async getKeyPair(accountId: string): Promise<KeyPair> {
     const keyId = new KeyId(accountId, this.config.networkId);
     return this.config.keyStore.getKeyPairByKeyId(keyId);
+  }
+
+  protected async persistKeyPair(accountId: string, keyPair: KeyPair) {
+    const keyId = new KeyId(accountId, this.config.networkId);
+    this.config.keyStore.addKeyByKeyId(keyId, keyPair);
   }
 }

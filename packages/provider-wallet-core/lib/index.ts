@@ -1,1 +1,1 @@
-export * from './provider-wallet-core';
+export * from './provider-wallet';

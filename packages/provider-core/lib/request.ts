@@ -1,5 +1,3 @@
-import { Transaction } from '@near.js/tx';
-
 export enum RPCRequestMethod {
   BLOCK = 'block',
   TX_ASYNC = 'broadcast_tx_async',
@@ -55,34 +53,4 @@ export class JsonRPCRequest {
 
 export abstract class RPCRequest {
   public abstract toJsonRPCRequest(requestId: RequestId): JsonRPCRequest;
-}
-
-export class BroadcastTx extends RPCRequest {
-  public readonly tx: string;
-
-  constructor(tx: Transaction) {
-    super();
-    this.tx = tx.toBorshString();
-  }
-
-  toJsonRPCRequest(requestId: RequestId): JsonRPCRequest {
-    return new JsonRPCRequest(requestId, RPCRequestMethod.TX_COMMIT, [this.tx]);
-  }
-}
-
-export class ViewAccount extends RPCRequest {
-  public readonly accountId: string;
-
-  constructor(accountId: string) {
-    super();
-    this.accountId = accountId;
-  }
-
-  toJsonRPCRequest(requestId: RequestId): JsonRPCRequest {
-    return new JsonRPCRequest(requestId, RPCRequestMethod.QUERY, {
-      request_type: 'view_account',
-      finality: 'final',
-      account_id: this.accountId,
-    });
-  }
 }

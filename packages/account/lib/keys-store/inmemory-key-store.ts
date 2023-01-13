@@ -16,8 +16,8 @@ export class InMemoryKeyStore extends KeyStore {
     this.keyStore[keyIdString] = keyPair;
   }
 
-  listKeys(): Promise<KeyIdString[]> {
-    return Promise.resolve(Object.keys(this.keyStore));
+  public async listKeys(): Promise<KeyIdString[]> {
+    return Object.keys(this.keyStore);
   }
 
   protected async deleteKey(keyIdString: KeyIdString): Promise<void> {

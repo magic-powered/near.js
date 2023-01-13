@@ -2,6 +2,8 @@ import { KeyPair } from '../keys';
 
 export type KeyIdString = string;
 
+const KeyIdPartsDelimiter = '::';
+
 export class KeyId {
   private readonly accountId: string;
 
@@ -13,7 +15,7 @@ export class KeyId {
   }
 
   public toString() {
-    return `${this.accountId}.${this.networkId}`;
+    return `${this.accountId}${KeyIdPartsDelimiter}${this.networkId}`;
   }
 
   public static fromString(keyIdString: KeyIdString): KeyId {
@@ -26,7 +28,7 @@ export class KeyId {
   }
 
   public static validateKeyIdString(keyIdString: KeyIdString) {
-    return keyIdString.indexOf('.') !== -1;
+    return keyIdString.indexOf(KeyIdPartsDelimiter) !== -1;
   }
 
   public static validateKeyIdStringOrThrow(keyIdString: KeyIdString) {
@@ -36,12 +38,12 @@ export class KeyId {
   }
 
   public static extractAccountId(keyIdString: KeyIdString): string {
-    if (!this.validateKeyIdString(keyIdString)) {
+    if (!KeyId.validateKeyIdString(keyIdString)) {
       throw new Error('Invalid key id'); // TODO: make good errors
     }
 
     // TODO: introduce parse function
-    return keyIdString.split('.')[0];
+    return keyIdString.split(KeyIdPartsDelimiter)[0];
   }
 }
 

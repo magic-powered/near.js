@@ -1,7 +1,9 @@
 {
   "compilerOptions": {
     "outDir": "./dist/",
-    "rootDir": "./"
+    "rootDir": "./",
+    "noUnusedParameters": false,
+    "noUnusedLocals": false
   },
   "exclude": [],
   "extends": "../../tsconfig.package.json",

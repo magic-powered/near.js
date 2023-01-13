@@ -77,7 +77,7 @@ export class AccessKey {
   /// same public key, the nonce of the new access key should be equal to the nonce of the old
   /// access key. It's required to avoid replaying old transactions again.
   @field({ type: 'u64' })
-    nonce: number;
+  public nonce: number;
 
   /// Defines permissions for this access key.
   @field({ type: AccessKeyPermission })
@@ -86,6 +86,15 @@ export class AccessKey {
   constructor(nonce: number, permission: AccessKeyPermission) {
     this.nonce = nonce;
     this.permission = permission;
+  }
+
+  public getAndIncrementNonce() {
+    this.nonce += 1;
+    return this.nonce;
+  }
+
+  public setNonce(newNonce: number) {
+    this.nonce = newNonce;
   }
 
   public toString() {
