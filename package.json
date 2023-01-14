@@ -9,10 +9,8 @@
   },
   "main": "index.ts",
   "scripts": {
-    "clean": "rm -rf ./lib",
-    "build": "npm run clean && npm run build:esm && npm run build:cjs",
-    "build:esm": "tsc -p ./configs/tsconfig.esm.json",
-    "build:cjs": "tsc -p ./configs/tsconfig.cjs.json",
+    "build": "pnpm --stream -r run clean && pnpm --stream -r run build",
+    "prepublishOnly": "pnpm build",
     "lint": "eslint . --ext ts --fix",
     "prepare": "husky install",
     "preinstall": "npx only-allow pnpm",

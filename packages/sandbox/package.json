@@ -10,7 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/Magic-Powered/near.js.git"
   },
-  "author": "",
+  "author": "Anatolii Petrovskyi <anatolii@magicpowered.io>",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Magic-Powered/near.js/issues"

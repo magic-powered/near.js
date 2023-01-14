@@ -16,10 +16,6 @@
     "./../packages/sandbox/*"
   ],
   "include": [
-    // "./../packages/account/*.ts",
-    // "./../packages/account/lib/**/*.ts",
-    // "./../packages/browser-key-store/*.ts",
-    // "./../packages/browser-key-store/lib/**/*.ts"
     "./../packages/**/*.ts",
     "./../packages/**/lib/**/*.ts"
   ]
