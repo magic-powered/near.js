@@ -20,6 +20,8 @@ export class BrowserKeyStore extends KeyStore {
 
   public async listKeys(): Promise<KeyIdString[]> {
     const listString = this.storage.getItem(this.buildStorageKey('list'));
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     return JSON.parse(listString);
   }
 
@@ -42,8 +44,12 @@ export class BrowserKeyStore extends KeyStore {
   }
 
   protected async getKey(keyIdString: KeyIdString): Promise<KeyPair> {
-    const base64JsonString = this.storage.getItem(this.buildStorageKey(keyIdString));
+    const base64JsonString = this.storage.getItem(
+      this.buildStorageKey(keyIdString),
+    );
 
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     return KeyPair.fromBase64JsonString(base64JsonString);
   }
 

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { PublicKey } from '@near.js/account';
 import BN from 'bn.js';
 import { IAction } from './action';
@@ -6,14 +7,19 @@ import { Transaction } from './transaction';
 export class TransactionBuilder {
   private actions: IAction[];
 
+  // @ts-ignore
   private blockHash: Uint8Array;
 
+  // @ts-ignore
   private nonce: BN;
 
+  // @ts-ignore
   private publicKey: PublicKey;
 
+  // @ts-ignore
   private receiverId: string;
 
+  // @ts-ignore
   private signerId: string;
 
   public static builder(): TransactionBuilder {

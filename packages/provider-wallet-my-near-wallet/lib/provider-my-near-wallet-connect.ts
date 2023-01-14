@@ -39,20 +39,28 @@ export abstract class ProviderMyNearWalletConnect
   private async completeAuth(): Promise<void> {
     const currentUrl = new URL(this.config.window.location.href);
     const authId = currentUrl.searchParams.get(AUTH_ID_URL_QUERY_PARAM);
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     if (!this.pendingAuth.includes(authId)) {
       throw new Error('Unknown auth id');
     }
 
     const accountId = currentUrl.searchParams.get('account_id') || '';
-    if (accountId) { // TODO: what if there is no accountId
-      const keyPair = await this.config.keyStore.getKeyPairByKeyIdString(`pending:${authId}`);
+    if (accountId) {
+      // TODO: what if there is no accountId
+      const keyPair = await this.config.keyStore.getKeyPairByKeyIdString(
+        `pending:${authId}`,
+      );
 
-      await this.config.keyStore.deleteKeyPairByKeyIdString(`pending:${authId}`);
+      await this.config.keyStore.deleteKeyPairByKeyIdString(
+        `pending:${authId}`,
+      );
       this.pendingAuth = this.pendingAuth.filter((id) => id !== authId);
 
       // TODO: fetch accessKey
       // TODO: put access key to the key pair
-
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       const keyId = new KeyId(accountId, this.config.networkId);
       await this.config.keyStore.addKeyByKeyId(keyId, keyPair);
 
@@ -65,7 +73,11 @@ export abstract class ProviderMyNearWalletConnect
     currentUrl.searchParams.delete('transactionHashes');
     currentUrl.searchParams.delete(AUTH_ID_URL_QUERY_PARAM);
 
-    this.config.window.history.replaceState({}, document.title, currentUrl.toString());
+    this.config.window.history.replaceState(
+      {},
+      document.title,
+      currentUrl.toString(),
+    );
   }
 
   private async constructLoginLink(
