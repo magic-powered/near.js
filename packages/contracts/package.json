@@ -21,9 +21,10 @@
   ],
   "scripts": {
     "clean": "rm -rf dist",
-    "build": "pnpm run build:esm && pnpm run build:cjs",
+    "build": "pnpm run clean && pnpm run build:esm && pnpm run build:cjs",
     "build:esm": "tsc -p ./tsconfig.esm.json && mv dist/esm/index.js dist/esm/index.mjs",
-    "build:cjs": "tsc -p ./tsconfig.cjs.json"
+    "build:cjs": "tsc -p ./tsconfig.cjs.json",
+    "prepublishOnly": "pnpm build"
   },
   "repository": {
     "type": "git",

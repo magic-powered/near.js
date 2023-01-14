@@ -179,15 +179,22 @@ export abstract class NearRPCProvider<ProviderConfig extends RPCProviderConfig> 
     request: JsonRPCRequest,
     method: HTTPMethods = HTTPMethods.POST,
   ): Promise<IJsonRpcResponse<ReturnType>> {
-    const req = {
-      url: this.config.rpcUrl,
-      method,
-      data: request.toObject(),
-      timeout: this.config.timeout,
-      headers: this.config.headers,
-    };
+    const controller = new AbortController();
+    const id = setTimeout(() => controller.abort(), this.config.timeout);
 
-    const result = await axios.request<IJsonRpcResponse<ReturnType>>(req);
+    const response = await fetch(this.config.rpcUrl, {
+      method,
+      body: JSON.stringify(request.toObject()),
+      headers: {
+        'Content-Type': 'application/json',
+        ...this.config.headers,
+      },
+      signal: controller.signal,
+    });
+
+    clearTimeout(id);
+
+    const result = await response.json();
 
     if (result.status !== 200) {
       throw new UnknownError(result.data);

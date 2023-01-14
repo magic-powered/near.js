@@ -9,8 +9,8 @@
   },
   "main": "index.ts",
   "scripts": {
-    "build": "pnpm --stream -r run clean && pnpm --stream -r run build",
-    "prepublishOnly": "pnpm build",
+    "build:workspaces": "pnpm --stream -r run build",
+    "publish:workspaces": "pnpm --filter=!@near.js/sandbox --filter=!@near.js/monorepo --stream -r publish --access=public",
     "lint": "eslint . --ext ts --fix",
     "prepare": "husky install",
     "preinstall": "npx only-allow pnpm",
