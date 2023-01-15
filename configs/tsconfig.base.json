@@ -16,6 +16,7 @@
     "./../packages/sandbox/*"
   ],
   "include": [
+    "./../index.ts",
     "./../packages/**/*.ts",
     "./../packages/**/lib/**/*.ts"
   ]

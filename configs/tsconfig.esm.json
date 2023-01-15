@@ -4,6 +4,8 @@
     "lib": ["ES2022", "DOM"],
     "target": "ES2022",
     "module": "ESNext",
-    "moduleResolution": "NodeNext"
+    "moduleResolution": "NodeNext",
+    "outDir": "./../dist/esm",
+    "declarationDir": "./../dist/esm/types"
   }
 }

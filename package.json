@@ -1,5 +1,5 @@
 {
-  "name": "@near.js/monorepo",
+  "name": "@zz1ck/near.js",
   "version": "1.0.0",
   "author": "Anatolii Petrovskyi <anatolii@magicpowered.io>",
   "license": "MIT",
@@ -7,10 +7,30 @@
     "node": ">=16.14.0",
     "pnpm": ">=7"
   },
-  "main": "index.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/esm/types/index.d.ts",
+        "default": "./dist/esm/index.mjs"
+      },
+      "require": {
+        "types": "./dist/cjs/types/index.d.ts",
+        "default": "./dist/cjs/index.js"
+      }
+    }
+  },
+  "types": "./dist/cjs/types/index.d.ts",
+  "main": "./dist/cjs/index.js",
+  "files": [
+    "dist/**/*"
+  ],
   "scripts": {
+    "clean": "rm -rf dist",
+    "build": "pnpm run clean && pnpm run build:workspaces && pnpm run build:esm && pnpm run build:cjs",
     "build:workspaces": "pnpm --stream -r run build",
-    "publish:workspaces": "pnpm --filter=!@near.js/sandbox --filter=!@near.js/monorepo --stream -r publish --access=public",
+    "build:esm": "tsc -p ./configs/tsconfig.esm.json && mv dist/esm/index.js dist/esm/index.mjs",
+    "build:cjs": "tsc -p ./configs/tsconfig.cjs.json",
+    "prepublishOnly": "pnpm build",
     "lint": "eslint . --ext ts --fix",
     "prepare": "husky install",
     "preinstall": "npx only-allow pnpm",
@@ -20,6 +40,16 @@
     "url": "https://github.com/Magic-Powered/near.js/issues"
   },
   "homepage": "https://github.com/Magic-Powered/near.js#readme",
+  "dependencies": {
+    "@near.js/account": "workspace:^1.0.0",
+    "@near.js/browser-key-store": "workspace:^1.0.0",
+    "@near.js/fs-key-store": "workspace:^1.0.0",
+    "@near.js/provider-core": "workspace:^1.0.0",
+    "@near.js/provider-wallet-core": "workspace:^1.0.0",
+    "@near.js/provider-wallet-my-near-wallet": "workspace:^1.0.0",
+    "@near.js/tx": "workspace:^1.0.0",
+    "@near.js/units": "workspace:^1.0.0"
+  },
   "devDependencies": {
     "@babel/parser": "^7.19.6",
     "@babel/types": "^7.19.4",
