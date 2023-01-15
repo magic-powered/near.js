@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "@near.js/account": "workspace:^1.0.0",
+    "@near.js/contracts": "workspace:^1.0.0",
     "@near.js/fs-key-store": "workspace:^1.0.0",
     "@near.js/provider-core": "workspace:^1.0.0",
     "@near.js/provider-wallet-my-near-wallet": "workspace:^1.0.0",

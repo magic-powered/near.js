@@ -12,13 +12,13 @@
       "path": "./packages/browser-key-store"
     },
     {
+      "path": "./packages/contracts"
+    },
+    {
       "path": "./packages/fs-key-store"
     },
     {
       "path": "./packages/provider-core"
-    },
-    {
-      "path": "./packages/provider-wallet-core"
     },
     {
       "path": "./packages/provider-wallet-my-near-wallet"

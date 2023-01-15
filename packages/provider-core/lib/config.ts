@@ -1,3 +1,5 @@
+import { KeyStore } from '@near.js/account';
+
 // TODO: add auth options
 
 export type RPCProviderHeadersConfig = { [key: string]: string | number };
@@ -13,4 +15,6 @@ export interface RPCProviderConfig {
   allowInsecure?: boolean;
   timeout?: number;
   headers?: RPCProviderHeadersConfig;
+
+  keyStore: KeyStore;
 }
