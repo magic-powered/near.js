@@ -19,7 +19,6 @@
   "dependencies": {
     "@near.js/account": "workspace:^1.0.0",
     "@near.js/provider-core": "workspace:^1.0.0",
-    "@near.js/provider-wallet-core": "workspace:^1.0.0",
     "@near.js/tx": "workspace:^1.0.0",
     "base58-js": "^1.0.5",
     "uuid": "^9.0.0"

@@ -1,5 +1,3 @@
-import {
-  ProviderMyNearWalletTransactionSender,
-} from './provider-my-near-wallet-transaction-sender';
+import { ProviderMyNearWalletConnect } from './provider-my-near-wallet-connect';
 
-export class ProviderMyNearWallet extends ProviderMyNearWalletTransactionSender {}
+export class ProviderMyNearWallet extends ProviderMyNearWalletConnect {}

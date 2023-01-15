@@ -34,12 +34,17 @@ export class FunctionCall extends Action {
   @field({ type: 'u128' })
   readonly deposit: BN;
 
-  constructor(methodName: string, args: { [key: string]: any }, gas: BN, deposit: BN) {
+  constructor(
+    methodName: string,
+    args: { [key: string]: any },
+    gas: number,
+    deposit: string // TODO: see what we can do better
+  ) {
     super();
     this.method_name = methodName;
     this.args = Buffer.from(JSON.stringify(args));
-    this.gas = gas;
-    this.deposit = deposit;
+    this.gas = new BN(gas);
+    this.deposit = new BN(deposit);
   }
 }
 

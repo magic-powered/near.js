@@ -7,6 +7,7 @@ import {
   ViewAccountResult,
   BroadcastTxSyncResult,
 } from './requests';
+import { CallViewFunction, CallViewFunctionResult } from './requests/call-view-function';
 
 export interface IJsonRpcResponse<ResultType> {
   id: string;
@@ -16,11 +17,13 @@ export interface IJsonRpcResponse<ResultType> {
 }
 
 export type RPCResponse<RequestType> = IJsonRpcResponse<
-RequestType extends ViewAccount ?
-  ViewAccountResult :
+RequestType extends CallViewFunction ?
+  CallViewFunctionResult :
   RequestType extends BroadcastTxSync ?
     BroadcastTxSyncResult :
     RequestType extends Block ?
       BlockResult :
-      unknown
+      RequestType extends ViewAccount ?
+        ViewAccountResult :
+        unknown
 >;

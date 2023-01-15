@@ -1,15 +1,15 @@
 import { KeyPair, KeyId, KeyType } from '@near.js/account';
-import { ProviderWallet } from '@near.js/provider-wallet-core';
 
 import { v4 as uuid } from 'uuid';
 
+import { NearRPCProvider } from '@near.js/provider-core';
 import { MyNearWalletConfiguration } from './my-near-wallet-configuration';
 import { MyNearWalletSignInOptions } from './my-near-wallet-sign-in-options';
 
 export const AUTH_ID_URL_QUERY_PARAM = 'nearJsAuthId';
 
 export abstract class ProviderMyNearWalletConnect
-  extends ProviderWallet<MyNearWalletConfiguration> {
+  extends NearRPCProvider<MyNearWalletConfiguration> {
   private pendingAuth: string[] = [];
 
   public async connectAccount(

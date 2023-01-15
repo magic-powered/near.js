@@ -74,6 +74,14 @@ importers:
   packages/config:
     specifiers: {}
 
+  packages/contracts:
+    specifiers:
+      '@near.js/provider-core': workspace:^1.0.0
+      '@near.js/tx': workspace:^1.0.0
+    dependencies:
+      '@near.js/provider-core': link:../provider-core
+      '@near.js/tx': link:../tx
+
   packages/fs-key-store:
     specifiers:
       '@near.js/account': workspace:^1.0.0
@@ -85,10 +93,12 @@ importers:
       '@near.js/account': workspace:^1.0.0
       '@near.js/tx': workspace:^1.0.0
       axios: ^1.1.0
+      base58-js: ^1.0.5
     dependencies:
       '@near.js/account': link:../account
       '@near.js/tx': link:../tx
       axios: 1.1.3
+      base58-js: 1.0.5
 
   packages/provider-wallet-core:
     specifiers:
@@ -125,6 +135,7 @@ importers:
   packages/sandbox:
     specifiers:
       '@near.js/account': workspace:^1.0.0
+      '@near.js/contracts': workspace:^1.0.0
       '@near.js/fs-key-store': workspace:^1.0.0
       '@near.js/provider-core': workspace:^1.0.0
       '@near.js/provider-wallet-my-near-wallet': workspace:^1.0.0
@@ -137,6 +148,7 @@ importers:
       typescript: ^4.8.4
     dependencies:
       '@near.js/account': link:../account
+      '@near.js/contracts': link:../contracts
       '@near.js/fs-key-store': link:../fs-key-store
       '@near.js/provider-core': link:../provider-core
       '@near.js/provider-wallet-my-near-wallet': link:../provider-wallet-my-near-wallet

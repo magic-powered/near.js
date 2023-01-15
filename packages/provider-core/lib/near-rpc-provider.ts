@@ -1,14 +1,27 @@
-import { PublicKey } from '@near.js/account';
-import { Transaction, SignedTransaction } from '@near.js/tx';
+import { PublicKey, KeyId, KeyPair } from '@near.js/account';
+import {
+  Transaction, SignedTransaction, IAction, TransactionBuilder,
+} from '@near.js/tx';
 import axios from 'axios';
-import { IJsonRPCRequest, JsonRPCRequest, RPCRequest } from './request';
+// TODO: typings
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import { base58_to_binary as fromBase58 } from 'base58-js';
+import { JsonRPCRequest, RPCRequest } from './request';
 import { IJsonRpcResponse, RPCResponse } from './response';
 import { RPCProviderConfig } from './config';
 import { RPCError, UnknownError } from './errors';
+import { Block, BroadcastTxSync } from './requests';
+import { CallViewFunction } from './requests/call-view-function';
 
 export enum HTTPMethods {
   POST = 'POST',
   GET = 'GET',
+}
+
+export interface WalletConnectOptions {
+  contractId?: string;
+  methodNames?: string[];
 }
 
 export abstract class NearRPCProvider<ProviderConfig extends RPCProviderConfig> {
@@ -20,15 +33,29 @@ export abstract class NearRPCProvider<ProviderConfig extends RPCProviderConfig> 
     this.config = config;
   }
 
-  public abstract sign(accountId: string, message: Uint8Array): Promise<Uint8Array>;
+  public async sign(
+    accountId: string,
+    message: Uint8Array,
+  ): Promise<Uint8Array> {
+    const keyPair = await this.getKeyPair(accountId);
 
-  public abstract verify(
+    return keyPair.sign(message);
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  public async verify(
     message: Uint8Array,
     signature: Uint8Array,
-    publicKey: Uint8Array
-  ): Promise<boolean>;
+    publicKey: Uint8Array,
+  ): Promise<boolean> {
+    return KeyPair.verifyWithPublicKey(message, signature, publicKey);
+  }
 
-  public abstract getPublicKey(accountId: string): Promise<PublicKey>;
+  public async getPublicKey(accountId: string): Promise<PublicKey> {
+    const keyPair = await this.getKeyPair(accountId);
+
+    return keyPair.getPublicKey();
+  }
 
   public async signTransaction(
     accountId: string,
@@ -38,15 +65,103 @@ export abstract class NearRPCProvider<ProviderConfig extends RPCProviderConfig> 
     return new SignedTransaction(transaction, signature);
   }
 
-  protected async sendRawRequest<ReturnType>(
-    requestObject: IJsonRPCRequest,
-    method: HTTPMethods = HTTPMethods.POST,
-  ): Promise<IJsonRpcResponse<ReturnType>> {
-    this.requestId += 1;
-    return this.sendJsonRpcRequest<ReturnType>(
-      JsonRPCRequest.fromObject(this.requestId, requestObject),
-      method,
-    );
+  protected async getKeyPair(accountId: string): Promise<KeyPair> {
+    const keyId = new KeyId(accountId, this.config.networkId);
+    return this.config.keyStore.getKeyPairByKeyId(keyId);
+  }
+
+  protected async persistKeyPair(accountId: string, keyPair: KeyPair) {
+    const keyId = new KeyId(accountId, this.config.networkId);
+    this.config.keyStore.addKeyByKeyId(keyId, keyPair);
+  }
+
+  public async listConnectedAccounts(): Promise<string[]> {
+    const keyIdStrings = await this.config.keyStore.listKeys();
+    return keyIdStrings.map(KeyId.extractAccountId);
+  }
+
+  public async isAccountConnected(accountId: string): Promise<boolean> {
+    const connectedAccounts = await this.listConnectedAccounts();
+
+    return connectedAccounts.includes(accountId);
+  }
+
+  public async sendTransactionSync(
+    senderAccountId: string,
+    receiverAccountId: string,
+    actions: IAction[],
+    retryCount = 0,
+  ): Promise<RPCResponse<BroadcastTxSync>> {
+    const keyPair = await this.getKeyPair(senderAccountId);
+    const block = await this.sendRPCRequest(new Block('final'));
+
+    const transaction = TransactionBuilder.builder()
+      .withActions(actions)
+      .withSignerId(senderAccountId)
+      .withReceiverId(receiverAccountId)
+      .withPublicKey(keyPair.getPublicKey())
+      .withNonce(keyPair.getAndIncrementNonce())
+      .withBlockHash(fromBase58(block.result.header.hash))
+      .build();
+
+    await this.persistKeyPair(senderAccountId, keyPair);
+
+    const signedTransaction = await this.signTransaction(senderAccountId, transaction);
+
+    const broadcastTxSync = new BroadcastTxSync(signedTransaction);
+
+    try {
+      return await this.sendRPCRequest(broadcastTxSync);
+    } catch (e) {
+      if (retryCount > 2) {
+        throw e;
+      }
+      // TODO: parse and wrap errors separately
+      if (
+        e
+        && e.errorObject
+        && e.errorObject.cause
+        && e.errorObject.cause.name === 'INVALID_TRANSACTION'
+      ) {
+        if (
+          e.errorObject.data
+          && e.errorObject.data.TxExecutionError
+          && e.errorObject.data.TxExecutionError.InvalidTxError
+          && e.errorObject.data.TxExecutionError.InvalidTxError.InvalidNonce
+          && e.errorObject.data.TxExecutionError.InvalidTxError.InvalidNonce.ak_nonce
+        ) {
+          keyPair.setNonce(
+            e.errorObject.data.TxExecutionError.InvalidTxError.InvalidNonce.ak_nonce,
+          );
+          await this.persistKeyPair(senderAccountId, keyPair);
+
+          // TODO: do a exp. backoff??
+          return this.sendTransactionSync(
+            senderAccountId,
+            receiverAccountId,
+            actions,
+            (retryCount + 1),
+          );
+        }
+      }
+
+      throw e;
+    }
+  }
+
+  public async sendViewCall(
+    targetAccountId: string,
+    functionName: string,
+    args: { [key: string]: any },
+  ) {
+    const request = new CallViewFunction(targetAccountId, functionName, args);
+    const result = await this.sendRPCRequest(request);
+    if (result.result.error) {
+      throw new Error(result.result.error);
+    }
+    result.result.parsedResult = Buffer.from(result.result.result).toString();
+
+    return result;
   }
 
   protected async sendRPCRequest<RequestType extends RPCRequest>(
