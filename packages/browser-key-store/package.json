@@ -1,5 +1,5 @@
 {
-  "name": "@near.js/browser-key-store",
+  "name": "@nearjs/browser-key-store",
   "version": "1.0.0",
   "description": "",
   "exports": {
@@ -37,6 +37,6 @@
   },
   "homepage": "https://github.com/Magic-Powered/near.js#readme",
   "dependencies": {
-    "@near.js/account": "workspace:^1.0.0"
+    "@nearjs/account": "workspace:^1.0.0"
   }
 }

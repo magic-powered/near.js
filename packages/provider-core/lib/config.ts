@@ -1,4 +1,4 @@
-import { KeyStore } from '@near.js/account';
+import { KeyStore } from '@nearjs/account';
 
 // TODO: add auth options
 

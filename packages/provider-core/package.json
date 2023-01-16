@@ -1,5 +1,5 @@
 {
-  "name": "@near.js/provider-core",
+  "name": "@nearjs/provider-core",
   "version": "1.0.0",
   "description": "",
   "exports": {
@@ -37,8 +37,8 @@
   },
   "homepage": "https://github.com/Magic-Powered/near.js#readme",
   "dependencies": {
-    "@near.js/account": "workspace:^1.0.0",
-    "@near.js/tx": "workspace:^1.0.0",
+    "@nearjs/account": "workspace:^1.0.0",
+    "@nearjs/tx": "workspace:^1.0.0",
     "base58-js": "^1.0.5"
   }
 }

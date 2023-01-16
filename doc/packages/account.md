@@ -1,13 +1,13 @@
-# @near.js/account
+# @nearjs/account
 
 ## Installation
 
 ```shell
-npm i @near.js/account --save
+npm i @nearjs/account --save
 ```
 
 ```shell
-yarn add @near.js/account
+yarn add @nearjs/account
 ```
 
 ## About
@@ -49,7 +49,7 @@ Includes in-memmory key store
 ```typescript
 import {
   InMemoryKeyStore, KeyId, KeyPair
-} from '@near.js/account';
+} from '@nearjs/account';
 
 (async () => {
   /**

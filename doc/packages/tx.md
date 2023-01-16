@@ -1,13 +1,13 @@
-# @near.js/tx
+# @nearjs/tx
 
 ## Installation
 
 ```shell
-npm i @near.js/tx --save
+npm i @nearjs/tx --save
 ```
 
 ```shell
-yarn add @near.js/tx
+yarn add @nearjs/tx
 ```
 
 ## Usage
@@ -16,8 +16,8 @@ The transaction itself is a complex object with a big amount of fields.
 The tx package provides `TransactionBuilder` class which helps build transaction in easy, robust and typed way.
 
 ```typescript
-import { TransactionBuilder, Transfer } from '@near.js/tx';
-import { KeyPair } from '@near.js/keys';
+import { TransactionBuilder, Transfer } from '@nearjs/tx';
+import { KeyPair } from '@nearjs/keys';
 
 const keyPair = KeyPair.fromRandom();
 

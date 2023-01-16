@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { PublicKey } from '@near.js/account';
+import { PublicKey } from '@nearjs/account';
 import BN from 'bn.js';
 import { IAction } from './action';
 import { Transaction } from './transaction';

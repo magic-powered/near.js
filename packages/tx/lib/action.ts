@@ -1,5 +1,5 @@
 import BN from 'bn.js';
-import { PublicKey, AccessKey } from '@near.js/account';
+import { PublicKey, AccessKey } from '@nearjs/account';
 import { field, variant, vec } from '@dao-xyz/borsh';
 
 export interface IAction {}

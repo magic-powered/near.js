@@ -1,13 +1,13 @@
-# @near.js/provider-wallet-my-near-wallet
+# @nearjs/provider-wallet-my-near-wallet
 
 ## Installation
 
 ```shell
-npm i @near.js/provider-wallet-my-near-wallet --save
+npm i @nearjs/provider-wallet-my-near-wallet --save
 ```
 
 ```shell
-yarn add @near.js/provider-wallet-my-near-wallet
+yarn add @nearjs/provider-wallet-my-near-wallet
 ```
 
 ## Usage
@@ -17,8 +17,8 @@ Provides the full integration with MyNearWallet
 ### Connect account
 
 ```typescript
-import { FileSystemKeyStore } from '@near.js/fs-key-store';
-import { ProviderMyNearWallet } from '@near.js/provider-wallet-my-near-wallet';
+import { FileSystemKeyStore } from '@nearjs/fs-key-store';
+import { ProviderMyNearWallet } from '@nearjs/provider-wallet-my-near-wallet';
 
 
 (async () => {
@@ -43,9 +43,9 @@ import { ProviderMyNearWallet } from '@near.js/provider-wallet-my-near-wallet';
 ### Sending transactions
 
 ```typescript
-import { FileSystemKeyStore } from '@near.js/fs-key-store';
-import { ProviderMyNearWallet } from '@near.js/provider-wallet-my-near-wallet';
-import { FunctionCall } from '@near.js/tx';
+import { FileSystemKeyStore } from '@nearjs/fs-key-store';
+import { ProviderMyNearWallet } from '@nearjs/provider-wallet-my-near-wallet';
+import { FunctionCall } from '@nearjs/tx';
 
 
 (async () => {

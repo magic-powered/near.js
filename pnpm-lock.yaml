@@ -6,14 +6,14 @@ importers:
     specifiers:
       '@babel/parser': ^7.19.6
       '@babel/types': ^7.19.4
-      '@near.js/account': workspace:^1.0.0
-      '@near.js/browser-key-store': workspace:^1.0.0
-      '@near.js/contracts': workspace:^1.0.0
-      '@near.js/fs-key-store': workspace:^1.0.0
-      '@near.js/provider-core': workspace:^1.0.0
-      '@near.js/provider-wallet-my-near-wallet': workspace:^1.0.0
-      '@near.js/tx': workspace:^1.0.0
-      '@near.js/units': workspace:^1.0.0
+      '@nearjs/account': workspace:^1.0.0
+      '@nearjs/browser-key-store': workspace:^1.0.0
+      '@nearjs/contracts': workspace:^1.0.0
+      '@nearjs/fs-key-store': workspace:^1.0.0
+      '@nearjs/provider-core': workspace:^1.0.0
+      '@nearjs/provider-wallet-my-near-wallet': workspace:^1.0.0
+      '@nearjs/tx': workspace:^1.0.0
+      '@nearjs/units': workspace:^1.0.0
       '@types/node': ^18.8.3
       '@typescript-eslint/eslint-plugin': ^5.41.0
       '@typescript-eslint/parser': ^5.41.0
@@ -25,14 +25,14 @@ importers:
       rollup: ^3.9.1
       typescript: ^4.8.4
     dependencies:
-      '@near.js/account': link:packages/account
-      '@near.js/browser-key-store': link:packages/browser-key-store
-      '@near.js/contracts': link:packages/contracts
-      '@near.js/fs-key-store': link:packages/fs-key-store
-      '@near.js/provider-core': link:packages/provider-core
-      '@near.js/provider-wallet-my-near-wallet': link:packages/provider-wallet-my-near-wallet
-      '@near.js/tx': link:packages/tx
-      '@near.js/units': link:packages/units
+      '@nearjs/account': link:packages/account
+      '@nearjs/browser-key-store': link:packages/browser-key-store
+      '@nearjs/contracts': link:packages/contracts
+      '@nearjs/fs-key-store': link:packages/fs-key-store
+      '@nearjs/provider-core': link:packages/provider-core
+      '@nearjs/provider-wallet-my-near-wallet': link:packages/provider-wallet-my-near-wallet
+      '@nearjs/tx': link:packages/tx
+      '@nearjs/units': link:packages/units
     devDependencies:
       '@babel/parser': 7.20.3
       '@babel/types': 7.20.2
@@ -66,46 +66,46 @@ importers:
 
   packages/browser-key-store:
     specifiers:
-      '@near.js/account': workspace:^1.0.0
+      '@nearjs/account': workspace:^1.0.0
     dependencies:
-      '@near.js/account': link:../account
+      '@nearjs/account': link:../account
 
   packages/contracts:
     specifiers:
-      '@near.js/provider-core': workspace:^1.0.0
-      '@near.js/tx': workspace:^1.0.0
+      '@nearjs/provider-core': workspace:^1.0.0
+      '@nearjs/tx': workspace:^1.0.0
     dependencies:
-      '@near.js/provider-core': link:../provider-core
-      '@near.js/tx': link:../tx
+      '@nearjs/provider-core': link:../provider-core
+      '@nearjs/tx': link:../tx
 
   packages/fs-key-store:
     specifiers:
-      '@near.js/account': workspace:^1.0.0
+      '@nearjs/account': workspace:^1.0.0
     dependencies:
-      '@near.js/account': link:../account
+      '@nearjs/account': link:../account
 
   packages/provider-core:
     specifiers:
-      '@near.js/account': workspace:^1.0.0
-      '@near.js/tx': workspace:^1.0.0
+      '@nearjs/account': workspace:^1.0.0
+      '@nearjs/tx': workspace:^1.0.0
       base58-js: ^1.0.5
     dependencies:
-      '@near.js/account': link:../account
-      '@near.js/tx': link:../tx
+      '@nearjs/account': link:../account
+      '@nearjs/tx': link:../tx
       base58-js: 1.0.5
 
   packages/provider-wallet-my-near-wallet:
     specifiers:
-      '@near.js/account': workspace:^1.0.0
-      '@near.js/provider-core': workspace:^1.0.0
-      '@near.js/tx': workspace:^1.0.0
+      '@nearjs/account': workspace:^1.0.0
+      '@nearjs/provider-core': workspace:^1.0.0
+      '@nearjs/tx': workspace:^1.0.0
       '@types/uuid': ^9.0.0
       base58-js: ^1.0.5
       uuid: ^9.0.0
     dependencies:
-      '@near.js/account': link:../account
-      '@near.js/provider-core': link:../provider-core
-      '@near.js/tx': link:../tx
+      '@nearjs/account': link:../account
+      '@nearjs/provider-core': link:../provider-core
+      '@nearjs/tx': link:../tx
       base58-js: 1.0.5
       uuid: 9.0.0
     devDependencies:
@@ -113,12 +113,12 @@ importers:
 
   packages/sandbox:
     specifiers:
-      '@near.js/account': workspace:^1.0.0
-      '@near.js/contracts': workspace:^1.0.0
-      '@near.js/fs-key-store': workspace:^1.0.0
-      '@near.js/provider-core': workspace:^1.0.0
-      '@near.js/provider-wallet-my-near-wallet': workspace:^1.0.0
-      '@near.js/tx': workspace:^1.0.0
+      '@nearjs/account': workspace:^1.0.0
+      '@nearjs/contracts': workspace:^1.0.0
+      '@nearjs/fs-key-store': workspace:^1.0.0
+      '@nearjs/provider-core': workspace:^1.0.0
+      '@nearjs/provider-wallet-my-near-wallet': workspace:^1.0.0
+      '@nearjs/tx': workspace:^1.0.0
       '@types/bn.js': ^5.1.1
       '@types/node': ^18.8.3
       bn.js: ^5.2.1
@@ -126,12 +126,12 @@ importers:
       ts-node: ^10.9.1
       typescript: ^4.8.4
     dependencies:
-      '@near.js/account': link:../account
-      '@near.js/contracts': link:../contracts
-      '@near.js/fs-key-store': link:../fs-key-store
-      '@near.js/provider-core': link:../provider-core
-      '@near.js/provider-wallet-my-near-wallet': link:../provider-wallet-my-near-wallet
-      '@near.js/tx': link:../tx
+      '@nearjs/account': link:../account
+      '@nearjs/contracts': link:../contracts
+      '@nearjs/fs-key-store': link:../fs-key-store
+      '@nearjs/provider-core': link:../provider-core
+      '@nearjs/provider-wallet-my-near-wallet': link:../provider-wallet-my-near-wallet
+      '@nearjs/tx': link:../tx
       bn.js: 5.2.1
       near-api-js: 1.1.0
     devDependencies:
@@ -143,7 +143,7 @@ importers:
   packages/tx:
     specifiers:
       '@dao-xyz/borsh': ^4.0.7
-      '@near.js/account': workspace:^1.0.0
+      '@nearjs/account': workspace:^1.0.0
       '@protobufjs/utf8': ^1.1.0
       '@types/bn.js': ^5.1.1
       base58-js: ^1.0.5
@@ -151,7 +151,7 @@ importers:
       js-sha256: ^0.9.0
     dependencies:
       '@dao-xyz/borsh': 4.0.7
-      '@near.js/account': link:../account
+      '@nearjs/account': link:../account
       base58-js: 1.0.5
       bn.js: 5.2.1
       js-sha256: 0.9.0

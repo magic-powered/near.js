@@ -1,13 +1,13 @@
 // TODO: remove nocheck
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-nocheck
-import { PublicKey, KeyId, KeyPair } from '@near.js/account';
+import { PublicKey, KeyId, KeyPair } from '@nearjs/account';
 import {
   Transaction,
   SignedTransaction,
   IAction,
   TransactionBuilder,
-} from '@near.js/tx';
+} from '@nearjs/tx';
 // TODO: typings
 import { base58_to_binary as fromBase58 } from 'base58-js';
 import { JsonRPCRequest, RPCRequest } from './request';

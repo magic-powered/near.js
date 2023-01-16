@@ -1,13 +1,13 @@
-# @near.js/browser-key-store
+# @nearjs/browser-key-store
 
 ## Installation
 
 ```shell
-npm i @near.js/browser-key-store --save
+npm i @nearjs/browser-key-store --save
 ```
 
 ```shell
-yarn add @near.js/browser-key-store
+yarn add @nearjs/browser-key-store
 ```
 
 ## About
@@ -19,7 +19,7 @@ The package provides implementation of KeyStore that can store KeyPair in browse
 ```typescript
 import {
   BrowserKeyStore
-} from '@near.js/browser-key-store';
+} from '@nearjs/browser-key-store';
 
 (async () => {
   /**

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-ignore
-import { NearRPCProvider, CallViewFunction } from '@near.js/provider-core';
-import { FunctionCall } from '@near.js/tx';
+import { NearRPCProvider, CallViewFunction } from '@nearjs/provider-core';
+import { FunctionCall } from '@nearjs/tx';
 
 export abstract class Contract {
   private readonly provider: NearRPCProvider<any>;

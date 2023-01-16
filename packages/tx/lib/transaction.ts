@@ -1,5 +1,5 @@
 import BN from 'bn.js';
-import { PublicKey } from '@near.js/account';
+import { PublicKey } from '@nearjs/account';
 import {
   deserialize, field, fixedArray, serialize, vec,
 } from '@dao-xyz/borsh';

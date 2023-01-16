@@ -1,8 +1,8 @@
-import { KeyPair, KeyId, KeyType } from '@near.js/account';
+import { KeyPair, KeyId, KeyType } from '@nearjs/account';
 
 import { v4 as uuid } from 'uuid';
 
-import { NearRPCProvider } from '@near.js/provider-core';
+import { NearRPCProvider } from '@nearjs/provider-core';
 import { MyNearWalletConfiguration } from './my-near-wallet-configuration';
 import { MyNearWalletSignInOptions } from './my-near-wallet-sign-in-options';
 

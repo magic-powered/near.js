@@ -1,4 +1,4 @@
-import { KeyPair, KeyStore, KeyIdString } from '@near.js/account';
+import { KeyPair, KeyStore, KeyIdString } from '@nearjs/account';
 
 export interface BrowserLocalStorageKeyStoreConfig {
   baseKey?: string;

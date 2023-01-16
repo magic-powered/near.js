@@ -1,13 +1,13 @@
-# @near.js/provider-rpc
+# @nearjs/provider-rpc
 
 ## Installation
 
 ```shell
-npm i @near.js/provider-rpc --save
+npm i @nearjs/provider-rpc --save
 ```
 
 ```shell
-yarn add @near.js/provider-rpc
+yarn add @nearjs/provider-rpc
 ```
 
 ## Usage
@@ -18,7 +18,7 @@ import {
   RPCProvider,
   StandardNodeUrls,
   BroadcastTx,
-} from '@near.js/provider-rpc';
+} from '@nearjs/provider-rpc';
 
 const config = new RPCProviderConfig(StandardNodeUrls.TESTNET);
 
