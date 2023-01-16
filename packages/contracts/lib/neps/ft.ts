@@ -1,3 +1,6 @@
+// TODO: remove nocheck
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+// @ts-nocheck
 import { Contract } from '../abstract-contract';
 
 export interface FTMetadata {

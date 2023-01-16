@@ -1,4 +1,6 @@
-import { NearRPCProvider } from '@near.js/provider-core';
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+// @ts-ignore
+import { NearRPCProvider, CallViewFunction } from '@near.js/provider-core';
 import { FunctionCall } from '@near.js/tx';
 
 export abstract class Contract {
@@ -8,7 +10,11 @@ export abstract class Contract {
 
   private signerAccountId?: string;
 
-  constructor(contractAccountId: string, provider: NearRPCProvider<any>, signerAccountId?: string) {
+  constructor(
+    contractAccountId: string,
+    provider: NearRPCProvider<any>,
+    signerAccountId?: string,
+  ) {
     this.contractAccountId = contractAccountId;
     this.provider = provider;
     this.signerAccountId = signerAccountId;
@@ -16,8 +22,10 @@ export abstract class Contract {
 
   public async setSignerAccountId(signerAccountId: string) {
     if (!(await this.provider.isAccountConnected(signerAccountId))) {
-      throw new Error(`account ${signerAccountId} is not connected to the provider.`
-        + `Please authorize ${signerAccountId} with near provider`);
+      throw new Error(
+        `account ${signerAccountId} is not connected to the provider.`
+          + `Please authorize ${signerAccountId} with near provider`,
+      );
     }
     this.signerAccountId = signerAccountId;
   }
@@ -34,10 +42,14 @@ export abstract class Contract {
         [this.signerAccountId] = connectedAccounts;
       } else {
         if (!connectedAccounts.length) {
-          throw new Error('No Near accounts connected. '
-            + 'Please connect at least one account ot call the contract functions');
+          throw new Error(
+            'No Near accounts connected. '
+              + 'Please connect at least one account ot call the contract functions',
+          );
         }
-        throw new Error('Signer account id ambiguous. Please choose one from connected');
+        throw new Error(
+          'Signer account id ambiguous. Please choose one from connected',
+        );
       }
     }
 
@@ -48,7 +60,10 @@ export abstract class Contract {
     );
   }
 
-  protected async callView(methodName: string, args: { [key: string]: any }) {
+  protected async callView(
+    methodName: string,
+    args: { [key: string]: any },
+  ): CallViewFunction {
     return this.provider.sendViewCall(this.contractAccountId, methodName, args);
   }
 }

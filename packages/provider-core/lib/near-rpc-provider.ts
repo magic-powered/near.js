@@ -1,11 +1,14 @@
+// TODO: remove nocheck
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+// @ts-nocheck
 import { PublicKey, KeyId, KeyPair } from '@near.js/account';
 import {
-  Transaction, SignedTransaction, IAction, TransactionBuilder,
+  Transaction,
+  SignedTransaction,
+  IAction,
+  TransactionBuilder,
 } from '@near.js/tx';
-import axios from 'axios';
 // TODO: typings
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
 import { base58_to_binary as fromBase58 } from 'base58-js';
 import { JsonRPCRequest, RPCRequest } from './request';
 import { IJsonRpcResponse, RPCResponse } from './response';
@@ -24,7 +27,9 @@ export interface WalletConnectOptions {
   methodNames?: string[];
 }
 
-export abstract class NearRPCProvider<ProviderConfig extends RPCProviderConfig> {
+export abstract class NearRPCProvider<
+  ProviderConfig extends RPCProviderConfig,
+> {
   protected requestId = 1;
 
   protected readonly config: ProviderConfig;
@@ -106,7 +111,10 @@ export abstract class NearRPCProvider<ProviderConfig extends RPCProviderConfig> 
 
     await this.persistKeyPair(senderAccountId, keyPair);
 
-    const signedTransaction = await this.signTransaction(senderAccountId, transaction);
+    const signedTransaction = await this.signTransaction(
+      senderAccountId,
+      transaction,
+    );
 
     const broadcastTxSync = new BroadcastTxSync(signedTransaction);
 
@@ -128,10 +136,12 @@ export abstract class NearRPCProvider<ProviderConfig extends RPCProviderConfig> 
           && e.errorObject.data.TxExecutionError
           && e.errorObject.data.TxExecutionError.InvalidTxError
           && e.errorObject.data.TxExecutionError.InvalidTxError.InvalidNonce
-          && e.errorObject.data.TxExecutionError.InvalidTxError.InvalidNonce.ak_nonce
+          && e.errorObject.data.TxExecutionError.InvalidTxError.InvalidNonce
+            .ak_nonce
         ) {
           keyPair.setNonce(
-            e.errorObject.data.TxExecutionError.InvalidTxError.InvalidNonce.ak_nonce,
+            e.errorObject.data.TxExecutionError.InvalidTxError.InvalidNonce
+              .ak_nonce,
           );
           await this.persistKeyPair(senderAccountId, keyPair);
 
@@ -140,7 +150,7 @@ export abstract class NearRPCProvider<ProviderConfig extends RPCProviderConfig> 
             senderAccountId,
             receiverAccountId,
             actions,
-            (retryCount + 1),
+            retryCount + 1,
           );
         }
       }

@@ -8,9 +8,9 @@ importers:
       '@babel/types': ^7.19.4
       '@near.js/account': workspace:^1.0.0
       '@near.js/browser-key-store': workspace:^1.0.0
+      '@near.js/contracts': workspace:^1.0.0
       '@near.js/fs-key-store': workspace:^1.0.0
       '@near.js/provider-core': workspace:^1.0.0
-      '@near.js/provider-wallet-core': workspace:^1.0.0
       '@near.js/provider-wallet-my-near-wallet': workspace:^1.0.0
       '@near.js/tx': workspace:^1.0.0
       '@near.js/units': workspace:^1.0.0
@@ -27,9 +27,9 @@ importers:
     dependencies:
       '@near.js/account': link:packages/account
       '@near.js/browser-key-store': link:packages/browser-key-store
+      '@near.js/contracts': link:packages/contracts
       '@near.js/fs-key-store': link:packages/fs-key-store
       '@near.js/provider-core': link:packages/provider-core
-      '@near.js/provider-wallet-core': link:packages/provider-wallet-core
       '@near.js/provider-wallet-my-near-wallet': link:packages/provider-wallet-my-near-wallet
       '@near.js/tx': link:packages/tx
       '@near.js/units': link:packages/units
@@ -70,9 +70,6 @@ importers:
     dependencies:
       '@near.js/account': link:../account
 
-  packages/config:
-    specifiers: {}
-
   packages/contracts:
     specifiers:
       '@near.js/provider-core': workspace:^1.0.0
@@ -91,29 +88,16 @@ importers:
     specifiers:
       '@near.js/account': workspace:^1.0.0
       '@near.js/tx': workspace:^1.0.0
-      axios: ^1.1.0
       base58-js: ^1.0.5
     dependencies:
       '@near.js/account': link:../account
       '@near.js/tx': link:../tx
-      axios: 1.1.3
       base58-js: 1.0.5
-
-  packages/provider-wallet-core:
-    specifiers:
-      '@near.js/account': workspace:^1.0.0
-      '@near.js/provider-core': workspace:^1.0.0
-      '@near.js/tx': workspace:^1.0.0
-    dependencies:
-      '@near.js/account': link:../account
-      '@near.js/provider-core': link:../provider-core
-      '@near.js/tx': link:../tx
 
   packages/provider-wallet-my-near-wallet:
     specifiers:
       '@near.js/account': workspace:^1.0.0
       '@near.js/provider-core': workspace:^1.0.0
-      '@near.js/provider-wallet-core': workspace:^1.0.0
       '@near.js/tx': workspace:^1.0.0
       '@types/uuid': ^9.0.0
       base58-js: ^1.0.5
@@ -121,7 +105,6 @@ importers:
     dependencies:
       '@near.js/account': link:../account
       '@near.js/provider-core': link:../provider-core
-      '@near.js/provider-wallet-core': link:../provider-wallet-core
       '@near.js/tx': link:../tx
       base58-js: 1.0.5
       uuid: 9.0.0
