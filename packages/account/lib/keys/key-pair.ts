@@ -99,6 +99,8 @@ export class KeyPair {
         nonce,
       );
     } catch (e) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       throw new Error(e);
     }
   }

@@ -1,13 +1,13 @@
-# @near.js/contracts
+# @nearjs/contracts
 
 ## Installation
 
 ```shell
-npm i @near.js/contracts --save
+npm i @nearjs/contracts --save
 ```
 
 ```shell
-yarn add @near.js/contracts
+yarn add @nearjs/contracts
 ```
 
 ## About
@@ -18,9 +18,9 @@ Used for simplification of the interactions with the contracts deployed to the N
 ## Usage
 
 ```typescript
-import { FileSystemKeyStore } from '@near.js/fs-key-store';
-import { ProviderMyNearWallet } from '@near.js/provider-wallet-my-near-wallet';
-import { NonFungibleToken } from '@near.js/contracts';
+import { FileSystemKeyStore } from '@nearjs/fs-key-store';
+import { ProviderMyNearWallet } from '@nearjs/provider-wallet-my-near-wallet';
+import { NonFungibleToken } from '@nearjs/contracts';
 
 const iam = 'toxa.testnet';
 const friend = 'toxa02.testnet';

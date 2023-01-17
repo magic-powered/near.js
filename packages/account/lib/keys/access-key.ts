@@ -23,12 +23,16 @@ export class FunctionCallPermission {
 
   /// The access key only allows transactions with the given receiver's account id.
   @field({ type: 'string' })
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
     receiver_id: string;
 
   /// A list of method names that can be used. The access key only allows transactions with the
   /// function call of one of the given method names.
   /// Empty list means any method name can be used.
   @field({ type: vec('string') })
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
     method_names: string[];
 }
 

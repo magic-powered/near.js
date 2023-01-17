@@ -1,7 +1,7 @@
 import * as os from 'os';
 import * as fs from 'fs';
 import * as path from 'path';
-import { KeyPair, KeyIdString, KeyStore } from '@near.js/account';
+import { KeyPair, KeyIdString, KeyStore } from '@nearjs/account';
 
 export interface FileSystemStoreConfig {
   keysPath?: string;

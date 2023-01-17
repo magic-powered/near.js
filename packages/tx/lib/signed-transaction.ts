@@ -1,4 +1,4 @@
-import { KeyType } from '@near.js/account';
+import { KeyType } from '@nearjs/account';
 import {
   deserialize, field, fixedArray, serialize,
 } from '@dao-xyz/borsh';

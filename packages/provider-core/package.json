@@ -1,25 +1,44 @@
 {
-  "name": "@near.js/provider-core",
+  "name": "@nearjs/provider-core",
   "version": "1.0.0",
   "description": "",
-  "main": "index.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/esm/types/index.d.ts",
+        "default": "./dist/esm/index.mjs"
+      },
+      "require": {
+        "types": "./dist/cjs/types/index.d.ts",
+        "default": "./dist/cjs/index.js"
+      }
+    }
+  },
+  "types": "./dist/cjs/types/index.d.ts",
+  "main": "./dist/cjs/index.js",
+  "files": [
+    "dist/**/*"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "clean": "rm -rf dist",
+    "build": "pnpm run clean && pnpm run build:esm && pnpm run build:cjs",
+    "build:esm": "tsc -p ./tsconfig.esm.json && mv dist/esm/index.js dist/esm/index.mjs",
+    "build:cjs": "tsc -p ./tsconfig.cjs.json",
+    "prepublishOnly": "pnpm build"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Magic-Powered/near.js.git"
   },
-  "author": "",
+  "author": "Magic Powered",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/Magic-Powered/near.js/issues"
   },
   "homepage": "https://github.com/Magic-Powered/near.js#readme",
   "dependencies": {
-    "@near.js/account": "workspace:^1.0.0",
-    "@near.js/tx": "workspace:^1.0.0",
-    "axios": "^1.1.0",
+    "@nearjs/account": "workspace:^1.0.0",
+    "@nearjs/tx": "workspace:^1.0.0",
     "base58-js": "^1.0.5"
   }
 }

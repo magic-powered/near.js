@@ -1,11 +1,14 @@
-import { PublicKey, KeyId, KeyPair } from '@near.js/account';
+// TODO: remove nocheck
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+// @ts-nocheck
+import { PublicKey, KeyId, KeyPair } from '@nearjs/account';
 import {
-  Transaction, SignedTransaction, IAction, TransactionBuilder,
-} from '@near.js/tx';
-import axios from 'axios';
+  Transaction,
+  SignedTransaction,
+  IAction,
+  TransactionBuilder,
+} from '@nearjs/tx';
 // TODO: typings
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
 import { base58_to_binary as fromBase58 } from 'base58-js';
 import { JsonRPCRequest, RPCRequest } from './request';
 import { IJsonRpcResponse, RPCResponse } from './response';
@@ -24,7 +27,9 @@ export interface WalletConnectOptions {
   methodNames?: string[];
 }
 
-export abstract class NearRPCProvider<ProviderConfig extends RPCProviderConfig> {
+export abstract class NearRPCProvider<
+  ProviderConfig extends RPCProviderConfig,
+> {
   protected requestId = 1;
 
   protected readonly config: ProviderConfig;
@@ -106,7 +111,10 @@ export abstract class NearRPCProvider<ProviderConfig extends RPCProviderConfig> 
 
     await this.persistKeyPair(senderAccountId, keyPair);
 
-    const signedTransaction = await this.signTransaction(senderAccountId, transaction);
+    const signedTransaction = await this.signTransaction(
+      senderAccountId,
+      transaction,
+    );
 
     const broadcastTxSync = new BroadcastTxSync(signedTransaction);
 
@@ -128,10 +136,12 @@ export abstract class NearRPCProvider<ProviderConfig extends RPCProviderConfig> 
           && e.errorObject.data.TxExecutionError
           && e.errorObject.data.TxExecutionError.InvalidTxError
           && e.errorObject.data.TxExecutionError.InvalidTxError.InvalidNonce
-          && e.errorObject.data.TxExecutionError.InvalidTxError.InvalidNonce.ak_nonce
+          && e.errorObject.data.TxExecutionError.InvalidTxError.InvalidNonce
+            .ak_nonce
         ) {
           keyPair.setNonce(
-            e.errorObject.data.TxExecutionError.InvalidTxError.InvalidNonce.ak_nonce,
+            e.errorObject.data.TxExecutionError.InvalidTxError.InvalidNonce
+              .ak_nonce,
           );
           await this.persistKeyPair(senderAccountId, keyPair);
 
@@ -140,7 +150,7 @@ export abstract class NearRPCProvider<ProviderConfig extends RPCProviderConfig> 
             senderAccountId,
             receiverAccountId,
             actions,
-            (retryCount + 1),
+            retryCount + 1,
           );
         }
       }
@@ -179,15 +189,22 @@ export abstract class NearRPCProvider<ProviderConfig extends RPCProviderConfig> 
     request: JsonRPCRequest,
     method: HTTPMethods = HTTPMethods.POST,
   ): Promise<IJsonRpcResponse<ReturnType>> {
-    const req = {
-      url: this.config.rpcUrl,
-      method,
-      data: request.toObject(),
-      timeout: this.config.timeout,
-      headers: this.config.headers,
-    };
+    const controller = new AbortController();
+    const id = setTimeout(() => controller.abort(), this.config.timeout);
 
-    const result = await axios.request<IJsonRpcResponse<ReturnType>>(req);
+    const response = await fetch(this.config.rpcUrl, {
+      method,
+      body: JSON.stringify(request.toObject()),
+      headers: {
+        'Content-Type': 'application/json',
+        ...this.config.headers,
+      },
+      signal: controller.signal,
+    });
+
+    clearTimeout(id);
+
+    const result = await response.json();
 
     if (result.status !== 200) {
       throw new UnknownError(result.data);

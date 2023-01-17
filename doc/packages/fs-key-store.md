@@ -1,13 +1,13 @@
-# @near.js/fs-key-store
+# @nearjs/fs-key-store
 
 ## Installation
 
 ```shell
-npm i @near.js/fs-key-store --save
+npm i @nearjs/fs-key-store --save
 ```
 
 ```shell
-yarn add @near.js/fs-key-store
+yarn add @nearjs/fs-key-store
 ```
 
 ## About
@@ -19,7 +19,7 @@ The package provides implementation of KeyStore that can store KeyPair in the lo
 ```typescript
 import {
   BrowserKeyStore
-} from '@near.js/fs-key-store';
+} from '@nearjs/fs-key-store';
 
 (async () => {
   /**

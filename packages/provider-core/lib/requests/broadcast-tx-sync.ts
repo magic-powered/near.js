@@ -1,4 +1,4 @@
-import { SignedTransaction } from '@near.js/tx';
+import { SignedTransaction } from '@nearjs/tx';
 import {
   JsonRPCRequest, RequestId, RPCRequest, RPCRequestMethod,
 } from '../request';

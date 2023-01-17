@@ -1,8 +1,0 @@
-{
-  "compilerOptions": {
-    "outDir": "./dist/",
-    "rootDir": "./"
-  },
-  "extends": "../../tsconfig.package.json",
-  "include": ["./lib/**/*.ts", "node_modules/@near.js/**/lib/**/*.ts"]
-}

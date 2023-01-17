@@ -1,4 +1,4 @@
-import { WalletConnectOptions } from '@near.js/provider-core';
+import { WalletConnectOptions } from '@nearjs/provider-core';
 
 export interface MyNearWalletSignInOptions extends WalletConnectOptions {
   contract?: string;

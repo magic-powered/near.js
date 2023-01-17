@@ -1,5 +1,5 @@
-import { KeyStore } from '@near.js/account';
-import { RPCProviderConfig } from '@near.js/provider-core';
+import { KeyStore } from '@nearjs/account';
+import { RPCProviderConfig } from '@nearjs/provider-core';
 
 export interface MyNearWalletConfiguration extends RPCProviderConfig {
   keyStore: KeyStore;

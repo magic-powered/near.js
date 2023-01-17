@@ -6,6 +6,6 @@
     "noUnusedLocals": false
   },
   "exclude": [],
-  "extends": "../../tsconfig.package.json",
+  "extends": "./../../configs/tsconfig.base.json",
   "include": ["index.ts"]
 }
