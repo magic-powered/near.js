@@ -22,7 +22,6 @@ importers:
       eslint-config-airbnb-typescript: ^17.0.0
       eslint-plugin-import: ^2.26.0
       husky: ^8.0.1
-      rollup: ^3.9.1
       typescript: ^4.8.4
     dependencies:
       '@nearjs/account': link:packages/account
@@ -44,7 +43,6 @@ importers:
       eslint-config-airbnb-typescript: 17.0.0_um3jpch3v3dsc7kuwqks6afcja
       eslint-plugin-import: 2.26.0_jnohwm7eexgw7uduhweedcbnpe
       husky: 8.0.2
-      rollup: 3.9.1
       typescript: 4.8.4
 
   packages/account:
@@ -1057,14 +1055,6 @@ packages:
     resolution: {integrity: sha512-OO0pH2lK6a0hZnAdau5ItzHPI6pUlvI7jMVnxUQRtw4owF2wk8lOSabtGDCTP4Ggrg2MbGnWO9X8K1t4+fGMDw==}
     dev: true
 
-  /fsevents/2.3.2:
-    resolution: {integrity: sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==}
-    engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
-    os: [darwin]
-    requiresBuild: true
-    dev: true
-    optional: true
-
   /function-bind/1.1.1:
     resolution: {integrity: sha512-yIovAzMX49sF8Yl58fSCWJ5svSLuaibPxXQJFLmBObTuCr0Mf1KiPopGM9NiFjiYBCbfaa2Fh6breQ6ANVTI0A==}
     dev: true
@@ -1640,14 +1630,6 @@ packages:
     hasBin: true
     dependencies:
       glob: 7.2.3
-    dev: true
-
-  /rollup/3.9.1:
-    resolution: {integrity: sha512-GswCYHXftN8ZKGVgQhTFUJB/NBXxrRGgO2NCy6E8s1rwEJ4Q9/VttNqcYfEvx4dTo4j58YqdC3OVztPzlKSX8w==}
-    engines: {node: '>=14.18.0', npm: '>=8.0.0'}
-    hasBin: true
-    optionalDependencies:
-      fsevents: 2.3.2
     dev: true
 
   /run-parallel/1.2.0:
