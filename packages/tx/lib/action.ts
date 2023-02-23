@@ -38,7 +38,7 @@ export class FunctionCall extends Action {
     methodName: string,
     args: { [key: string]: any },
     gas: number,
-    deposit: string // TODO: see what we can do better
+    deposit: string, // TODO: see what we can do better
   ) {
     super();
     this.method_name = methodName;
