@@ -74,6 +74,10 @@ export class KeyPair {
     return this.publicKey;
   }
 
+  public getPrivateKey(): PrivateKey {
+    return this.privateKey;
+  }
+
   public toJsonString(): string {
     return JSON.stringify({
       publicKey: this.publicKey.toString(),
