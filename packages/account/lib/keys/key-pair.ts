@@ -130,4 +130,13 @@ export class KeyPair {
       new PublicKey(keypair.publicKey, keyType),
     );
   }
+
+  public static fromSeed(seed: string, keyType: KeyType = KeyType.ED25519): KeyPair {
+    const keyPair = sign.keyPair.fromSeed(new TextEncoder().encode(seed));
+
+    return new KeyPair(
+      new PrivateKey(keyPair.secretKey, keyType),
+      new PublicKey(keyPair.publicKey, keyType),
+    );
+  }
 }
