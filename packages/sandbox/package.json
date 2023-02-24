@@ -23,12 +23,12 @@
     "typescript": "^4.8.4"
   },
   "dependencies": {
-    "@nearjs/account": "workspace:^1.0.0",
+    "@nearjs/account": "workspace:^1.0.3",
     "@nearjs/contracts": "workspace:^1.0.0",
     "@nearjs/fs-key-store": "workspace:^1.0.0",
-    "@nearjs/provider-core": "workspace:^1.0.0",
-    "@nearjs/provider-wallet-my-near-wallet": "workspace:^1.0.0",
-    "@nearjs/tx": "workspace:^1.0.0",
+    "@nearjs/provider-core": "workspace:^1.0.1",
+    "@nearjs/provider-wallet-my-near-wallet": "workspace:^1.0.1",
+    "@nearjs/tx": "workspace:^1.0.1",
     "bn.js": "^5.2.1",
     "near-api-js": "^1.1.0"
   }
