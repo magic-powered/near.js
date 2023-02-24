@@ -13,7 +13,7 @@ import { base58_to_binary as fromBase58 } from 'base58-js';
 import { JsonRPCRequest, RPCRequest } from './request';
 import { IJsonRpcResponse, RPCResponse } from './response';
 import { RPCProviderConfig } from './config';
-import { RPCError, UnknownError } from './errors';
+import { UnknownError } from './errors';
 import { Block, BroadcastTxSync } from './requests';
 import { CallViewFunction } from './requests/call-view-function';
 
@@ -190,7 +190,8 @@ export abstract class NearRPCProvider<
     method: HTTPMethods = HTTPMethods.POST,
   ): Promise<IJsonRpcResponse<ReturnType>> {
     const controller = new AbortController();
-    const id = setTimeout(() => controller.abort(), this.config.timeout);
+    const id = this.config.timeout
+      ? setTimeout(() => controller.abort(), this.config.timeout) : null;
 
     const response = await fetch(this.config.rpcUrl, {
       method,
@@ -202,18 +203,16 @@ export abstract class NearRPCProvider<
       signal: controller.signal,
     });
 
-    clearTimeout(id);
+    if (id) {
+      clearTimeout(id);
+    }
 
     const result = await response.json();
 
-    if (result.status !== 200) {
-      throw new UnknownError(result.data);
+    if (!response.ok) {
+      throw new UnknownError(result);
     }
 
-    if (result.data.error) {
-      throw new RPCError(result.data.error);
-    }
-
-    return result.data;
+    return result;
   }
 }
