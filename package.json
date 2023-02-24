@@ -1,6 +1,6 @@
 {
   "name": "@nearjs/all",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "author": "Anatolii Petrovskyi <anatolii@magicpowered.io>",
   "license": "MIT",
   "engines": {
@@ -41,13 +41,13 @@
   },
   "homepage": "https://github.com/Magic-Powered/near.js#readme",
   "dependencies": {
-    "@nearjs/account": "workspace:^1.0.0",
+    "@nearjs/account": "workspace:^1.0.3",
     "@nearjs/browser-key-store": "workspace:^1.0.0",
     "@nearjs/contracts": "workspace:^1.0.0",
     "@nearjs/fs-key-store": "workspace:^1.0.0",
-    "@nearjs/provider-core": "workspace:^1.0.0",
-    "@nearjs/provider-wallet-my-near-wallet": "workspace:^1.0.0",
-    "@nearjs/tx": "workspace:^1.0.0",
+    "@nearjs/provider-core": "workspace:^1.0.1",
+    "@nearjs/provider-wallet-my-near-wallet": "workspace:^1.0.1",
+    "@nearjs/tx": "workspace:^1.0.1",
     "@nearjs/units": "workspace:^1.0.0"
   },
   "devDependencies": {
