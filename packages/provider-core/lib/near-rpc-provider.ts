@@ -13,7 +13,7 @@ import { base58_to_binary as fromBase58 } from 'base58-js';
 import { JsonRPCRequest, RPCRequest } from './request';
 import { IJsonRpcResponse, RPCResponse } from './response';
 import { RPCProviderConfig } from './config';
-import { UnknownError } from './errors';
+import { RPCError, UnknownError } from './errors';
 import { Block, BroadcastTxSync } from './requests';
 import { CallViewFunction } from './requests/call-view-function';
 
@@ -211,6 +211,10 @@ export abstract class NearRPCProvider<
 
     if (!response.ok) {
       throw new UnknownError(result);
+    }
+
+    if (result.error) {
+      throw new RPCError(result.error);
     }
 
     return result;

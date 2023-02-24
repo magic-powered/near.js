@@ -1,6 +1,6 @@
 {
   "name": "@nearjs/provider-wallet-my-near-wallet",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "",
   "exports": {
     ".": {
@@ -38,7 +38,7 @@
   "homepage": "https://github.com/Magic-Powered/near.js#readme",
   "dependencies": {
     "@nearjs/account": "workspace:^1.0.0",
-    "@nearjs/provider-core": "workspace:^1.0.1",
+    "@nearjs/provider-core": "workspace:^1.0.2",
     "@nearjs/tx": "workspace:^1.0.0",
     "base58-js": "^1.0.5",
     "uuid": "^9.0.0"
