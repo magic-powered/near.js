@@ -14,17 +14,6 @@ Near.JS is a community driven typescript library to interact with Near blockchai
 - Complete functionality for all Near desires.
 - MIT License.
 
-## Documentation
-
-- [Getting started](docs/getting-started.md)
-- [Packages](docs/packages.md)
-
-## Contribute
-
-- [Library architecture](docs/architecture.md)
-- [Contribution guide](docs/contributing.md)
-- [Roadmap](docs/roadmap.md)
-
 # License
 
 MIT License
