@@ -1,0 +1,52 @@
+{
+  "name": "@nearjs/web",
+  "version": "1.0.1",
+  "description": "",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/esm/types/index.d.ts",
+        "default": "./dist/esm/index.mjs"
+      },
+      "require": {
+        "types": "./dist/cjs/types/index.d.ts",
+        "default": "./dist/cjs/index.js"
+      }
+    }
+  },
+  "types": "./dist/cjs/types/index.d.ts",
+  "main": "./dist/cjs/index.js",
+  "files": [
+    "dist/**/*"
+  ],
+  "scripts": {
+    "clean": "rm -rf dist",
+    "build": "pnpm run clean && pnpm run build:esm && pnpm run build:cjs",
+    "build:esm": "tsc -p ./tsconfig.esm.json && mv dist/esm/index.js dist/esm/index.mjs",
+    "build:cjs": "tsc -p ./tsconfig.cjs.json",
+    "prepublishOnly": "pnpm build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Magic-Powered/near.js.git"
+  },
+  "author": "Magic Powered",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Magic-Powered/near.js/issues"
+  },
+  "homepage": "https://github.com/Magic-Powered/near.js#readme",
+  "dependencies": {
+    "@dao-xyz/borsh": "^4.0.7",
+    "@nearjs/account": "workspace:^1.0.3",
+    "@nearjs/browser-key-store": "workspace:^1.0.0",
+    "@nearjs/provider-wallet-my-near-wallet": "workspace:^1.0.2",
+    "base58-js": "^1.0.5",
+    "bn.js": "^5.2.1",
+    "js-sha256": "^0.9.0"
+  },
+  "devDependencies": {
+    "@protobufjs/utf8": "^1.1.0",
+    "@types/bn.js": "^5.1.1"
+  }
+}
