@@ -16,14 +16,14 @@ Near.JS is a community driven typescript library to interact with Near blockchai
 
 ## Documentation
 
-- [Getting started](./doc/getting-started.md)
-- [Packages](./doc/packages.md)
+- [Getting started](docs/getting-started.md)
+- [Packages](docs/packages.md)
 
 ## Contribute
 
-- [Library architecture](./doc/architecture.md)
-- [Contribution guide](./doc/contributing.md)
-- [Roadmap](./doc/roadmap.md)
+- [Library architecture](docs/architecture.md)
+- [Contribution guide](docs/contributing.md)
+- [Roadmap](docs/roadmap.md)
 
 # License
 
