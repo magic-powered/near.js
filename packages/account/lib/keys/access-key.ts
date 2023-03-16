@@ -34,6 +34,12 @@ export class FunctionCallPermission {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
     method_names: string[];
+
+  constructor(allowance: string, receiver_id: string, method_names: string[]) {
+    this.allowance = new BN(allowance);
+    this.receiver_id = receiver_id;
+    this.method_names = method_names;
+  }
 }
 
 export const serializeAccessKeyPermission = (accessKeyPermission: AccessKeyPermission): string => {
@@ -60,12 +66,7 @@ export const deserializePermission = (
   const obj = JSON.parse(Buffer.from(serializedAccessKeyPermission, 'base64').toString());
 
   if (obj.type === FunctionCallPermission.name) {
-    const functionCallPermission = new FunctionCallPermission();
-    functionCallPermission.method_names = obj.methodNames;
-    functionCallPermission.receiver_id = obj.receiverId;
-    functionCallPermission.allowance = obj.allowance;
-
-    return functionCallPermission;
+    return new FunctionCallPermission(obj.allowance, obj.receiverId, obj.methodNames);
   }
 
   if (obj.type === FullAccess.name) {

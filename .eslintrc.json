@@ -13,8 +13,11 @@
     "semi": ["error", "always"],
     "no-console": "off",
     "@typescript-eslint/no-empty-interface": "off",
+    "@typescript-eslint/ban-ts-comment": "off",
     "max-classes-per-file": "off",
-    "import/prefer-default-export": "off"
+    "import/prefer-default-export": "off",
+    "max-len": ["error", 120],
+    "class-methods-use-this": "off"
   },
   "globals": {
     "window": true,
@@ -22,5 +25,5 @@
     "Headers": true,
     "document": true
   },
-  "ignorePatterns": ["packages/sandbox/*", "*.d.ts"]
+  "ignorePatterns": ["packages/sandbox/*", "*.d.ts", "vite.config.ts"]
 }

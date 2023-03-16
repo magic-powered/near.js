@@ -30,7 +30,8 @@ export class RPCError extends ProviderError {
   private readonly errorObject: RPCErrorObject;
 
   constructor(errorObject: RPCErrorObject) {
-    const message = `${errorObject.code}: ${errorObject.name}/${errorObject.cause.name} - ${errorObject.message}: ${errorObject.data}`;
+    const message = `${errorObject.code}: ${errorObject.name}/${errorObject.cause.name} - `
+      + `${errorObject.message}: ${JSON.stringify(errorObject.data, null, 2)}`;
     super(message);
     this.errorObject = errorObject;
   }

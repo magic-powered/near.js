@@ -1,9 +1,18 @@
 import { KeyStore } from '@nearjs/account';
-import { RPCProviderConfig } from '@nearjs/provider-core';
+import { getRPCConfig, Network, RPCProviderConfig } from '@nearjs/provider-core';
 
 export interface MyNearWalletConfiguration extends RPCProviderConfig {
-  keyStore: KeyStore;
   walletBaseUrl: string;
-  throwIfInsufficientAllowance: boolean; // TODO: review this
+  blockPopupFallback?: boolean;
   window: Window; // TODO: abstract handler that can use window object OR 'open' pkg
 }
+
+export { Network } from '@nearjs/provider-core';
+
+export const getConfiguration = (networkId: Network, keyStore: KeyStore): MyNearWalletConfiguration => {
+  const walletBaseUrl = networkId === Network.TESTNET
+    ? 'https://testnet.mynearwallet.com'
+    : 'https://app.mynearwallet.com';
+
+  return { ...getRPCConfig(networkId, keyStore), window, walletBaseUrl };
+};

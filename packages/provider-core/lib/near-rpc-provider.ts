@@ -1,20 +1,20 @@
-// TODO: remove nocheck
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-// @ts-nocheck
-import { PublicKey, KeyId, KeyPair } from '@nearjs/account';
+import {
+  PublicKey, KeyId, KeyPair, FullAccess, FunctionCallPermission, AccessKey,
+} from '@nearjs/account';
 import {
   Transaction,
   SignedTransaction,
   IAction,
   TransactionBuilder,
 } from '@nearjs/tx';
-// TODO: typings
+// TODO: custom typings needed
+// @ts-ignore
 import { base58_to_binary as fromBase58 } from 'base58-js';
 import { JsonRPCRequest, RPCRequest } from './request';
 import { IJsonRpcResponse, RPCResponse } from './response';
 import { RPCProviderConfig } from './config';
 import { RPCError, UnknownError } from './errors';
-import { Block, BroadcastTxSync } from './requests';
+import { Block, BroadcastTxSync, ViewAccessKey } from './requests';
 import { CallViewFunction } from './requests/call-view-function';
 
 export enum HTTPMethods {
@@ -25,9 +25,10 @@ export enum HTTPMethods {
 export interface WalletConnectOptions {
   contractId?: string;
   methodNames?: string[];
+  fullAccess?: boolean;
 }
 
-export abstract class NearRPCProvider<
+export class NearRPCProvider<
   ProviderConfig extends RPCProviderConfig,
 > {
   protected requestId = 1;
@@ -77,7 +78,7 @@ export abstract class NearRPCProvider<
 
   protected async persistKeyPair(accountId: string, keyPair: KeyPair) {
     const keyId = new KeyId(accountId, this.config.networkId);
-    this.config.keyStore.addKeyByKeyId(keyId, keyPair);
+    await this.config.keyStore.addKeyByKeyId(keyId, keyPair);
   }
 
   public async listConnectedAccounts(): Promise<string[]> {
@@ -91,16 +92,37 @@ export abstract class NearRPCProvider<
     return connectedAccounts.includes(accountId);
   }
 
-  public async sendTransactionSync(
+  public async fetchAccessKey(accountId: string): Promise<void> {
+    const keyPair = await this.getKeyPair(accountId);
+    if (!keyPair) {
+      throw new Error(`Cannot fetch access key for account ${accountId} because no keypair found for the account`);
+    }
+
+    const accessKeyResponse = await this.sendRPCRequest(new ViewAccessKey(accountId, keyPair.getPublicKey()));
+    const accessKeyPermission = accessKeyResponse.result.permission === 'FullAccess'
+      ? new FullAccess()
+      : new FunctionCallPermission(
+        accessKeyResponse.result.permission.FunctionCall.allowance,
+        accessKeyResponse.result.permission.FunctionCall.receiver_id,
+        accessKeyResponse.result.permission.FunctionCall.method_names,
+      );
+    const accessKey = new AccessKey(accessKeyResponse.result.nonce, accessKeyPermission);
+
+    keyPair.setAccessKey(accessKey);
+
+    await this.persistKeyPair(accountId, keyPair);
+  }
+
+  protected async buildTransaction(
     senderAccountId: string,
     receiverAccountId: string,
     actions: IAction[],
-    retryCount = 0,
-  ): Promise<RPCResponse<BroadcastTxSync>> {
+  ): Promise<Transaction> {
     const keyPair = await this.getKeyPair(senderAccountId);
+
     const block = await this.sendRPCRequest(new Block('final'));
 
-    const transaction = TransactionBuilder.builder()
+    const tx = TransactionBuilder.builder()
       .withActions(actions)
       .withSignerId(senderAccountId)
       .withReceiverId(receiverAccountId)
@@ -110,6 +132,17 @@ export abstract class NearRPCProvider<
       .build();
 
     await this.persistKeyPair(senderAccountId, keyPair);
+
+    return tx;
+  }
+
+  public async sendTransactionSync(
+    senderAccountId: string,
+    receiverAccountId: string,
+    actions: IAction[],
+    retryCount = 0,
+  ): Promise<RPCResponse<BroadcastTxSync>> {
+    const transaction = await this.buildTransaction(senderAccountId, receiverAccountId, actions);
 
     const signedTransaction = await this.signTransaction(
       senderAccountId,
@@ -125,22 +158,25 @@ export abstract class NearRPCProvider<
         throw e;
       }
       // TODO: parse and wrap errors separately
+      // TODO: typings for errors
       if (
         e
-        && e.errorObject
-        && e.errorObject.cause
-        && e.errorObject.cause.name === 'INVALID_TRANSACTION'
+        && (e as any).errorObject
+        && (e as any).errorObject.cause
+        && (e as any).errorObject.cause.name === 'INVALID_TRANSACTION'
       ) {
         if (
-          e.errorObject.data
-          && e.errorObject.data.TxExecutionError
-          && e.errorObject.data.TxExecutionError.InvalidTxError
-          && e.errorObject.data.TxExecutionError.InvalidTxError.InvalidNonce
-          && e.errorObject.data.TxExecutionError.InvalidTxError.InvalidNonce
+          (e as any).errorObject.data
+          && (e as any).errorObject.data.TxExecutionError
+          && (e as any).errorObject.data.TxExecutionError.InvalidTxError
+          && (e as any).errorObject.data.TxExecutionError.InvalidTxError.InvalidNonce
+          && (e as any).errorObject.data.TxExecutionError.InvalidTxError.InvalidNonce
             .ak_nonce
         ) {
+          const keyPair = await this.getKeyPair(senderAccountId);
+
           keyPair.setNonce(
-            e.errorObject.data.TxExecutionError.InvalidTxError.InvalidNonce
+            (e as any).errorObject.data.TxExecutionError.InvalidTxError.InvalidNonce
               .ak_nonce,
           );
           await this.persistKeyPair(senderAccountId, keyPair);
