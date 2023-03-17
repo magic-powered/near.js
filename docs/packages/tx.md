@@ -6,11 +6,9 @@
 npm i @nearjs/tx --save
 ```
 
-```shell
-yarn add @nearjs/tx
-```
-
 ## Usage
+
+### Transaction builder
 
 The transaction itself is a complex object with a big amount of fields.
 The tx package provides `TransactionBuilder` class which helps build transaction in easy, robust and typed way.

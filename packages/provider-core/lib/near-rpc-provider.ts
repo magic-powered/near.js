@@ -57,8 +57,12 @@ export class NearRPCProvider<
     return KeyPair.verifyWithPublicKey(message, signature, publicKey);
   }
 
-  public async getPublicKey(accountId: string): Promise<PublicKey> {
+  public async getPublicKey(accountId: string): Promise<PublicKey | null> {
     const keyPair = await this.getKeyPair(accountId);
+
+    if (!keyPair) {
+      return null;
+    }
 
     return keyPair.getPublicKey();
   }
@@ -72,16 +76,25 @@ export class NearRPCProvider<
   }
 
   protected async getKeyPair(accountId: string): Promise<KeyPair> {
+    if (!this.config.keyStore) {
+      throw new Error('No KeyStore was provided.');
+    }
     const keyId = new KeyId(accountId, this.config.networkId);
     return this.config.keyStore.getKeyPairByKeyId(keyId);
   }
 
   protected async persistKeyPair(accountId: string, keyPair: KeyPair) {
+    if (!this.config.keyStore) {
+      throw new Error('No KeyStore was provided.');
+    }
     const keyId = new KeyId(accountId, this.config.networkId);
     await this.config.keyStore.addKeyByKeyId(keyId, keyPair);
   }
 
   public async listConnectedAccounts(): Promise<string[]> {
+    if (!this.config.keyStore) {
+      throw new Error('No KeyStore was provided.');
+    }
     const keyIdStrings = await this.config.keyStore.listKeys();
     return keyIdStrings.map(KeyId.extractAccountId);
   }

@@ -12,14 +12,13 @@ export enum Network {
   CUSTOM = 'custom',
 }
 
-// TODO: should it be just an interface ?
 export interface RPCProviderConfig {
   rpcUrl: string;
   networkId: Network;
   allowInsecure?: boolean;
   timeout?: number;
   headers?: RPCProviderHeadersConfig;
-  keyStore: KeyStore;
+  keyStore?: KeyStore;
 }
 
 export const networkUrls = {
@@ -29,7 +28,7 @@ export const networkUrls = {
   [Network.LOCALNET]: 'http://localhost:3030',
 };
 
-export const getRPCConfig = (networkId: Network, keyStore: KeyStore): RPCProviderConfig => {
+export const getRPCConfig = (networkId: Network, keyStore?: KeyStore): RPCProviderConfig => {
   if (networkId === Network.CUSTOM) {
     throw new Error('getRPCConfig support only predefined RPCs. Please build RPCProviderConfig for your env manually');
   }
@@ -45,10 +44,10 @@ export const getRPCConfig = (networkId: Network, keyStore: KeyStore): RPCProvide
   };
 };
 
-export const mainnetRPCConfig = (keyStore: KeyStore): RPCProviderConfig => getRPCConfig(Network.MAINNET, keyStore);
+export const mainnetRPCConfig = (keyStore?: KeyStore): RPCProviderConfig => getRPCConfig(Network.MAINNET, keyStore);
 
-export const testnetRPCConfig = (keyStore: KeyStore): RPCProviderConfig => getRPCConfig(Network.TESTNET, keyStore);
+export const testnetRPCConfig = (keyStore?: KeyStore): RPCProviderConfig => getRPCConfig(Network.TESTNET, keyStore);
 
-export const betanetRPCConfig = (keyStore: KeyStore): RPCProviderConfig => getRPCConfig(Network.BETANET, keyStore);
+export const betanetRPCConfig = (keyStore?: KeyStore): RPCProviderConfig => getRPCConfig(Network.BETANET, keyStore);
 
-export const localnetRPCConfig = (keyStore: KeyStore): RPCProviderConfig => getRPCConfig(Network.LOCALNET, keyStore);
+export const localnetRPCConfig = (keyStore?: KeyStore): RPCProviderConfig => getRPCConfig(Network.LOCALNET, keyStore);

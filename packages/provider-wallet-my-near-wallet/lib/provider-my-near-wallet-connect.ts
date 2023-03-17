@@ -15,7 +15,11 @@ export abstract class ProviderMyNearWalletConnect
   extends ProviderMyNearWalletTransactionSender {
   public async connectAccount(
     signInOptions: MyNearWalletSignInOptions = {},
-  ): Promise<void> {
+  ): Promise<string> {
+    if (!this.config.keyStore) {
+      throw new Error('Cannot authenticate user without KeyStore');
+    }
+
     if (!this.config.window) { // TODO: use open pkg to open browser if it is not browser
       throw new Error('Can connect wallet only in browser');
     }
@@ -25,19 +29,27 @@ export abstract class ProviderMyNearWalletConnect
 
   private async connectAccountInBrowser(
     signInOptions: MyNearWalletSignInOptions = {},
-  ): Promise<void> {
+  ): Promise<string> {
+    if (!this.config.keyStore) {
+      throw new Error('Cannot authenticate user without KeyStore');
+    }
+
     const currentUrl = new URL(this.config.window.location.href);
     if (!currentUrl.searchParams.has(AUTH_ID_URL_QUERY_PARAM)) {
       // TODO: this is essentially a copy-paste from near-api-js.
       // TODO: We want to consider leveraging opening popup without blocking
       this.config.window.location.assign(await this.constructLoginLink(signInOptions));
-      return;
+      return '';
     }
 
-    await this.completeAuth();
+    return this.completeAuth();
   }
 
-  private async completeAuth(): Promise<void> {
+  private async completeAuth(): Promise<string> {
+    if (!this.config.keyStore) {
+      throw new Error('Cannot authenticate user without KeyStore');
+    }
+
     const currentUrl = new URL(this.config.window.location.href);
     const authId = currentUrl.searchParams.get(AUTH_ID_URL_QUERY_PARAM);
 
@@ -78,11 +90,17 @@ export abstract class ProviderMyNearWalletConnect
       document.title,
       currentUrl.toString(),
     );
+
+    return accountId;
   }
 
   private async constructLoginLink(
     signInOptions: MyNearWalletSignInOptions = {},
   ): Promise<string> {
+    if (!this.config.keyStore) {
+      throw new Error('Cannot authenticate user without KeyStore');
+    }
+
     const authId = uuid();
     const loginUrl = new URL(`${this.config.walletBaseUrl}/login`);
 

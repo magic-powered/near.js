@@ -11,10 +11,5 @@ const nftContract = 'toxa.mintspace2.testnet';
 
   const provider = new NearRPCProvider(testnetRPCConfig(keyStore));
 
-  const nft = new NonFungibleToken(nftContract, provider);
-  const myTokens = await nft.nftTokensForOwner(iam);
-
-  await nft.nftTransfer(friend, myTokens[0].token_id);
-
-  const myFriendsTokens = await nft.nftTokensForOwner(friend);
+  console.log(await provider.listConnectedAccounts());
 })();

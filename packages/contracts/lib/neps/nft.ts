@@ -126,8 +126,8 @@ export class NonFungibleToken extends Contract {
     }
 
     // TODO: very important to log
-    console.log('unexpected result');
-    console.log(JSON.stringify(result, null, 2));
+    // console.log('unexpected result');
+    // console.log(JSON.stringify(result, null, 2));
     throw new Error('Unexpected result');
   }
 

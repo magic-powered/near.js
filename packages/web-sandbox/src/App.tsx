@@ -4,7 +4,6 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import { ProviderMyNearWallet, getConfiguration, Network } from '@nearjs/provider-wallet-my-near-wallet';
 import { BrowserKeyStore } from '@nearjs/browser-key-store';
-import { Transfer } from '@nearjs/tx';
 import { FungibleToken } from '@nearjs/contracts';
 
 function App() {
