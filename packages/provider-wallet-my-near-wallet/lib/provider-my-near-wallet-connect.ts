@@ -30,15 +30,17 @@ export abstract class ProviderMyNearWalletConnect
   private async connectAccountInBrowser(
     signInOptions: MyNearWalletSignInOptions = {},
   ): Promise<string> {
+    if (!this.config.window) {
+      throw new Error('Cannot start login via popup outside browser environment');
+    }
+
     if (!this.config.keyStore) {
       throw new Error('Cannot authenticate user without KeyStore');
     }
 
     const currentUrl = new URL(this.config.window.location.href);
     if (!currentUrl.searchParams.has(AUTH_ID_URL_QUERY_PARAM)) {
-      // TODO: this is essentially a copy-paste from near-api-js.
-      // TODO: We want to consider leveraging opening popup without blocking
-      this.config.window.location.assign(await this.constructLoginLink(signInOptions));
+      await this.startLogin(signInOptions);
       return '';
     }
 
@@ -46,6 +48,10 @@ export abstract class ProviderMyNearWalletConnect
   }
 
   private async completeAuth(): Promise<string> {
+    if (!this.config.window) {
+      throw new Error('Cannot authenticate outside browser environment');
+    }
+
     if (!this.config.keyStore) {
       throw new Error('Cannot authenticate user without KeyStore');
     }
@@ -94,17 +100,41 @@ export abstract class ProviderMyNearWalletConnect
     return accountId;
   }
 
-  private async constructLoginLink(
-    signInOptions: MyNearWalletSignInOptions = {},
-  ): Promise<string> {
+  private async startLogin(signInOptions: MyNearWalletSignInOptions = {}) {
+    if (!this.config.window) {
+      throw new Error('Cannot start login via popup outside browser environment');
+    }
+
     if (!this.config.keyStore) {
       throw new Error('Cannot authenticate user without KeyStore');
     }
 
     const authId = uuid();
+
+    let publicKey: string | undefined;
+
+    if (signInOptions.contractId || signInOptions.fullAccess) {
+      const keyPair = KeyPair.fromRandom(KeyType.ED25519);
+
+      await this.config.keyStore.addKeyByKeyIdString(`pending::${authId}`, keyPair);
+
+      publicKey = keyPair.getPublicKey().toString();
+    }
+
+    this.config.window.location.assign(this.constructLoginLink(authId, signInOptions, publicKey));
+  }
+
+  public constructLoginLink(
+    authId: string,
+    signInOptions: MyNearWalletSignInOptions = {},
+    publicKey?: string,
+  ): string {
     const loginUrl = new URL(`${this.config.walletBaseUrl}/login`);
 
-    const callbackUrl = new URL(signInOptions.callbackUrl || this.config.window.location.href);
+    const callbackUrlBasePath = signInOptions.callbackUrl
+    || !this.config.window ? this.config.walletBaseUrl : this.config.window.location.href;
+
+    const callbackUrl = new URL(callbackUrlBasePath);
     callbackUrl.searchParams.set(AUTH_ID_URL_QUERY_PARAM, authId);
 
     loginUrl.searchParams.set('success_url', callbackUrl.toString());
@@ -114,13 +144,8 @@ export abstract class ProviderMyNearWalletConnect
       loginUrl.searchParams.set('contract_id', signInOptions.contractId);
     }
 
-    if (signInOptions.contractId || signInOptions.fullAccess) {
-      const keyPair = KeyPair.fromRandom(KeyType.ED25519);
-
-      loginUrl.searchParams.set('public_key', keyPair.getPublicKey()
-        .toString());
-
-      await this.config.keyStore.addKeyByKeyIdString(`pending::${authId}`, keyPair);
+    if (publicKey) {
+      loginUrl.searchParams.set('public_key', publicKey);
     }
 
     if (signInOptions.methodNames) {

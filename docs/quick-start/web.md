@@ -12,7 +12,9 @@ $ npm install --save @nearjs/web
 
 - [@nearjs/account](../packages/account.md) - base library for account / encryption keys and access keys
 - [@nearjs/browser-key-store](../packages/browser-key-store.md) - browser local or session storage wrapper for KeyPair storage 
-- [@nearjs/provider-wallet-my-near-wallet](../packages/provider-wallet-my-near-wallet.md) - Near provider - provider Near API and MyNearWallet integration
+- [@nearjs/provider-wallet-my-near-wallet](../packages/provider-wallet-my-near-wallet.md) - Near provider - provide Near API and MyNearWallet integration
+  
+you can extend your setup with any other package you might need by simple installation them into your app
 
 ## Example usage
 

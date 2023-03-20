@@ -4,7 +4,7 @@ import { getRPCConfig, Network, RPCProviderConfig } from '@nearjs/provider-core'
 export interface MyNearWalletConfiguration extends RPCProviderConfig {
   walletBaseUrl: string;
   blockPopupFallback?: boolean;
-  window: Window; // TODO: abstract handler that can use window object OR 'open' pkg
+  window?: Window;
 }
 
 export { Network } from '@nearjs/provider-core';

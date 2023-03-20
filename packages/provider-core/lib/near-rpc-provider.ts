@@ -39,6 +39,10 @@ export class NearRPCProvider<
     this.config = config;
   }
 
+  public getNetworkId() {
+    return this.config.networkId;
+  }
+
   public async sign(
     accountId: string,
     message: Uint8Array,

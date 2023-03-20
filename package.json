@@ -1,6 +1,6 @@
 {
-  "name": "@nearjs/all",
-  "version": "1.0.2",
+  "name": "nearjs",
+  "version": "1.0.0",
   "author": "Anatolii Petrovskyi <anatolii@magicpowered.io>",
   "license": "MIT",
   "engines": {
@@ -26,10 +26,8 @@
   ],
   "scripts": {
     "clean": "rm -rf dist",
-    "build": "pnpm run clean && pnpm run build:workspaces && pnpm run build:esm && pnpm run build:cjs",
+    "build": "pnpm run clean && pnpm run build:workspaces",
     "build:workspaces": "pnpm --stream -r run build",
-    "build:esm": "tsc -p ./configs/tsconfig.esm.json && mv dist/esm/index.js dist/esm/index.mjs",
-    "build:cjs": "tsc -p ./configs/tsconfig.cjs.json",
     "prepublishOnly": "pnpm build",
     "lint": "eslint . --ext ts --fix",
     "prepare": "husky install",
