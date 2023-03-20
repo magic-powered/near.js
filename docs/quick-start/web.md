@@ -16,7 +16,7 @@ $ npm install --save @nearjs/web
 
 ## Example usage
 
-```tsx
+```typescript
 import { ProviderMyNearWallet, getConfiguration, Network, BrowserKeyStore } from '@nearjs/web'
 import { useEffect, useState } from 'react';
 

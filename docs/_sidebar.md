@@ -1,6 +1,6 @@
-* [HOME](./)
+* [HOME](/)
 
-* [Quick start](README.md)
+* Quick start
   * [NearJS for frontend app](./quick-start/web.md)
   * [NearJS for cli app](./quick-start/cli.md)
   * [NearJS for backend app](./quick-start/backend.md)

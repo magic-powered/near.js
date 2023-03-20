@@ -42,7 +42,7 @@ Contains several classes that manages users keys:
 ### Keys store
 
 Provides base abstract key store interface for all further implementations of keys stores: fs, browser, inmemmory, etc...
-Includes in-memmory key store 
+Includes in-memory key store 
 
 #### Usage
 
