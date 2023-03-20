@@ -48,7 +48,7 @@ Implement your changes. Make sure your changeset comply with the following rules
 2. You do not introduce TODO comments.
 3. Your code is covered by unit tests.
 4. Your code is covered with JSDoc annotations
-5. Your code is covered with all necessary guides, manuals and explanations in `./docs` folder
+5. Your code is covered with all necessary guides, manuals and explanations in `./docs` folder. Please refer to [Docsify](http://docsify.js.org) documentation to learn how to structure your documentation
 
 **Step 4**: Push your changes and create Pull Request
 

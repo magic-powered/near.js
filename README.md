@@ -16,8 +16,7 @@ Near.JS is a community driven typescript library to interact with Near blockchai
 
 ## Documentation
 
-- [Getting started](docs/getting-started.md)
-- [Packages](docs/packages.md)
+- [Getting started](https://magic-powered.github.io/near.js/)
 
 ## Contribute
 
