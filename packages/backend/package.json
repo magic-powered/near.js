@@ -1,5 +1,5 @@
 {
-  "name": "@nearjs/web",
+  "name": "@nearjs/backend",
   "version": "1.0.1",
   "description": "",
   "exports": {
@@ -38,9 +38,7 @@
   "homepage": "https://github.com/Magic-Powered/near.js#readme",
   "dependencies": {
     "@nearjs/account": "workspace:^1.0.3",
-    "@nearjs/browser-key-store": "workspace:^1.0.0",
-    "@nearjs/provider-wallet-my-near-wallet": "workspace:^1.0.2"
-  },
-  "devDependencies": {
+    "@nearjs/fs-key-store": "workspace:^1.0.0",
+    "@nearjs/provider-core": "workspace:^1.0.2"
   }
 }

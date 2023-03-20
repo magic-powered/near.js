@@ -32,7 +32,11 @@ export abstract class ProviderMyNearWalletTransactionSender
     callbackUrl?: string,
     meta?: string,
   ): Promise<void> {
-    const currentUrl = new URL(window.location.href);
+    if (!this.config.window) {
+      throw new Error('Cannot send transaction via popup outside browser environment');
+    }
+
+    const currentUrl = new URL(this.config.window.location.href);
     const newUrl = new URL('sign', this.config.walletBaseUrl);
 
     const tx = await this.buildTransaction(senderAccountId, receiverAccountId, actions);
@@ -43,6 +47,6 @@ export abstract class ProviderMyNearWalletTransactionSender
       newUrl.searchParams.set('meta', meta);
     }
 
-    window.location.assign(newUrl.toString());
+    this.config.window.location.assign(newUrl.toString());
   }
 }
