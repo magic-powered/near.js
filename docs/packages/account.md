@@ -36,13 +36,13 @@ The package provides several tools helping manage users keys and key pairs
 Contains several classes that manages users keys:
 
 - Access Key - The user's [access key](https://docs.near.org/concepts/basics/accounts/access-keys)
-- Keys - Implements Public and Private keys
-- Key Pair - Container for Public and Private keys pair
+- Keys - Implements Public and Private keys representation
+- Key Pair - Container or storage for Public and Private keys pair and access keys
 
 ### Keys store
 
 Provides base abstract key store interface for all further implementations of keys stores: fs, browser, inmemmory, etc...
-Includes in-memmory key store 
+Includes in-memory key store 
 
 #### Usage
 

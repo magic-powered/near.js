@@ -1,20 +1,25 @@
-import { KeyPair, KeyId, KeyType } from '@nearjs/account';
+import {
+  KeyPair,
+  KeyId,
+  KeyType,
+} from '@nearjs/account';
 
 import { v4 as uuid } from 'uuid';
 
-import { NearRPCProvider } from '@nearjs/provider-core';
-import { MyNearWalletConfiguration } from './my-near-wallet-configuration';
 import { MyNearWalletSignInOptions } from './my-near-wallet-sign-in-options';
+import { ProviderMyNearWalletTransactionSender } from './provider-my-near-wallet-transaction-sender';
 
 export const AUTH_ID_URL_QUERY_PARAM = 'nearJsAuthId';
 
 export abstract class ProviderMyNearWalletConnect
-  extends NearRPCProvider<MyNearWalletConfiguration> {
-  private pendingAuth: string[] = [];
-
+  extends ProviderMyNearWalletTransactionSender {
   public async connectAccount(
     signInOptions: MyNearWalletSignInOptions = {},
-  ): Promise<void> {
+  ): Promise<string> {
+    if (!this.config.keyStore) {
+      throw new Error('Cannot authenticate user without KeyStore');
+    }
+
     if (!this.config.window) { // TODO: use open pkg to open browser if it is not browser
       throw new Error('Can connect wallet only in browser');
     }
@@ -24,24 +29,31 @@ export abstract class ProviderMyNearWalletConnect
 
   private async connectAccountInBrowser(
     signInOptions: MyNearWalletSignInOptions = {},
-  ): Promise<void> {
+  ): Promise<string> {
+    if (!this.config.keyStore) {
+      throw new Error('Cannot authenticate user without KeyStore');
+    }
+
     const currentUrl = new URL(this.config.window.location.href);
-    if (!this.pendingAuth.length || !currentUrl.searchParams.has(AUTH_ID_URL_QUERY_PARAM)) {
+    if (!currentUrl.searchParams.has(AUTH_ID_URL_QUERY_PARAM)) {
       // TODO: this is essentially a copy-paste from near-api-js.
       // TODO: We want to consider leveraging opening popup without blocking
       this.config.window.location.assign(await this.constructLoginLink(signInOptions));
-      return;
+      return '';
     }
 
-    await this.completeAuth();
+    return this.completeAuth();
   }
 
-  private async completeAuth(): Promise<void> {
+  private async completeAuth(): Promise<string> {
+    if (!this.config.keyStore) {
+      throw new Error('Cannot authenticate user without KeyStore');
+    }
+
     const currentUrl = new URL(this.config.window.location.href);
     const authId = currentUrl.searchParams.get(AUTH_ID_URL_QUERY_PARAM);
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    if (!this.pendingAuth.includes(authId)) {
+
+    if (!authId) {
       throw new Error('Unknown auth id');
     }
 
@@ -49,22 +61,22 @@ export abstract class ProviderMyNearWalletConnect
     if (accountId) {
       // TODO: what if there is no accountId
       const keyPair = await this.config.keyStore.getKeyPairByKeyIdString(
-        `pending:${authId}`,
+        `pending::${authId}`,
       );
 
-      await this.config.keyStore.deleteKeyPairByKeyIdString(
-        `pending:${authId}`,
-      );
-      this.pendingAuth = this.pendingAuth.filter((id) => id !== authId);
+      if (keyPair) {
+        await this.config.keyStore.deleteKeyPairByKeyIdString(
+          `pending::${authId}`,
+        );
 
-      // TODO: fetch accessKey
-      // TODO: put access key to the key pair
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      const keyId = new KeyId(accountId, this.config.networkId);
-      await this.config.keyStore.addKeyByKeyId(keyId, keyPair);
+        // TODO: fetch accessKey
+        // TODO: put access key to the key pair
+        const keyId = new KeyId(accountId, this.config.networkId);
 
-      // TODO: should we verify somehow that key is added to the account? - probably yes
+        await this.config.keyStore.addKeyByKeyId(keyId, keyPair);
+
+        await this.fetchAccessKey(accountId);
+      }
     }
     currentUrl.searchParams.delete('public_key');
     currentUrl.searchParams.delete('all_keys');
@@ -78,11 +90,17 @@ export abstract class ProviderMyNearWalletConnect
       document.title,
       currentUrl.toString(),
     );
+
+    return accountId;
   }
 
   private async constructLoginLink(
     signInOptions: MyNearWalletSignInOptions = {},
   ): Promise<string> {
+    if (!this.config.keyStore) {
+      throw new Error('Cannot authenticate user without KeyStore');
+    }
+
     const authId = uuid();
     const loginUrl = new URL(`${this.config.walletBaseUrl}/login`);
 
@@ -92,19 +110,21 @@ export abstract class ProviderMyNearWalletConnect
     loginUrl.searchParams.set('success_url', callbackUrl.toString());
     loginUrl.searchParams.set('failure_url', callbackUrl.toString());
 
-    if (signInOptions.contract) {
-      loginUrl.searchParams.set('contract_id', signInOptions.contract);
+    if (signInOptions.contractId) {
+      loginUrl.searchParams.set('contract_id', signInOptions.contractId);
+    }
+
+    if (signInOptions.contractId || signInOptions.fullAccess) {
       const keyPair = KeyPair.fromRandom(KeyType.ED25519);
 
-      this.pendingAuth.push(authId);
       loginUrl.searchParams.set('public_key', keyPair.getPublicKey()
         .toString());
 
-      await this.config.keyStore.addKeyByKeyIdString(`pending:${authId}`, keyPair);
+      await this.config.keyStore.addKeyByKeyIdString(`pending::${authId}`, keyPair);
     }
 
-    if (signInOptions.methods) {
-      signInOptions.methods.forEach((methodName) => {
+    if (signInOptions.methodNames) {
+      signInOptions.methodNames.forEach((methodName) => {
         loginUrl.searchParams.append('methodNames', methodName);
       });
     }

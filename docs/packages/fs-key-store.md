@@ -21,11 +21,15 @@ import {
   BrowserKeyStore
 } from '@nearjs/fs-key-store';
 
+const keyBasePath = '/some/path';
+
 (async () => {
   /**
    * Create the key store object
    */
-  const keyStore = new FileSystemKeyStore();
+  const keyStore = new FileSystemKeyStore({
+    keyPath: keyBasePath // base path to the folder where keys will be stored. Homedir used as default
+  });
 
   /**
    * Define the ID of the key

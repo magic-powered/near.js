@@ -2,7 +2,9 @@ import BN from 'bn.js';
 import { PublicKey, AccessKey } from '@nearjs/account';
 import { field, variant, vec } from '@dao-xyz/borsh';
 
-export interface IAction {}
+export interface IAction {
+  deposit?: BN;
+}
 
 export abstract class Action implements IAction {}
 

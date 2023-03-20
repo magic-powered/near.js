@@ -1,6 +1,11 @@
 import { sign } from 'tweetnacl';
+import buffer from 'buffer/';
 import { KeyType, PrivateKey, PublicKey } from './keys';
-import { AccessKey } from './access-key';
+import { AccessKey, FullAccess } from './access-key';
+
+if (window) {
+  window.Buffer = window.Buffer || buffer.Buffer;
+}
 
 export class KeyPair {
   private readonly publicKey: PublicKey;
@@ -44,6 +49,14 @@ export class KeyPair {
 
   public setAccessKey(accessKey: AccessKey) {
     this.accessKey = accessKey;
+  }
+
+  public isFullAccessKey() {
+    if (!this.accessKey) {
+      return false;
+    }
+
+    return this.accessKey.permission instanceof FullAccess;
   }
 
   public iterateNonce() {

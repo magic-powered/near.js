@@ -1,6 +1,6 @@
 {
-  "name": "@nearjs/account",
-  "version": "1.0.3",
+  "name": "@nearjs/web",
+  "version": "1.0.1",
   "description": "",
   "exports": {
     ".": {
@@ -38,10 +38,12 @@
   "homepage": "https://github.com/Magic-Powered/near.js#readme",
   "dependencies": {
     "@dao-xyz/borsh": "^4.0.7",
+    "@nearjs/account": "workspace:^1.0.3",
+    "@nearjs/browser-key-store": "workspace:^1.0.0",
+    "@nearjs/provider-wallet-my-near-wallet": "workspace:^1.0.2",
     "base58-js": "^1.0.5",
     "bn.js": "^5.2.1",
-    "buffer": "^6.0.3",
-    "tweetnacl": "^1.0.3"
+    "js-sha256": "^0.9.0"
   },
   "devDependencies": {
     "@protobufjs/utf8": "^1.1.0",

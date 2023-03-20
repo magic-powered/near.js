@@ -14,14 +14,16 @@ export class BrowserKeyStore extends KeyStore {
   constructor(config?: BrowserLocalStorageKeyStoreConfig) {
     super();
 
-    this.baseKey = (config && config.baseKey) ? config.baseKey : 'near.js';
+    this.baseKey = (config && config.baseKey) ? config.baseKey : 'nearjs';
     this.storage = (config && config.storage) ? config.storage : window.localStorage;
   }
 
   public async listKeys(): Promise<KeyIdString[]> {
     const listString = this.storage.getItem(this.buildStorageKey('list'));
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
+    if (!listString) {
+      return [];
+    }
+
     return JSON.parse(listString);
   }
 
@@ -54,10 +56,13 @@ export class BrowserKeyStore extends KeyStore {
   }
 
   protected async deleteKey(keyIdString: KeyIdString): Promise<void> {
-    if (!this.storage.getItem(keyIdString)) {
+    if (!this.storage.getItem(this.buildStorageKey(keyIdString))) {
       return;
     }
 
-    this.storage.removeItem(keyIdString);
+    this.storage.removeItem(this.buildStorageKey(keyIdString));
+
+    const keys = await this.listKeys();
+    this.storage.setItem(this.buildStorageKey('list'), JSON.stringify(keys.filter((key) => key !== keyIdString)));
   }
 }

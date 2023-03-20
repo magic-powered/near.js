@@ -8,7 +8,7 @@ Following steps describes how to setup the Near.js repository on your local mach
 
 The following tools need to be installed on your system prior to installing the Near.js:
 
-"node": ">=16.14.0",
+"node": ">=18",
 "pnpm": ">=7"
 
 - [NodeJS >=16.14.0](https://nodejs.org/download/release/latest-v16.x/)
