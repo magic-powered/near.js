@@ -4,10 +4,6 @@
   "description": "",
   "exports": {
     ".": {
-      "import": {
-        "types": "./dist/esm/types/index.d.ts",
-        "default": "./dist/esm/index.mjs"
-      },
       "require": {
         "types": "./dist/cjs/types/index.d.ts",
         "default": "./dist/cjs/index.js"
@@ -21,8 +17,7 @@
   ],
   "scripts": {
     "clean": "rm -rf dist",
-    "build": "pnpm run clean && pnpm run build:esm && pnpm run build:cjs",
-    "build:esm": "tsc -p ./tsconfig.esm.json && mv dist/esm/index.js dist/esm/index.mjs",
+    "build": "pnpm run clean && pnpm run build:cjs",
     "build:cjs": "tsc -p ./tsconfig.cjs.json",
     "prepublishOnly": "pnpm build"
   },
