@@ -22,14 +22,14 @@ on:
         - web
 
 jobs:
-  build:
+  release:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
 
       - name: Setup node
-      - uses: actions/setup-node@v3
+        uses: actions/setup-node@v3
         with:
           node-version: '18.x'
           registry-url: 'https://registry.npmjs.org'
@@ -78,8 +78,7 @@ jobs:
       - name: Publish to NPM
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: pnpm --filter ${{ github.event.inputs.package }} publish --access public
-        # run: pnpm --filter ${{ github.event.inputs.package }} publish --access public --tag ${{ env.RELEASE_TAG }}
+        run: pnpm --filter ${{ github.event.inputs.package }} publish --access public # --tag ${{ env.RELEASE_TAG }}
 
       # Push repository changes
       # - name: Push changes to repository
