@@ -2,23 +2,14 @@
   "name": "@nearjs/backend",
   "version": "1.0.1",
   "description": "",
-  "exports": {
-    ".": {
-      "require": {
-        "types": "./dist/cjs/types/index.d.ts",
-        "default": "./dist/cjs/index.js"
-      }
-    }
-  },
-  "types": "./dist/cjs/types/index.d.ts",
-  "main": "./dist/cjs/index.js",
+  "types": "./dist/types/index.d.ts",
+  "main": "./dist/index.js",
   "files": [
     "dist/**/*"
   ],
   "scripts": {
     "clean": "rm -rf dist",
-    "build": "pnpm run clean && pnpm run build:cjs",
-    "build:cjs": "tsc -p ./tsconfig.cjs.json",
+    "build": "pnpm run clean && tsc",
     "prepublishOnly": "pnpm build"
   },
   "repository": {
