@@ -1,0 +1,107 @@
+name: Release Package to npmjs
+
+on:
+  workflow_dispatch:
+    inputs:
+      package:
+        description: 'Package'
+        required: true
+        default: 'account'
+        type: choice
+        options:
+        - account
+        - backend
+        - browser-key-store
+        - cli
+        - contracts
+        - fs-key-store
+        - provider-core
+        - provider-wallet-my-near-wallet
+        - tx
+        - units
+        - web
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Setup node
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install PNPM
+        run: npm install -g pnpm
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build workspaces
+        run: pnpm --filter ${{ github.event.inputs.package }} build
+
+      # Configure Git
+      # - name: Git configuration
+      #   run: |
+      #     git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+      #     git config --global user.name "GitHub Actions"
+
+      # Bump package version
+      # Use tag latest
+      # - name: Bump release version
+      #   run: |
+      #     echo "NEW_VERSION=$(npm --no-git-tag-version version $RELEASE_TYPE)" >> $GITHUB_ENV
+      #     echo "RELEASE_TAG=latest" >> $GITHUB_ENV
+      #   env:
+      #     RELEASE_TYPE: latest
+
+      # Update changelog unreleased section with new version
+      # - name: Update changelog
+      #   uses: superfaceai/release-changelog-action@v1
+      #   with:
+      #     path-to-changelog: CHANGELOG.md
+      #     version: ${{ env.NEW_VERSION }}
+      #     operation: release
+
+      # Commit changes
+      # - name: Commit CHANGELOG.md and package.json changes and create tag
+      #   run: |
+      #     git add "package.json"
+      #     git add "CHANGELOG.md"
+      #     git commit -m "chore: release ${{ env.NEW_VERSION }}"
+      #     git tag ${{ env.NEW_VERSION }}
+
+      # Publish version to public repository
+      - name: Publish to NPM
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: pnpm --filter ${{ github.event.inputs.package }} publish --access public
+        # run: pnpm --filter ${{ github.event.inputs.package }} publish --access public --tag ${{ env.RELEASE_TAG }}
+
+      # Push repository changes
+      # - name: Push changes to repository
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   run: |
+      #     git push origin && git push --tags
+
+      # Read version changelog
+      # - id: get-changelog
+      #   name: Get version changelog
+      #   uses: superfaceai/release-changelog-action@v1
+      #   with:
+      #     path-to-changelog: CHANGELOG.md
+      #     version: ${{ env.NEW_VERSION }}
+      #     operation: read
+
+      # Update GitHub release with changelog
+      # - name: Update GitHub release documentation
+      #   uses: softprops/action-gh-release@v1
+      #   with:
+      #     tag_name: ${{ env.NEW_VERSION }}
+      #     body: ${{ steps.get-changelog.outputs.changelog }}
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
