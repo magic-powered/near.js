@@ -25,5 +25,5 @@
     "Headers": true,
     "document": true
   },
-  "ignorePatterns": ["packages/sandbox/*", "*.d.ts", "vite.config.ts"]
+  "ignorePatterns": ["*.d.ts", "vite.config.ts"]
 }

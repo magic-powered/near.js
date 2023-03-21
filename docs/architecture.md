@@ -40,7 +40,6 @@ Everything around this two circles considered complimentary to the one of these 
 │   ├── provider-wallet-core
 │   ├── provider-wallet-my-near-wallet
 │   ├── provider-wallet-sender
-│   ├── sandbox
 │   ├── tx
 │   └── units
 ├── package.json
