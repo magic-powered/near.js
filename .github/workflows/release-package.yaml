@@ -1,0 +1,45 @@
+on:
+  workflow_dispatch:
+    inputs:
+      package:
+        description: 'Choose package to release'
+        required: true
+        type: choice
+        options:
+          - account
+          - backend
+          - browser-key-store
+          - cli
+          - contracts
+          - fs-key-store
+          - provider-core
+          - provider-wallet-my-near-wallet
+          - tx
+          - units
+          - web
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Setup node and install pnpm
+        uses: actions/setup-node@v3
+        with:
+          cache: 'pnpm'
+          node-version: 18
+          registry-url: 'https://registry.npmjs.org'
+      - run: npm install -g pnpm
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build workspaces
+        run: pnpm --filter ${{ github.event.inputs.package }} build
+
+      - name: Publish to NPM
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: pnpm --filter ${{ github.event.inputs.package }} publish --access public
