@@ -25,13 +25,16 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Setup node and install pnpm
+      - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          cache: 'pnpm'
           node-version: 18
-          registry-url: 'https://registry.npmjs.org'
-      - run: npm install -g pnpm
+          cache: 'pnpm'
+
+      - name: Install pnpm
+        run: |
+          npm install -g pnpm
+          echo "$(npm config get prefix)/bin" >> $GITHUB_PATH
 
       - name: Install dependencies
         run: pnpm install
@@ -42,4 +45,4 @@ jobs:
       - name: Publish to NPM
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: pnpm --filter ${{ github.event.inputs.package }} publish --access public
+        run: pnpm --filter ${{ github.event.inputs.package }} publish --access public --tag latest
