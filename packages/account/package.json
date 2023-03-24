@@ -1,6 +1,6 @@
 {
   "name": "@nearjs/account",
-  "version": "1.0.3",
+  "version": "1.0.31",
   "description": "",
   "types": "./dist/types/index.d.ts",
   "main": "./dist/index.js",
