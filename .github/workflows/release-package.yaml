@@ -2,7 +2,7 @@ on:
   workflow_dispatch:
     inputs:
       package:
-        description: 'Package'
+        description: 'Choose package to release'
         required: true
         type: choice
         options:
