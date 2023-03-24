@@ -57,4 +57,5 @@ jobs:
       - name: Publish to NPM
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: echo $TEST_ENV && pnpm --filter ${{ github.event.inputs.package }} publish --access public --tag latest
+          SOME_TEST_ENV: ${{ secrets.TEST_ENV }}
+        run: echo $SOME_TEST_ENV && pnpm --filter ${{ github.event.inputs.package }} publish --access public --tag latest
