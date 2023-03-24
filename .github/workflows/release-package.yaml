@@ -54,10 +54,7 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Build workspaces
-        run: pnpm --filter ${{ github.event.inputs.package }} build
-
       - name: Publish to NPM
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: pnpm --filter ${{ github.event.inputs.package }} publish --access public --tag latest
+        run: echo $TEST_ENV && pnpm --filter ${{ github.event.inputs.package }} publish --access public --tag latest
