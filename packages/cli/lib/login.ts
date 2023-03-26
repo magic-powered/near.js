@@ -1,7 +1,8 @@
 import { KeyId, KeyPair, KeyStore } from '@nearjs/account';
 import { ProviderMyNearWallet, AUTH_ID_URL_QUERY_PARAM } from '@nearjs/provider-wallet-my-near-wallet';
-import * as open from 'open';
 import { RedirectHandler } from './redirect-handler';
+
+const openPkg = import('open');
 
 export const login = async (provider: ProviderMyNearWallet, keyStore: KeyStore) => {
   const redirectHandler = new RedirectHandler(['accountId', AUTH_ID_URL_QUERY_PARAM]);
@@ -18,6 +19,7 @@ export const login = async (provider: ProviderMyNearWallet, keyStore: KeyStore) 
   await redirectHandler.start();
 
   try {
+    const open = await openPkg;
     await open.default(loginLink);
   } catch (e) {
     await redirectHandler.stop();
