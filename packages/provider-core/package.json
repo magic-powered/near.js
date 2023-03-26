@@ -1,6 +1,6 @@
 {
   "name": "@nearjs/provider-core",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "description": "",
   "types": "./dist/types/index.d.ts",
   "main": "./dist/index.js",

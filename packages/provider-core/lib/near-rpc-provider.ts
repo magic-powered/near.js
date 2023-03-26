@@ -242,7 +242,7 @@ export class NearRPCProvider<
     return result;
   }
 
-  protected async sendRPCRequest<RequestType extends RPCRequest>(
+  public async sendRPCRequest<RequestType extends RPCRequest>(
     rpcRequest: RequestType,
     method: HTTPMethods = HTTPMethods.POST,
   ): Promise<RPCResponse<RequestType>> {
