@@ -101,13 +101,13 @@ export class RedirectHandler {
         port,
         host: '127.0.0.1',
       });
-      connection.on('connect', () => {
+      connection.on('connect', async () => {
         connection.end();
-        resolve(port);
+        resolve(await this.findFreePort(port + 1));
       });
       connection.on('error', async () => {
         connection.end();
-        resolve(await this.findFreePort(port + 1));
+        resolve(port);
       });
     });
   }
