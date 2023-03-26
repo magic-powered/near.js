@@ -3,7 +3,7 @@ import buffer from 'buffer/';
 import { KeyType, PrivateKey, PublicKey } from './keys';
 import { AccessKey, FullAccess } from './access-key';
 
-if (window) {
+if (typeof window !== 'undefined') {
   window.Buffer = window.Buffer || buffer.Buffer;
 }
 
