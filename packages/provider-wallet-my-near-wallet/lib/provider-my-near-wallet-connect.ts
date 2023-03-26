@@ -131,8 +131,8 @@ export abstract class ProviderMyNearWalletConnect
   ): string {
     const loginUrl = new URL(`${this.config.walletBaseUrl}/login`);
 
-    const callbackUrlBasePath = signInOptions.callbackUrl
-    || !this.config.window ? this.config.walletBaseUrl : this.config.window.location.href;
+    const callbackUrlBasePath = signInOptions.callbackUrl ? signInOptions.callbackUrl
+      : !this.config.window ? this.config.walletBaseUrl : this.config.window.location.href;
 
     const callbackUrl = new URL(callbackUrlBasePath);
     callbackUrl.searchParams.set(AUTH_ID_URL_QUERY_PARAM, authId);

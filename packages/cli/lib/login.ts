@@ -4,8 +4,10 @@ import { RedirectHandler } from './redirect-handler';
 
 const openPkg = import('open');
 
+const ACCOUNT_ID_QUERY_PARAM = 'account_id';
+
 export const login = async (provider: ProviderMyNearWallet, keyStore: KeyStore) => {
-  const redirectHandler = new RedirectHandler(['accountId', AUTH_ID_URL_QUERY_PARAM]);
+  const redirectHandler = new RedirectHandler([ACCOUNT_ID_QUERY_PARAM, AUTH_ID_URL_QUERY_PARAM]);
   const keyPair = KeyPair.fromRandom();
 
   const loginLink = provider.constructLoginLink(
@@ -36,7 +38,7 @@ export const login = async (provider: ProviderMyNearWallet, keyStore: KeyStore) 
     throw new Error('Failed to fetch auth info.');
   }
 
-  const accountIdParameter = authParams.get('accountId');
+  const accountIdParameter = authParams.get(ACCOUNT_ID_QUERY_PARAM);
 
   if (!accountIdParameter) {
     throw new Error('Failed to fetch auth info.');
