@@ -67,7 +67,7 @@ importers:
     specifiers:
       '@nearjs/account': workspace:^1.1.1
       '@nearjs/fs-key-store': workspace:^1.0.0
-      '@nearjs/provider-wallet-my-near-wallet': workspace:^1.0.2
+      '@nearjs/provider-wallet-my-near-wallet': workspace:^1.1.1
       open: ^9.0.0
     dependencies:
       '@nearjs/account': link:../account
