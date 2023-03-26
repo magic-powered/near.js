@@ -1,9 +1,0 @@
-{
-  "extends": "./../../configs/tsconfig.esm.json",
-  "compilerOptions": {
-    "outDir": "./dist/esm",
-    "declarationDir": "./dist/esm/types"
-  },
-  "include": ["./*.ts", "./lib/**/*.ts"],
-  "exclude": ["node_modules"]
-}

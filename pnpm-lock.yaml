@@ -6,14 +6,6 @@ importers:
     specifiers:
       '@babel/parser': ^7.19.6
       '@babel/types': ^7.19.4
-      '@nearjs/account': workspace:^1.0.3
-      '@nearjs/browser-key-store': workspace:^1.0.0
-      '@nearjs/contracts': workspace:^1.0.0
-      '@nearjs/fs-key-store': workspace:^1.0.0
-      '@nearjs/provider-core': workspace:^1.0.1
-      '@nearjs/provider-wallet-my-near-wallet': workspace:^1.0.1
-      '@nearjs/tx': workspace:^1.0.1
-      '@nearjs/units': workspace:^1.0.0
       '@types/node': ^18.8.3
       '@typescript-eslint/eslint-plugin': ^5.41.0
       '@typescript-eslint/parser': ^5.41.0
@@ -23,15 +15,6 @@ importers:
       eslint-plugin-import: ^2.26.0
       husky: ^8.0.1
       typescript: ^4.8.4
-    dependencies:
-      '@nearjs/account': link:packages/account
-      '@nearjs/browser-key-store': link:packages/browser-key-store
-      '@nearjs/contracts': link:packages/contracts
-      '@nearjs/fs-key-store': link:packages/fs-key-store
-      '@nearjs/provider-core': link:packages/provider-core
-      '@nearjs/provider-wallet-my-near-wallet': link:packages/provider-wallet-my-near-wallet
-      '@nearjs/tx': link:packages/tx
-      '@nearjs/units': link:packages/units
     devDependencies:
       '@babel/parser': 7.20.3
       '@babel/types': 7.20.2

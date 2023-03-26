@@ -1,5 +1,10 @@
 {
   "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "moduleResolution": "Node",
+    "outDir": "./../dist",
+    "declarationDir": "./../dist/types",
     "strict": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
@@ -15,8 +20,7 @@
     "../node_modules",
   ],
   "include": [
-    "./../index.ts",
-    "./../packages/**/*.ts",
-    "./../packages/**/lib/**/*.ts"
+    "./packages/**/*.ts",
+    "./packages/**/lib/**/*.ts"
   ]
 }
