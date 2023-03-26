@@ -80,10 +80,8 @@ In order to authenticate with your account you can use `login` function provided
 
 ```typescript
 import { Command } from "commander";
-import * as fs from "fs";
-import * as path from "path";
 import * as figlet from "figlet";
-import { mainnetRPCConfig, login } from '@nearjs/cli';
+import { FileSystemKeyStore, getConfiguration, login, Network, ProviderMyNearWallet } from '@nearjs/cli';
 
 const program = new Command();
 
@@ -95,14 +93,14 @@ program
   .command('login')
   .action(async () => {
     // Define that our keys are stored in file system
-    const keyStore = FileSystemKeyStore();
+    const keyStore = new FileSystemKeyStore();
     // Construct provider configuration based on provided input
-    const config = options.network === 'mainnet' ? mainnetRPCConfig(keyStore) : testnetRPCConfig(keyStore);
+    const config = getConfiguration(Network.TESTNET, keyStore);
     // Construct RPC Provider
-    const provider = new NearRPCProvider(config);
-    
+    const provider = new ProviderMyNearWallet(config);
+
     const accountId = await login(provider, keyStore);
-    
+
     console.log(`Welcome, ${accountId}!`);
   })
   .parse(process.argv);
