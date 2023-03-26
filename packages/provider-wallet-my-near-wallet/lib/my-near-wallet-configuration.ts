@@ -14,5 +14,11 @@ export const getConfiguration = (networkId: Network, keyStore: KeyStore): MyNear
     ? 'https://testnet.mynearwallet.com'
     : 'https://app.mynearwallet.com';
 
-  return { ...getRPCConfig(networkId, keyStore), window, walletBaseUrl };
+  const config: MyNearWalletConfiguration = { ...getRPCConfig(networkId, keyStore), walletBaseUrl };
+
+  if (typeof window !== 'undefined') {
+    config.window = window;
+  }
+
+  return config;
 };
