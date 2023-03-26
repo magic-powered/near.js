@@ -35,4 +35,5 @@ export type ViewAccessKeyResult = {
   } | 'FullAccess',
   block_height: number;
   block_hash: string;
+  error?: string;
 };

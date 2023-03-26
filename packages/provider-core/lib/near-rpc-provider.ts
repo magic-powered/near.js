@@ -109,16 +109,28 @@ export class NearRPCProvider<
     return connectedAccounts.includes(accountId);
   }
 
-  public async fetchAccessKey(accountId: string): Promise<void> {
+  public async fetchAccessKey(accountId: string, tryCount = 1): Promise<void> {
     const keyPair = await this.getKeyPair(accountId);
     if (!keyPair) {
       throw new Error(`Cannot fetch access key for account ${accountId} because no keypair found for the account`);
     }
 
     const accessKeyResponse = await this.sendRPCRequest(new ViewAccessKey(accountId, keyPair.getPublicKey()));
-    if (!accessKeyResponse) {
+
+    if (accessKeyResponse.result.error) {
+      if (tryCount > 2) {
+        return;
+      }
+
+      await (new Promise<void>((resolve, reject) => {
+        setTimeout(() => {
+          this.fetchAccessKey(accountId, tryCount).then(resolve).catch(reject);
+        }, 1000);
+      }));
+
       return;
     }
+
     const accessKeyPermission = accessKeyResponse.result.permission === 'FullAccess'
       ? new FullAccess()
       : new FunctionCallPermission(
