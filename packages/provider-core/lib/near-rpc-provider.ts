@@ -116,6 +116,9 @@ export class NearRPCProvider<
     }
 
     const accessKeyResponse = await this.sendRPCRequest(new ViewAccessKey(accountId, keyPair.getPublicKey()));
+    if (!accessKeyResponse) {
+      return;
+    }
     const accessKeyPermission = accessKeyResponse.result.permission === 'FullAccess'
       ? new FullAccess()
       : new FunctionCallPermission(
