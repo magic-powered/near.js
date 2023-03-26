@@ -1,6 +1,6 @@
 {
   "name": "@nearjs/browser-key-store",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "",
   "types": "./dist/types/index.d.ts",
   "main": "./dist/index.js",
