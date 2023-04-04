@@ -1,22 +1,7 @@
 on:
-  workflow_dispatch:
-    inputs:
-      package:
-        description: 'Choose package to release'
-        required: true
-        type: choice
-        options:
-          - account
-          - backend
-          - browser-key-store
-          - cli
-          - contracts
-          - fs-key-store
-          - provider-core
-          - provider-wallet-my-near-wallet
-          - tx
-          - units
-          - web
+  push:
+    branches:
+      - main
 
 jobs:
   release:
@@ -58,4 +43,4 @@ jobs:
       - name: Publish to NPM
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: pnpm --filter ./packages/${{ github.event.inputs.package }} publish --access public --tag latest
+        run: pnpm changeset publish

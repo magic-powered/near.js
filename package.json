@@ -20,11 +20,10 @@
     "url": "https://github.com/Magic-Powered/near.js/issues"
   },
   "homepage": "https://github.com/Magic-Powered/near.js#readme",
-  "dependencies": {
-  },
   "devDependencies": {
     "@babel/parser": "^7.19.6",
     "@babel/types": "^7.19.4",
+    "@changesets/cli": "^2.26.1",
     "@types/node": "^18.8.3",
     "@typescript-eslint/eslint-plugin": "^5.41.0",
     "@typescript-eslint/parser": "^5.41.0",
